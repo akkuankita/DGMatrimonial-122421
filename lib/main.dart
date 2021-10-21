@@ -4,15 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
-import 'package:matrimonial/view/dashboard/demo_test/iPhone12ProMax1.dart';
-import 'package:matrimonial/view/dashboard/chat/MainChatPage.dart';
-import 'package:matrimonial/view/dashboard/chat/MemberChat.dart';
-import 'package:matrimonial/view/dashboard/chat/MessageScreen.dart';
-import 'package:matrimonial/view/dashboard/details/details.dart';
-import 'package:matrimonial/view/dashboard/home.dart';
-import 'package:matrimonial/view/dashboard/save_page.dart';
-import 'package:matrimonial/view/dashboard/search/adv_search.dart';
-import 'package:matrimonial/view/dashboard/search/searchDashboard.dart';
 
 void main() {
   runApp(GetMaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));

@@ -64,13 +64,11 @@ class Networkcall extends GetConnect {
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>> login <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<bool> register(body) async {
-    String url = '$BASE_URL$login_google';
     // var headers = {
     //   'Accept': "application/json",
     // };
     // print(body);
     showProgress();
-    print(url);
     try {
     var response = await post(registerApi1, body);
     hideProgress();

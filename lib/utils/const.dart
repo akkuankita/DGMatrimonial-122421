@@ -265,8 +265,18 @@ void showSnack(String msg,
 String internetError = 'No Internet Connection';
 String baseUrl = 'https://demo39.gowebbi.us/api/';
 String registerApi1 = baseUrl + 'RegistrationApi/Registration';
-// String otpVerifyApi = baseUrl + 'otp-verify-register';
+String registerApi2 = baseUrl + 'RegistrationApi/Registration';
+String registerApi3 = baseUrl + 'RegistrationApi/Registration';
+String registerApi4 = baseUrl + 'RegistrationApi/Registration';
 String loginApi = baseUrl + 'LoginApi/Login';
+String divisionApi = baseUrl + 'RegistrationApi/FetchDivision';
+String casteSubcasteApi = baseUrl + 'RegistrationApi/FetchCasteSubCaste';
+String hobbiesApi = baseUrl + 'RegistrationApi/FetchHobbies';
+String countryApi = baseUrl + 'RegistrationApi/FetchCountry';
+String stateApi = baseUrl + 'RegistrationApi/FetchState';
+String cityApi = baseUrl + 'RegistrationApi/FetchCity';
+String prefLocApi = baseUrl + 'RegistrationApi/FetchPrefLoc';
+// String otpVerifyApi = baseUrl + 'otp-verify-register';
 
 //----------------------------keys--------------------------
 String API_SUCCESS = 'success';

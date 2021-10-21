@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/view/SigninSignUp/PersonalDetails.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
 
@@ -480,24 +481,33 @@ class _SignupState extends State<Signup> {
   }
 
   void _registerUser1() async {
-    final param = {
-      "FirstName": "${_Firstname.text.trim()}",
-      "LastName": "${_Lastname.text.trim()}",
-      "Email": "${_email.text.trim()}",
-      "ContactNo": "${_phone.text.trim()}",
-      "Password": "${_password.text.trim()}",
-      "Example": "${selectedExample}",
-      "Gender": "${selectedGender}",
-      "Age": "${selectedAge}",
-      "OnTable": "REG1"
-    };
-    var result = await networkcallService.register(param);
+    try {
+      final param = {
+        "FirstName": "${_Firstname.text.trim()}",
+        "LastName": "${_Lastname.text.trim()}",
+        "Email": "${_email.text.trim()}",
+        "ContactNo": "${_phone.text.trim()}",
+        "Password": "${_password.text.trim()}",
+        "Example": "${selectedExample}",
+        "Gender": "${selectedGender}",
+        "Age": "${selectedAge}",
+        "OnTable": "REG1"
+      };
+      var result = await networkcallService.register(param);
 
-    if (result != null) {
-      Get.to(
-        () => PersonalDetails(),
-      );
+      if (result) {
+        Get.to(
+          () => PersonalDetails(),
+        );
+      }
+    } catch (e) {
+      if (e is CustomError) {
+        if (e.isNetworkError != null && (e.isNetworkError)!) {
+          showToast(e.customMessage, red);
+        } else {
+          showToast(e.customMessage, red);
+        }
+      }
     }
   }
-
 }

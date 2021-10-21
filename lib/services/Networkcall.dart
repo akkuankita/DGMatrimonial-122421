@@ -79,7 +79,7 @@ class Networkcall extends GetConnect {
       if (myjson['status'] == API_SUCCESS) {
         showSnack(myjson['msg']);
         sharePrefereceInstance.setuserId(myjson['data'][0]['Id']);
-        return myjson;
+        return true;
         } else {
           throw CustomError(myjson['msg']);
         }

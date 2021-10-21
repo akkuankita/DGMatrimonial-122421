@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/BottomTab/MyTabBar.dart';
+import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
 
 class AboutyourSelf extends StatelessWidget {
@@ -19,32 +20,32 @@ class AboutyourSelf extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-          SingleChildScrollView(
-            child: Container(
-              height: 1.sh,
-              width: 1.sw,
-              child: Stack(
-                children: [
-                  Container(
-                    width: 1.sw,
-                    height: 120.h,
-                    alignment: Alignment.topCenter,
-                    padding: EdgeInsets.symmetric(vertical: 22.h),
-                    decoration: BoxDecoration(
-                      color: kThirdColor,
-                    ),
-                    child: Column(
-                      children: [
-                        customText("Get started with your profile", white,
-                            20.sp, FontWeight.w700),
-                      ],
-                    ),
+              SingleChildScrollView(
+                child: Container(
+                  height: 1.sh,
+                  width: 1.sw,
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: 1.sw,
+                        height: 120.h,
+                        alignment: Alignment.topCenter,
+                        padding: EdgeInsets.symmetric(vertical: 22.h),
+                        decoration: BoxDecoration(
+                          color: kThirdColor,
+                        ),
+                        child: Column(
+                          children: [
+                            customText("Get started with your profile", white,
+                                20.sp, FontWeight.w700),
+                          ],
+                        ),
+                      ),
+                      PartOne(),
+                    ],
                   ),
-                  PartOne(),
-                ],
+                ),
               ),
-            ),
-          ),
             ],
           ),
         ),

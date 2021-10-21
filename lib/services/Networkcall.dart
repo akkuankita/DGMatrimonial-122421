@@ -79,7 +79,6 @@ class Networkcall extends GetConnect {
       if (myjson['status'] == API_SUCCESS) {
         showSnack(myjson['msg']);
         sharePrefereceInstance.setuserId(myjson['data'][0]['Id']);
-        // sharePref.setToken(myjson['data']['original']['access_token']);
         return myjson;
         } else {
           throw CustomError(myjson['msg']);

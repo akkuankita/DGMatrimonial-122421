@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
     var h = MediaQuery.of(context).size.height;
     return ScreenUtilInit(
       allowFontScaling: false,
-      // designSize: Size(360, 690),
       designSize: Size(w, h),
       builder: () => SplashScreen(),
     );

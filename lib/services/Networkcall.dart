@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:get/get_connect.dart';
+import 'package:matrimonial/model/castSubcastModel.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/utils/sharePreference_instance.dart';
@@ -35,22 +36,22 @@ class Networkcall extends GetConnect {
     };
     print(url);
     try {
-    final response = await post(loginApi, param);
-    hideProgress();
+      final response = await post(loginApi, param);
+      hideProgress();
       print(response.body);
-    print('res- ${response.body}-- $param');
-    final myjson = response.body;
-    if (response.statusCode == 200) {
-      if (myjson['status'] == API_SUCCESS) {
-        showSnack(myjson['msg']);
-        sharePrefereceInstance.setIsLogin(true);
-        // sharePref.setToken(myjson['data']['original']['access_token']);
-        return true;
+      print('res- ${response.body}-- $param');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        if (myJson['status'] == API_SUCCESS) {
+          showSnack(myJson['msg']);
+          sharePrefereceInstance.setIsLogin(true);
+          // sharePref.setToken(myJson['data']['original']['access_token']);
+          return true;
         } else {
-          throw CustomError(myjson['msg']);
+          throw CustomError(myJson['msg']);
         }
       } else {
-        throw CustomError(myjson['msg']);
+        throw CustomError(myJson['msg']);
       }
     } on SocketException {
       throw CustomError('No Internet connection 😑');
@@ -70,21 +71,21 @@ class Networkcall extends GetConnect {
     // print(body);
     showProgress();
     try {
-    var response = await post(registerApi1, body);
-    hideProgress();
+      var response = await post(registerApi1, body);
+      hideProgress();
       print(response.body);
-    print('res- ${response.body}-- ');
-    final myjson = response.body;
-    if (response.statusCode == 200) {
-      if (myjson['status'] == API_SUCCESS) {
-        showSnack(myjson['msg']);
-        sharePrefereceInstance.setuserId(myjson['data'][0]['Id']);
-        return true;
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        if (myJson['status'] == API_SUCCESS) {
+          showSnack(myJson['msg']);
+          sharePrefereceInstance.setuserId(myJson['data'][0]['Id']);
+          return true;
         } else {
-          throw CustomError(myjson['msg']);
+          throw CustomError(myJson['msg']);
         }
       } else {
-        throw CustomError(myjson['msg']);
+        throw CustomError(myJson['msg']);
       }
     } on SocketException {
       throw CustomError('No Internet connection 😑');
@@ -96,7 +97,80 @@ class Networkcall extends GetConnect {
     }
   }
 
+// --------------------------------register2--------------------------
+  Future register2(body) async {
+    showProgress();
+    var response = await post(registerApi1, body);
+    hideProgress();
+    print('res- ${response.body}');
+    final myJson = response.body;
+    if (response.statusCode == 200) {
+      if (myJson['status'] == API_SUCCESS) {
+        return myJson;
+      } else {
+        showSnack(myJson['msg']);
+        return null;
+      }
+    } else {
+      showSnack(myJson['msg']);
+      return null;
+    }
+  }
 
+// --------------------------------register2--------------------------
+  Future<CastSubcastModel?> fetchcastSubcast() async {
+    // var headers = {
+    //   'Accept': "application/json",
+    // };
+    // print(body);
+    showProgress();
+    try {
+      var response = await get(casteSubCasteApi);
+      hideProgress();
+      print(response.body);
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        if (myJson['status'] == API_SUCCESS) {
+        return CastSubcastModel.fromJson(myJson);
+        } else {
+          throw CustomError(myJson['msg']);
+        }
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
+
+//---------------------------------otp verify---------------------------
+  // Future<bool> otpVerification(
+  //     {required String email,
+  //     required String otp,
+  //     required String usertype}) async {
+  //   showProgress();
+  //   var param = {'email': email, 'otp': otp};
+  //   var response = await post(otpVerifyApi, param);
+  //   hideProgress();
+  //   print('otp res- ${response.body}');
+  //   final myJson = response.body;
+  //   if (response.statusCode == 200) {
+  //     if (myJson['success']) {
+  //       sharePref.setIsLogin(true);
+  //       sharePref.setUsertype(usertype);
+  //       sharePref.setToken(myJson['data']['original']['access_token']);
+  //       return true;
+  //     }
+  //     return false;
+  //   }
+  //   return false;
+  // }
 
 }
 

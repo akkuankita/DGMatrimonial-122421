@@ -455,9 +455,9 @@ class _SignupState extends State<Signup> {
     } catch (e) {
       if (e is CustomError) {
         if (e.isNetworkError != null && (e.isNetworkError)!) {
-          showToast(e.customMessage, red);
+          showSnack(e.customMessage);
         } else {
-          showToast(e.customMessage, red);
+          showSnack(e.customMessage);
         }
       }
     }

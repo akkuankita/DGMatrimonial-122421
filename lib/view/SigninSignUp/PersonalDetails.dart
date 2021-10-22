@@ -234,7 +234,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {});
     super.initState();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

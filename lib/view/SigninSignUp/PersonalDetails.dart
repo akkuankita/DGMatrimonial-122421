@@ -161,14 +161,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
     'Daughter',
   ];
   var selectedDivision;
-
-  var subcasteList = [
-    'Myself',
-    'Son',
-    'Daughter',
-  ];
-  var selectedSubcaste;
-
   var personalityList = [
     'Myself',
     'Son',
@@ -224,7 +216,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
     selectedRelegion = relegionList[0];
     selectedMotherTongue = motherTongueList[0];
     selectedDivision = divisionList[0];
-    selectedSubcaste = subcasteList[0];
     selectedPersonality = personalityList[0];
     selectedDosh = doshList[0];
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
@@ -235,12 +226,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   initialDataFetching() async {
     await _controller.fetchCastList();
-    print(_controller.listOfCastSubcast[0].casteId);
     _controller.selectedCast = _controller.listOfCastSubcast[0];
-    print(_controller.selectedCast);
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -450,9 +437,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
           value: _controller.selectedCast,
           isExpanded: true,
           onChanged: (value) {
-            setState(() {
-              _controller.selectedCast = value as CasteList;
-            });
+            _controller.changeSelectedCast(value as CasteList);
+            setState(() {});
+            // var cast = value as CasteList;
+            // setState(() {
+            //   _controller.selectedCast = value as CasteList;
+            // });
+            // _controller.fetchSubcastList(cast.casteId!);
           },
           items: _controller.listOfCastSubcast
               .map<DropdownMenuItem<CasteList>>((CasteList value) {
@@ -484,20 +475,21 @@ class _PersonalInfoState extends State<PersonalInfo> {
               // borderSide:  ,
             ),
           ),
-          value: selectedSubcaste,
+          value: _controller.selectedSubcast,
           isExpanded: true,
           onChanged: (value) {
             setState(() {
-              selectedSubcaste = value as String;
+              _controller.selectedSubcast = value as Subcastelist;
             });
           },
-          items: subcasteList.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
+          items: _controller.listOfSubcast
+              .map<DropdownMenuItem<Subcastelist>>((Subcastelist value) {
+            return DropdownMenuItem(
               value: value,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: customText(
-                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+                child: customText(value.subCasteName!, Color(0xFF707070), 14.sp,
+                    FontWeight.w400),
               ),
             );
           }).toList(),

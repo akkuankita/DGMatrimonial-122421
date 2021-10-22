@@ -228,70 +228,81 @@ class _PersonalInfoState extends State<PersonalInfo> {
     selectedPersonality = personalityList[0];
     selectedDosh = doshList[0];
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      initialDataFetching();
     });
     super.initState();
   }
 
+  initialDataFetching() async {
+    await _controller.fetchCastList();
+    print(_controller.listOfCastSubcast[0].casteId);
+    _controller.selectedCast = _controller.listOfCastSubcast[0];
+    print(_controller.selectedCast);
+    setState(() {
+      
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Obx((){
-        return SingleChildScrollView(
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 40.h),
-                customText("PersonalDetails", kThirdColor, 16.sp, FontWeight.w700),
-                SizedBox(height: 25.h),
-                relegionDropDown(),
-                motherToungDropDown(),
-                divisionDropDown(),
-                castDropDown(),
-                subCastDropDown(),
-                doshDropDown(),
-                CheckboxListTile(
-                    contentPadding: EdgeInsets.all(0),
-                    value: willingToMarryFromOtherCommunities,
-                    title: customText(
-                        "Willing to marry from other communities also",
-                        kThirdColor,
-                        11.sp,
-                        FontWeight.w400),
-                    onChanged: (value) {
-                      willingToMarryFromOtherCommunities = value!;
-                      setState(() {});
-                    }),
-                personalityDropDown(),
-                eatingHabitWidget(),
-                smokingHabitWidget(),
-                drinkingHabitWidget(),
-                hobbiesWidget(),
-                SizedBox(height: 25.h),
-                SizedBox(
-                    width: 1.sw,
-                    height: 50.h,
-                    child: GreyButton(
-                        text: "Back",
-                        press: () {
-                          Get.back();
-                        })),
-                SizedBox(height: 25.h),
-                SizedBox(
-                    width: 1.sw,
-                    height: 50.h,
-                    child: DefaultButton(
-                        text: "Next",
-                        press: () {
-                          // sendDataToApi();
-                          Get.to(() => MoreperDetail());
-                        })),
-                SizedBox(height: 25.h),
-              ],
-            ),
+    return Obx(() {
+      return SingleChildScrollView(
+        child: Form(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 40.h),
+              customText(
+                  "PersonalDetails", kThirdColor, 16.sp, FontWeight.w700),
+              SizedBox(height: 25.h),
+              relegionDropDown(),
+              motherToungDropDown(),
+              divisionDropDown(),
+              castDropDown(),
+              subCastDropDown(),
+              doshDropDown(),
+              CheckboxListTile(
+                  contentPadding: EdgeInsets.all(0),
+                  value: willingToMarryFromOtherCommunities,
+                  title: customText(
+                      "Willing to marry from other communities also",
+                      kThirdColor,
+                      11.sp,
+                      FontWeight.w400),
+                  onChanged: (value) {
+                    willingToMarryFromOtherCommunities = value!;
+                    setState(() {});
+                  }),
+              personalityDropDown(),
+              eatingHabitWidget(),
+              smokingHabitWidget(),
+              drinkingHabitWidget(),
+              hobbiesWidget(),
+              SizedBox(height: 25.h),
+              SizedBox(
+                  width: 1.sw,
+                  height: 50.h,
+                  child: GreyButton(
+                      text: "Back",
+                      press: () {
+                        Get.back();
+                      })),
+              SizedBox(height: 25.h),
+              SizedBox(
+                  width: 1.sw,
+                  height: 50.h,
+                  child: DefaultButton(
+                      text: "Next",
+                      press: () {
+                        // sendDataToApi();
+                        Get.to(() => MoreperDetail());
+                      })),
+              SizedBox(height: 25.h),
+            ],
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 
   void sendDataToApi() async {
@@ -436,20 +447,21 @@ class _PersonalInfoState extends State<PersonalInfo> {
               // borderSide:  ,
             ),
           ),
-          value: _controller.selectedCast.value,
+          value: _controller.selectedCast,
           isExpanded: true,
           onChanged: (value) {
             setState(() {
-              _controller.selectedCast.value = value as CasteList;
+              _controller.selectedCast = value as CasteList;
             });
           },
-          items: _controller.listOfCastSubcast.map<DropdownMenuItem<String>>((CasteList value) {
+          items: _controller.listOfCastSubcast
+              .map<DropdownMenuItem<CasteList>>((CasteList value) {
             return DropdownMenuItem(
-              value: value.casteName,
+              value: value,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: customText(
-                    value.casteName!, Color(0xFF707070), 14.sp, FontWeight.w400),
+                child: customText(value.casteName!, Color(0xFF707070), 14.sp,
+                    FontWeight.w400),
               ),
             );
           }).toList(),

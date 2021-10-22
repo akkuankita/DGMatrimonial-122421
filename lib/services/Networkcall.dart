@@ -119,23 +119,13 @@ class Networkcall extends GetConnect {
 
 // --------------------------------register2--------------------------
   Future<CastSubcastModel> fetchcastSubcast() async {
-    // var headers = {
-    //   'Accept': "application/json",
-    // };
-    // print(body);
-    showProgress();
     try {
       var response = await get(casteSubCasteApi);
-      hideProgress();
       print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
-        if (myJson['status'] == API_SUCCESS) {
-          return CastSubcastModel.fromJson(myJson);
-        } else {
-          throw CustomError(myJson['msg']);
-        }
+        return CastSubcastModel.fromJson(myJson);
       } else {
         throw CustomError(myJson['msg']);
       }

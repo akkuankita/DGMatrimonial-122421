@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/BottomTab/MyTabBar.dart';
+import 'package:matrimonial/view/SigninSignUp/PersonalDetails.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -88,9 +89,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: DefaultButton(
                     text: "Login",
                     press: () {
-                      if (_formKey.currentState!.validate()) {
-                        _login();
-                      }
+                      // if (_formKey.currentState!.validate()) {
+                      //   _login();
+                      // }
+                      Get.to(() => PersonalDetails());
                     },
                     // press: () {
                     //   Get.to(() => MyTabBar());

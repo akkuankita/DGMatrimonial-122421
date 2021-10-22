@@ -10,9 +10,15 @@ class PersonalDetailsRegisterController extends GetxController {
   var castSubcastModel = CastSubcastModel().obs;
   var listOfCastSubcast = <CasteList>[].obs;
   var listOfSubcast = <Subcastelist>[].obs;
-  var selectedCast;
+  var selectedCast = CasteList().obs;
   var selectedSubcast;
   var initialCountry = 'select your country *'.obs;
+
+  @override
+  void onInit() {
+    fetchCastList();
+    super.onInit();
+  }
 
   onDispose() {
     listOfCastSubcast.clear();
@@ -25,12 +31,12 @@ class PersonalDetailsRegisterController extends GetxController {
   //fetchCountryList-------------------------------------------
   fetchCastList() async {
     try {
-      showProgress();
       var apiData = await networkcallService.fetchcastSubcast();
       if (apiData != null) {
         castSubcastModel.value = apiData;
         // listOfCountry.clear();
         listOfCastSubcast.assignAll(castSubcastModel.value.casteList!);
+        // selectedCast.value = listOfCastSubcast[0];
       }
     } catch (e) {
       if (e is CustomError) {
@@ -43,9 +49,15 @@ class PersonalDetailsRegisterController extends GetxController {
 
   //fetchCountryList-------------------------------------------
   fetchSubcastList(String castId) async {
-   
-    }
-
+    var subCust;
+    castSubcastModel.value.casteList!.where((element) {
+      if (element.casteId == castId) {
+        subCust = element.subcastelist;
+      }
+      return true;
+    });
+    listOfSubcast.assignAll(subCust);
+  }
 
 // /////fetchStateList------------------------------------------------------------
 //   fetchStateList(countryId) async {

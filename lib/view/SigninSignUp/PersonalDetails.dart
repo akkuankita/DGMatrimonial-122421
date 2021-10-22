@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/Controller/personalDetailsRegisterController.dart';
+import 'package:matrimonial/model/castSubcastModel.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
@@ -160,13 +162,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   ];
   var selectedDivision;
 
-  var casteList = [
-    'Myself',
-    'Son',
-    'Daughter',
-  ];
-  var selectedCaste;
-
   var subcasteList = [
     'Myself',
     'Son',
@@ -221,76 +216,81 @@ class _PersonalInfoState extends State<PersonalInfo> {
   ];
   var selectedHobbies;
   bool willingToMarryFromOtherCommunities = false;
+  PersonalDetailsRegisterController _controller =
+      Get.put(PersonalDetailsRegisterController());
 
   @override
   void initState() {
     selectedRelegion = relegionList[0];
     selectedMotherTongue = motherTongueList[0];
     selectedDivision = divisionList[0];
-    selectedCaste = casteList[0];
     selectedSubcaste = subcasteList[0];
     selectedPersonality = personalityList[0];
     selectedDosh = doshList[0];
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {});
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    });
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 40.h),
-            customText("PersonalDetails", kThirdColor, 16.sp, FontWeight.w700),
-            SizedBox(height: 25.h),
-            relegionDropDown(),
-            motherToungDropDown(),
-            divisionDropDown(),
-            castDropDown(),
-            subCastDropDown(),
-            doshDropDown(),
-            CheckboxListTile(
-                contentPadding: EdgeInsets.all(0),
-                value: willingToMarryFromOtherCommunities,
-                title: customText(
-                    "Willing to marry from other communities also",
-                    kThirdColor,
-                    11.sp,
-                    FontWeight.w400),
-                onChanged: (value) {
-                  willingToMarryFromOtherCommunities = value!;
-                  setState(() {});
-                }),
-            personalityDropDown(),
-            eatingHabitWidget(),
-            smokingHabitWidget(),
-            drinkingHabitWidget(),
-            hobbiesWidget(),
-            SizedBox(height: 25.h),
-            SizedBox(
-                width: 1.sw,
-                height: 50.h,
-                child: GreyButton(
-                    text: "Back",
-                    press: () {
-                      Get.back();
-                    })),
-            SizedBox(height: 25.h),
-            SizedBox(
-                width: 1.sw,
-                height: 50.h,
-                child: DefaultButton(
-                    text: "Next",
-                    press: () {
-                      // sendDataToApi();
-                      Get.to(() => MoreperDetail());
-                    })),
-            SizedBox(height: 25.h),
-          ],
-        ),
-      ),
+    return Obx((){
+        return SingleChildScrollView(
+          child: Form(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 40.h),
+                customText("PersonalDetails", kThirdColor, 16.sp, FontWeight.w700),
+                SizedBox(height: 25.h),
+                relegionDropDown(),
+                motherToungDropDown(),
+                divisionDropDown(),
+                castDropDown(),
+                subCastDropDown(),
+                doshDropDown(),
+                CheckboxListTile(
+                    contentPadding: EdgeInsets.all(0),
+                    value: willingToMarryFromOtherCommunities,
+                    title: customText(
+                        "Willing to marry from other communities also",
+                        kThirdColor,
+                        11.sp,
+                        FontWeight.w400),
+                    onChanged: (value) {
+                      willingToMarryFromOtherCommunities = value!;
+                      setState(() {});
+                    }),
+                personalityDropDown(),
+                eatingHabitWidget(),
+                smokingHabitWidget(),
+                drinkingHabitWidget(),
+                hobbiesWidget(),
+                SizedBox(height: 25.h),
+                SizedBox(
+                    width: 1.sw,
+                    height: 50.h,
+                    child: GreyButton(
+                        text: "Back",
+                        press: () {
+                          Get.back();
+                        })),
+                SizedBox(height: 25.h),
+                SizedBox(
+                    width: 1.sw,
+                    height: 50.h,
+                    child: DefaultButton(
+                        text: "Next",
+                        press: () {
+                          // sendDataToApi();
+                          Get.to(() => MoreperDetail());
+                        })),
+                SizedBox(height: 25.h),
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 
@@ -436,20 +436,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
               // borderSide:  ,
             ),
           ),
-          value: selectedCaste,
+          value: _controller.selectedCast.value,
           isExpanded: true,
           onChanged: (value) {
             setState(() {
-              selectedCaste = value as String;
+              _controller.selectedCast.value = value as CasteList;
             });
           },
-          items: casteList.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
+          items: _controller.listOfCastSubcast.map<DropdownMenuItem<String>>((CasteList value) {
+            return DropdownMenuItem(
+              value: value.casteName,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: customText(
-                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+                    value.casteName!, Color(0xFF707070), 14.sp, FontWeight.w400),
               ),
             );
           }).toList(),

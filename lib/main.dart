@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/view/SigninSignUp/LoginScreen.dart';
 import 'package:matrimonial/view/SigninSignUp/PersonalDetails.dart';
 import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
 
@@ -44,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Get.to(() => PersonalDetailsRegister());
       // Get.to(() => Pricing());
       // Get.to(() => Register());
-      Get.to(() => PersonalDetails());
+      Get.to(() => LoginScreen());
       // Get.to(() => iPhone12ProMax1());
       // Get.to(() => SignInSignUp());
     });

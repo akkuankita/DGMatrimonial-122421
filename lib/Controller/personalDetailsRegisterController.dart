@@ -10,13 +10,12 @@ class PersonalDetailsRegisterController extends GetxController {
   var castSubcastModel = CastSubcastModel().obs;
   var listOfCastSubcast = <CasteList>[].obs;
   var listOfSubcast = <Subcastelist>[].obs;
-  var selectedCast = CasteList().obs;
+  var selectedCast;
   var selectedSubcast;
   var initialCountry = 'select your country *'.obs;
 
   @override
   void onInit() {
-    fetchCastList();
     super.onInit();
   }
 
@@ -29,7 +28,7 @@ class PersonalDetailsRegisterController extends GetxController {
   // }
 
   //fetchCountryList-------------------------------------------
-  fetchCastList() async {
+  Future fetchCastList() async {
     try {
       var apiData = await networkcallService.fetchcastSubcast();
       if (apiData != null) {

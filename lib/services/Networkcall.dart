@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:get/get_connect.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
+import 'package:matrimonial/model/divisionModel.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/utils/sharePreference_instance.dart';
@@ -126,6 +127,28 @@ class Networkcall extends GetConnect {
       final myJson = response.body;
       if (response.statusCode == 200) {
         return CastSubcastModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
+
+  // ----------------------------register2--------------------------------
+  Future<DivisionModel> fetchdivision() async {
+    try {
+      var response = await get(divisionApi);
+      print(response.body);
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return DivisionModel.fromJson(myJson);
       } else {
         throw CustomError(myJson['msg']);
       }

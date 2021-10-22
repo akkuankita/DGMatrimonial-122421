@@ -9,7 +9,9 @@ class PersonalDetailsRegisterController extends GetxController {
   //country
   var castSubcastModel = CastSubcastModel().obs;
   var listOfCastSubcast = <CasteList>[].obs;
-  var selectedRelegion;
+  var listOfSubcast = <Subcastelist>[].obs;
+  var selectedCast;
+  var selectedSubcast;
   var initialCountry = 'select your country *'.obs;
 
   onDispose() {
@@ -28,7 +30,7 @@ class PersonalDetailsRegisterController extends GetxController {
       if (apiData != null) {
         castSubcastModel.value = apiData;
         // listOfCountry.clear();
-        // listOfCastSubcast.assignAll(castSubcastModel.value.casteList);
+        listOfCastSubcast.assignAll(castSubcastModel.value.casteList!);
       }
     } catch (e) {
       if (e is CustomError) {
@@ -38,6 +40,12 @@ class PersonalDetailsRegisterController extends GetxController {
       }
     }
   }
+
+  //fetchCountryList-------------------------------------------
+  fetchSubcastList(String castId) async {
+   
+    }
+
 
 // /////fetchStateList------------------------------------------------------------
 //   fetchStateList(countryId) async {

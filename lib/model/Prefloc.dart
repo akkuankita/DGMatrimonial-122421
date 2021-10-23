@@ -1,11 +1,11 @@
-class Prefloc {
+class PreflocModel {
   String? status;
   String? msg;
   List<Data>? data;
 
-  Prefloc({this.status, this.msg, this.data});
+  PreflocModel({this.status, this.msg, this.data});
 
-  Prefloc.fromJson(Map<String, dynamic> json) {
+  PreflocModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
@@ -15,7 +15,6 @@ class Prefloc {
       });
     }
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;

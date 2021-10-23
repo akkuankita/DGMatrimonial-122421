@@ -13,7 +13,6 @@ class PersonalDetailsRegisterController extends GetxController {
   var selectedCast;
   var selectedSubcast;
   var initialCountry = 'select your country *'.obs;
-
   @override
   void onInit() {
     super.onInit();
@@ -22,7 +21,6 @@ class PersonalDetailsRegisterController extends GetxController {
   onDispose() {
     listOfCastSubcast.clear();
   }
-
   // clearData() {
   //   listOfCastSubcast = null;
   // }

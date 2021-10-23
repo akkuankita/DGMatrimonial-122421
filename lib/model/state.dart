@@ -1,11 +1,11 @@
-class State {
+class StateModel {
   String? status;
   String? msg;
   List<Data>? data;
 
-  State({this.status, this.msg, this.data});
+  StateModel({this.status, this.msg, this.data});
 
-  State.fromJson(Map<String, dynamic> json) {
+  StateModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {

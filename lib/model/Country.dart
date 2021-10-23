@@ -1,11 +1,11 @@
-class Country {
+class CountryModel {
   String? status;
   String? msg;
   List<Data>? data;
 
-  Country({this.status, this.msg, this.data});
+  CountryModel({this.status, this.msg, this.data});
 
-  Country.fromJson(Map<String, dynamic> json) {
+  CountryModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {

@@ -1,7 +1,7 @@
 class Hobbies {
   String? status;
   String? msg;
-  List<Data>? data;
+  List<HobbieData>? data;
 
   Hobbies({this.status, this.msg, this.data});
 
@@ -9,9 +9,9 @@ class Hobbies {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data =  <Data>[];
+      data =  <HobbieData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new HobbieData.fromJson(v));
       });
     }
   }
@@ -27,13 +27,13 @@ class Hobbies {
   }
 }
 
-class Data {
+class HobbieData {
   int? id;
   String? hobbies;
 
-  Data({this.id, this.hobbies});
+  HobbieData({this.id, this.hobbies});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  HobbieData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     hobbies = json['Hobbies'];
   }

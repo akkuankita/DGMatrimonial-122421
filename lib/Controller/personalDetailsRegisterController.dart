@@ -1,32 +1,33 @@
 import 'package:get/get.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
+import 'package:matrimonial/model/hobbies.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
 
 class PersonalDetailsRegisterController extends GetxController {
   var isLoading = true.obs;
-  //country
+  
   var castSubcastModel = CastSubcastModel().obs;
   var listOfCastSubcast = <CasteList>[].obs;
   var listOfSubcast = <Subcastelist>[].obs;
   var selectedCast;
   var selectedSubcast;
 
+  var hobbiesModel = Hobbies().obs;
+  var hobbiesList = <HobbieData>[].obs;
+  var selectedHobbies;
+
   @override
   void onInit() {
     super.onInit();
-  }
-
-  onDispose() {
-    listOfCastSubcast.clear();
   }
 
   // clearData() {
   //   listOfCastSubcast = null;
   // }
 
-  //fetchCountryList-------------------------------------------
+  //fetchCastList -------------------------------------------
   Future fetchCastList() async {
     try {
     listOfCastSubcast.clear();
@@ -36,6 +37,26 @@ class PersonalDetailsRegisterController extends GetxController {
         castSubcastModel.value = apiData;
         // listOfCountry.clear();
         listOfCastSubcast.assignAll(castSubcastModel.value.casteList!);
+        // selectedCast.value = listOfCastSubcast[0];
+      }
+    } catch (e) {
+      if (e is CustomError) {
+        print(e);
+        isLoading.value = false;
+        showToast(e.customMessage, red);
+      }
+    }
+  }
+
+  //fetchHobbie -------------------------------------------
+  Future fetchHobbie() async {
+    try {
+    hobbiesList.clear();
+      var apiData = await networkcallService.fetchcastSubcast();
+      if (apiData != null) {
+        // hobbiesModel.value = apiData;
+        // listOfCountry.clear();
+        hobbiesList.assignAll(hobbiesModel.value.data!);
         // selectedCast.value = listOfCastSubcast[0];
       }
     } catch (e) {

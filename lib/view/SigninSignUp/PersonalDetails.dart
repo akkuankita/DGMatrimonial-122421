@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/Controller/personalDetailsRegisterController.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
+import 'package:matrimonial/model/hobbies.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
@@ -199,14 +200,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
   ];
   var selectedDrinkingHabit;
 
-  var HobbiesList = [
-    'Travelling',
-    'Sports',
-    'Movies/Series',
-    'Music',
-    'Parties',
-  ];
-  var selectedHobbies;
   bool willingToMarryFromOtherCommunities = false;
   PersonalDetailsRegisterController _controller =
       Get.put(PersonalDetailsRegisterController());
@@ -226,7 +219,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   initialDataFetching() async {
     await _controller.fetchCastList();
+    await _controller.fetchHobbie();
     _controller.selectedCast = _controller.listOfCastSubcast[0];
+    
     setState(() {});
   }
 
@@ -247,6 +242,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
               divisionDropDown(),
               castDropDown(),
               subCastDropDown(),
+              hobbiesWidget(),
               doshDropDown(),
               CheckboxListTile(
                   contentPadding: EdgeInsets.all(0),
@@ -264,7 +260,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
               eatingHabitWidget(),
               smokingHabitWidget(),
               drinkingHabitWidget(),
-              hobbiesWidget(),
               SizedBox(height: 25.h),
               SizedBox(
                   width: 1.sw,
@@ -786,70 +781,37 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   hobbiesWidget() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 15,
-        ),
-        customText('Hobbies', commonColor, 18, FontWeight.w400),
-        ListView.builder(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          itemCount: HobbiesList.length,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (_, i) {
-            return Padding(
-              padding: EdgeInsets.only(
-                top: 20,
-              ),
-              child: InkWell(
-                onTap: () {
-                  print(HobbiesList[i]);
-                  setState(() {
-                    selectedHobbies = HobbiesList[i];
-                  });
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    customText(HobbiesList[i], lightBlack, 17, FontWeight.w400),
-                    selectedHobbies == HobbiesList[i]
-                        ? Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(90),
-                              color: Colors.white,
-                              border: Border.all(
-                                  color: commonColor, // Set border color
-                                  width: 3),
-                            ),
-                            padding: EdgeInsets.all(3),
-                            child: Container(
-                              width: 15,
-                              height: 15,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(90),
-                                color: commonColor,
-                              ),
-                            ),
-                          )
-                        : Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(90),
-                              color: Colors.white,
-                              border: Border.all(
-                                  color: commonColor, // Set border color
-                                  width: .0),
-                            ),
-                          )
-                  ],
-                ),
+        customText("Hobbies", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: _controller.selectedHobbies,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              _controller.selectedHobbies = value as HobbieData;
+            });
+          },
+          items: _controller.hobbiesList
+              .map<DropdownMenuItem<HobbieData>>((HobbieData value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(
+                    value.hobbies!, Color(0xFF707070), 14.sp, FontWeight.w400),
               ),
             );
-          },
+          }).toList(),
         ),
+        SizedBox(height: 25.h),
       ],
     );
   }

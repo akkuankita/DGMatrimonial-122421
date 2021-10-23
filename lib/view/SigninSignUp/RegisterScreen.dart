@@ -434,7 +434,7 @@ class _SignupState extends State<Signup> {
 
   void _registerUser1() async {
     try {
-      final param = {
+      final body = {
         "FirstName": "${_Firstname.text.trim()}",
         "LastName": "${_Lastname.text.trim()}",
         "Email": "${_email.text.trim()}",
@@ -445,7 +445,7 @@ class _SignupState extends State<Signup> {
         "Age": "${selectedAge}",
         "OnTable": "REG1"
       };
-      var result = await networkcallService.register(param);
+      var result = await networkcallService.register(body);
 
       if (result) {
         Get.to(

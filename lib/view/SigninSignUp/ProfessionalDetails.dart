@@ -436,4 +436,34 @@ class _ProDetailState extends State<ProDetail> {
       ),
     );
   }
+  
+  void sendDataToApi() async {
+     final  Registration4={
+      "Id": "1",
+      "Education": " ",
+      "Occupation": " ",
+      "Currency": " ",
+      "AnnualIncome": " ",
+      "EmployedIn": " ",
+      "CountryName": " ",
+      "State":" ",
+      "City":" ",
+      "Citizenship":" ",
+      "ResidentialSts":" ",
+      "PreferableLoc":" ",
+      "OnTable":"REG4",
+     };
+     final  Registration5={
+      "Id": "1",
+      "AboutYourself": " ",
+      "OnTable":"REG5",
+     };
+    // var result = await _api.register(Registration4);
+
+    // if (result != null) {
+    //   Get.to(
+    //     () => PersonalDetails(),
+    //   );
+    // }
+  }
 }

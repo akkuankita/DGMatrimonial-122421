@@ -35,9 +35,7 @@ class PersonalDetailsRegisterController extends GetxController {
       var apiData = await networkcallService.fetchcastSubcast();
       if (apiData != null) {
         castSubcastModel.value = apiData;
-        // listOfCountry.clear();
         listOfCastSubcast.assignAll(castSubcastModel.value.casteList!);
-        // selectedCast.value = listOfCastSubcast[0];
       }
     } catch (e) {
       if (e is CustomError) {
@@ -52,12 +50,10 @@ class PersonalDetailsRegisterController extends GetxController {
   Future fetchHobbie() async {
     try {
     hobbiesList.clear();
-      var apiData = await networkcallService.fetchcastSubcast();
+      var apiData = await networkcallService.fetchhobbies();
       if (apiData != null) {
-        // hobbiesModel.value = apiData;
-        // listOfCountry.clear();
+        hobbiesModel.value = apiData;
         hobbiesList.assignAll(hobbiesModel.value.data!);
-        // selectedCast.value = listOfCastSubcast[0];
       }
     } catch (e) {
       if (e is CustomError) {

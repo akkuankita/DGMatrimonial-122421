@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Get.to(() => PersonalDetailsRegister());
       // Get.to(() => Pricing());
       // Get.to(() => Register());
-      Get.to(() => LoginScreen());
+      Get.to(() => PersonalDetails());
       // Get.to(() => iPhone12ProMax1());
       // Get.to(() => SignInSignUp());
     });

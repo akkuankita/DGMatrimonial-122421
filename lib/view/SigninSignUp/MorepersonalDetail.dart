@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/view/SigninSignUp/ProfessionalDetails.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
@@ -260,6 +262,60 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
         ),
       ),
     );
+  }
+
+  void sendDataToApi() async {
+    try {
+      final body = {
+        "Id": " ",
+        "MaritalStatus": " ",
+        "Children": " ",
+        "HeightFt": " ",
+        "HeightInch": " ",
+        "FamilyStatus": " ",
+        "FamilyType": " ",
+        "FamilyValues": " ",
+        "Disability": " ",
+        "FamilyBackground": " ",
+        "OnTable": "REG3",
+      };
+      final Registration4 = {
+        "Id": "1",
+        "Education": " ",
+        "Occupation": " ",
+        "Currency": " ",
+        "AnnualIncome": " ",
+        "EmployedIn": " ",
+        "CountryName": " ",
+        "State": " ",
+        "City": " ",
+        "Citizenship": " ",
+        "ResidentialSts": " ",
+        "PreferableLoc": " ",
+        "OnTable": "REG4",
+      };
+      final Registration5 = {
+        "Id": "1",
+        "AboutYourself": " ",
+        "OnTable": "REG5",
+      };
+      // print(body);
+      var result = await networkcallService.register(body);
+
+      if (result) {
+        Get.to(
+          () => ProfessionalDetails(),
+        );
+      }
+    } catch (e) {
+      if (e is CustomError) {
+        if (e.isNetworkError != null && (e.isNetworkError)!) {
+          showSnack(e.customMessage);
+        } else {
+          showSnack(e.customMessage);
+        }
+      }
+    }
   }
 
   maritalStatusWidget() {

@@ -69,7 +69,7 @@ class Networkcall extends GetConnect {
     }
   }
 
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>> login <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>> register <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<bool> register(body) async {
     // var headers = {
     //   'Accept': "application/json",
@@ -103,23 +103,29 @@ class Networkcall extends GetConnect {
     }
   }
 
-// --------------------------------register2--------------------------
-  Future register2(body) async {
-    showProgress();
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>> register <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  Future<bool> register2(body) async {
+    try { showProgress();
     var response = await post(registerApi1, body);
     hideProgress();
     print('res- ${response.body}');
     final myJson = response.body;
-    if (response.statusCode == 200) {
-      if (myJson['status'] == API_SUCCESS) {
+      if (response.statusCode == 200) {
+        if (myJson['status'] == API_SUCCESS) {
         return myJson;
+        } else {
+          throw CustomError(myJson['msg']);
+        }
       } else {
-        showSnack(myJson['msg']);
-        return null;
+        throw CustomError(myJson['msg']);
       }
-    } else {
-      showSnack(myJson['msg']);
-      return null;
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
     }
   }
 
@@ -167,11 +173,10 @@ class Networkcall extends GetConnect {
     }
   }
 
-  // ----------------------------register2--------------------------------
+  // ----------------------------fetchhobbies--------------------------------
   Future<HobbiesModel> fetchhobbies() async {
     try {
       var response = await get(hobbiesApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {

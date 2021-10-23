@@ -254,26 +254,28 @@ class Networkcall extends GetConnect {
           : throw CustomError(INTERNET_ERROR);
     }
   }
+
   // ----------------------------register4--------------------------------
-  // Future<PreflocModel> fetchPrefloc() async {
-  //   try {
-  //     var response = await get(preflocApi);
-  //     print(response.body);
-  //     print('res- ${response.body}-- ');
-  //     final myJson = response.body;/
-  //       return PreflocModel.fromJson(myJson);
-  //     } else {
-  //       throw CustomError(myJson['msg']);
-  //     }
-  //   } on SocketException {
-  //     throw CustomError('No Internet connection 😑');
-  //   } catch (e) {
-  //     print(e);
-  //     e is CustomError
-  //         ? throw CustomError(e.errorMessage())
-  //         : throw CustomError(INTERNET_ERROR);
-  //   }
-  // }
+  Future<PreflocModel> fetchPrefloc() async {
+    try {
+      var response = await get(cityApi);
+      print(response.body);
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return PreflocModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
 
 //---------------------------------otp verify---------------------------
   // Future<bool> otpVerification(

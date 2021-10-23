@@ -1,7 +1,11 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/view/SigninSignUp/AboutyourSelf.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
@@ -147,7 +151,6 @@ class _ProDetailState extends State<ProDetail> {
     'ca',
   ];
   var selectedOccupationCategory;
-
   var annualIncomeCurrencyList = [
     'Airline',
     'bsf',
@@ -164,7 +167,11 @@ class _ProDetailState extends State<ProDetail> {
   @override
   void initState() {
     super.initState();
+    selectedHighestEducationCategory = highestEducationCategoryList[0];
     selectedMaritalStatusRadiogroupVal = maritalStatusList[0];
+    selectedOccupationCategory = occupationCategoryList[0];
+    selectedAnnualIncomeCurrency = annualIncomeCurrencyList[0];
+    selectedemployedIn = employedInList[0];
   }
 
   @override
@@ -436,34 +443,45 @@ class _ProDetailState extends State<ProDetail> {
       ),
     );
   }
-  
-  void sendDataToApi() async {
-     final  Registration4={
-      "Id": "1",
-      "Education": " ",
-      "Occupation": " ",
-      "Currency": " ",
-      "AnnualIncome": " ",
-      "EmployedIn": " ",
-      "CountryName": " ",
-      "State":" ",
-      "City":" ",
-      "Citizenship":" ",
-      "ResidentialSts":" ",
-      "PreferableLoc":" ",
-      "OnTable":"REG4",
-     };
-     final  Registration5={
-      "Id": "1",
-      "AboutYourself": " ",
-      "OnTable":"REG5",
-     };
-    // var result = await _api.register(Registration4);
 
-    // if (result != null) {
-    //   Get.to(
-    //     () => PersonalDetails(),
-    //   );
-    // }
+  void sendDataToApi() async {
+    try {
+      final body = {
+        "Id": "1",
+        "Education": " ",
+        "Occupation": " ",
+        "Currency": " ",
+        "AnnualIncome": " ",
+        "EmployedIn": " ",
+        "CountryName": " ",
+        "State": " ",
+        "City": " ",
+        "Citizenship": " ",
+        "ResidentialSts": " ",
+        "PreferableLoc": " ",
+        "OnTable": "REG4",
+      };
+      final Registration5 = {
+        "Id": "1",
+        "AboutYourself": " ",
+        "OnTable": "REG5",
+      };
+      // print(body);
+      var result = await networkcallService.register(body);
+      if (result) {
+        Get.to(
+          () =>  AboutyourSelf(),
+        );
+      }
+    } catch (e) {
+      if (e is CustomError) {
+        if (e.isNetworkError != null && (e.isNetworkError)!) {
+          showSnack(e.customMessage);
+        } else {
+          showSnack(e.customMessage);
+        }
+      }
+    }
   }
+
 }

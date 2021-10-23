@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/utils/error_handler.dart';
+import 'package:matrimonial/utils/sharePreference_instance.dart';
 import 'package:matrimonial/view/BottomTab/MyTabBar.dart';
+import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
 
@@ -149,7 +153,10 @@ class _AboutSelfState extends State<AboutSelf> {
                 child: DefaultButton(
                     text: "Finish",
                     press: () {
-                      Get.to(() => MyTabBar());
+                      Get.to(() => 
+                      // sendDataToApi()
+                      MyTabBar()
+                      );
                     })),
             SizedBox(height: 25.h),
           ],
@@ -157,4 +164,41 @@ class _AboutSelfState extends State<AboutSelf> {
       ),
     );
   }
+   void MyTabBar() async {
+    try {
+      var userId = sharePrefereceInstance.getuserId();
+      // if (userId != null) {
+        final body = {
+          // "Id": "$userId",
+          // "Religion": "$selectedRelegion",
+          // "Language": "$selectedMotherTongue",
+          // "DivisionName": "selectedDivision; ",
+          // "OtherCommu": "$willingToMarryFromOtherCommunities",
+          // "CasteName": "${_controller.selectedCast.casteId}",
+          // "SubCaste": "${_controller.selectedSubcast.subCasteId}",
+          // "Dosh": "$selectedDosh",
+          // "Personality": "$selectedPersonality",
+          // "EatingHabits": "$selectedEatingHabit",
+          // "Smoking": "$selectedSmokingHabit",
+          // "Drinking": "$selectedDrinkingHabit",
+          // "Hobbies": "${_controller.selectedHobbies.id}",
+          // "OnTable": "REG2",
+        };
+        // print(body);
+        var result = await networkcallService.register(body);
+        if (result) {
+          Get.to(
+            () => MoreperDetail(),
+          );
+        }
+    } catch (e) {
+      if (e is CustomError) {
+        if (e.isNetworkError != null && (e.isNetworkError)!) {
+          showSnack(e.customMessage);
+        } else {
+          showSnack(e.customMessage);
+        }
+      }
+    }
+}
 }

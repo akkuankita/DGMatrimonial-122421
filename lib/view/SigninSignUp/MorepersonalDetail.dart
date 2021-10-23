@@ -203,6 +203,18 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
   var selectedDisability;
 
   @override
+  void initState() {
+  selectedMaritalStatus = maritalStatusList[0];
+  selectedNoOfChildren = noOfChildrenList[0];
+  selectedHeightInFit =heightInFitList[0];
+  selectedHeightInInch =heightInInchList[0];
+  selectedFamilyStatus = familyTypeList[0];
+  selectedFamilyValues=familyValuesList[0];
+  selectedDisability= disabilityList[0];
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
@@ -301,7 +313,6 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
       };
       // print(body);
       var result = await networkcallService.register(body);
-
       if (result) {
         Get.to(
           () => ProfessionalDetails(),

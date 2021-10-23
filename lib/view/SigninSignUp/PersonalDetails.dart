@@ -213,12 +213,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
     selectedDivision = divisionList[0];
     selectedPersonality = personalityList[0];
     selectedDosh = doshList[0];
+    selectedEatingHabit=EatingHabitList[0];
+    selectedSmokingHabit=SmokingHabitList[0];
+    selectedDrinkingHabit=DrinkingHabitList[0];
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       initialDataFetching();
     });
     super.initState();
   }
-
   initialDataFetching() async {
     await _controller.fetchCastList();
     await _controller.fetchHobbie();

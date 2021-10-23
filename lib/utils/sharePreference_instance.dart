@@ -1,5 +1,4 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
 class SharePreferenceInstance {
   static SharedPreferences? prefs;
 
@@ -11,7 +10,6 @@ class SharePreferenceInstance {
   factory SharePreferenceInstance() {
     return sp;
   }
-
   //shared pref initialize
   init() async {
     await SharedPreferences.getInstance()

@@ -7,7 +7,7 @@ import 'package:matrimonial/utils/error_handler.dart';
 
 class PersonalDetailsRegisterController extends GetxController {
   var isLoading = true.obs;
-  
+
   var castSubcastModel = CastSubcastModel().obs;
   var listOfCastSubcast = <CasteList>[].obs;
   var listOfSubcast = <Subcastelist>[].obs;
@@ -30,7 +30,7 @@ class PersonalDetailsRegisterController extends GetxController {
   //fetchCastList -------------------------------------------
   Future fetchCastList() async {
     try {
-    listOfCastSubcast.clear();
+      listOfCastSubcast.clear();
       selectedSubcast = null;
       var apiData = await networkcallService.fetchcastSubcast();
       if (apiData != null) {
@@ -75,10 +75,10 @@ class PersonalDetailsRegisterController extends GetxController {
         }
       }
     }).toList();
-    if(subCust.isNotEmpty){
-    listOfSubcast.assignAll(subCust);
-    selectedSubcast = listOfSubcast[0];
-    }else{
+    if (subCust.isNotEmpty) {
+      listOfSubcast.assignAll(subCust);
+      selectedSubcast = listOfSubcast[0];
+    } else {
       listOfSubcast.clear();
       selectedSubcast = null;
     }

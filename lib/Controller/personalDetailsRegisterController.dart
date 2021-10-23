@@ -14,7 +14,7 @@ class PersonalDetailsRegisterController extends GetxController {
   var selectedCast;
   var selectedSubcast;
 
-  var hobbiesModel = Hobbies().obs;
+  var hobbiesModel = HobbiesModel().obs;
   var hobbiesList = <HobbieData>[].obs;
   var selectedHobbies;
 

@@ -1,11 +1,11 @@
-class Hobbies {
+class HobbiesModel {
   String? status;
   String? msg;
   List<HobbieData>? data;
 
-  Hobbies({this.status, this.msg, this.data});
+  HobbiesModel({this.status, this.msg, this.data});
 
-  Hobbies.fromJson(Map<String, dynamic> json) {
+  HobbiesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {

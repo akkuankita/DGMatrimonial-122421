@@ -1,15 +1,15 @@
-class City {
+class CityModel {
   String? status;
   String? msg;
   List<Data>? data;
 
-  City({this.status, this.msg, this.data});
+  CityModel({this.status, this.msg, this.data});
 
-  City.fromJson(Map<String, dynamic> json) {
+  CityModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data =<Data>[];
+      data = <Data>[];
       json['data'].forEach((v) {
         data!.add(new Data.fromJson(v));
       });

@@ -2,8 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:get/get_connect.dart';
+import 'package:matrimonial/model/Country.dart';
+import 'package:matrimonial/model/Prefloc.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
+import 'package:matrimonial/model/city.dart';
 import 'package:matrimonial/model/divisionModel.dart';
+import 'package:matrimonial/model/hobbies.dart';
+import 'package:matrimonial/model/state.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/utils/sharePreference_instance.dart';
@@ -162,6 +167,114 @@ class Networkcall extends GetConnect {
     }
   }
 
+  // ----------------------------register2--------------------------------
+  Future<HobbiesModel> fetchhobbies() async {
+    try {
+      var response = await get(hobbiesApi);
+      print(response.body);
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return HobbiesModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
+
+  // ----------------------------register4--------------------------------
+  Future<CountryModel> fetchCountry() async {
+    try {
+      var response = await get(countryApi);
+      print(response.body);
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return CountryModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
+
+  // ----------------------------register4--------------------------------
+  Future<StateModel> fetchState() async {
+    try {
+      var response = await get(stateApi);
+      print(response.body);
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return StateModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
+
+  // ----------------------------register4--------------------------------
+  Future<CityModel> fetchCity() async {
+    try {
+      var response = await get(cityApi);
+      print(response.body);
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return CityModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
+  // ----------------------------register4--------------------------------
+  // Future<PreflocModel> fetchPrefloc() async {
+  //   try {
+  //     var response = await get(preflocApi);
+  //     print(response.body);
+  //     print('res- ${response.body}-- ');
+  //     final myJson = response.body;/
+  //       return PreflocModel.fromJson(myJson);
+  //     } else {
+  //       throw CustomError(myJson['msg']);
+  //     }
+  //   } on SocketException {
+  //     throw CustomError('No Internet connection 😑');
+  //   } catch (e) {
+  //     print(e);
+  //     e is CustomError
+  //         ? throw CustomError(e.errorMessage())
+  //         : throw CustomError(INTERNET_ERROR);
+  //   }
+  // }
+
 //---------------------------------otp verify---------------------------
   // Future<bool> otpVerification(
   //     {required String email,
@@ -184,7 +297,6 @@ class Networkcall extends GetConnect {
   //   }
   //   return false;
   // }
-
 }
 
 Networkcall networkcallService = Networkcall();

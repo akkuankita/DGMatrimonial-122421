@@ -1,7 +1,7 @@
 class DivisionModel {
   String? status;
   String? msg;
-  List<Data>? data;
+  List<DivisionData>? data;
 
   DivisionModel({this.status, this.msg, this.data});
 
@@ -9,9 +9,9 @@ class DivisionModel {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <DivisionData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new DivisionData.fromJson(v));
       });
     }
   }
@@ -27,13 +27,13 @@ class DivisionModel {
   }
 }
 
-class Data {
+class DivisionData {
   int? id;
   String? division;
 
-  Data({this.id, this.division});
+  DivisionData({this.id, this.division});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DivisionData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     division = json['Division'];
   }
@@ -45,5 +45,3 @@ class Data {
     return data;
   }
 }
-
-

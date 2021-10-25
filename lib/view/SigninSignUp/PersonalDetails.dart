@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/Controller/personalDetailsRegisterController.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
+import 'package:matrimonial/model/divisionModel.dart';
 import 'package:matrimonial/model/hobbies.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
@@ -157,13 +158,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
     'Daughter',
   ];
   var selectedMotherTongue;
-
-  var divisionList = [
-    'Myself',
-    'Son',
-    'Daughter',
-  ];
-  var selectedDivision;
   var personalityList = [
     'Myself',
     'Son',
@@ -210,22 +204,26 @@ class _PersonalInfoState extends State<PersonalInfo> {
   void initState() {
     selectedRelegion = relegionList[0];
     selectedMotherTongue = motherTongueList[0];
-    selectedDivision = divisionList[0];
+
     selectedPersonality = personalityList[0];
     selectedDosh = doshList[0];
-    selectedEatingHabit=EatingHabitList[0];
-    selectedSmokingHabit=SmokingHabitList[0];
-    selectedDrinkingHabit=DrinkingHabitList[0];
+    selectedEatingHabit = EatingHabitList[0];
+    selectedSmokingHabit = SmokingHabitList[0];
+    selectedDrinkingHabit = DrinkingHabitList[0];
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       initialDataFetching();
     });
     super.initState();
   }
+
   initialDataFetching() async {
     await _controller.fetchCastList();
     await _controller.fetchHobbie();
     _controller.selectedCast = _controller.listOfCastSubcast[0];
     _controller.selectedHobbies = _controller.hobbiesList[0];
+
+    await _controller.fetchDivision();
+    _controller.selectedDivision = _controller.divisionList[0];
     setState(() {});
   }
 
@@ -297,12 +295,13 @@ class _PersonalInfoState extends State<PersonalInfo> {
       // if (userId != null) {
       if (_controller.selectedCast.casteId != null &&
           _controller.selectedSubcast.subCasteId != null &&
-          _controller.selectedHobbies.id != null) {
+          _controller.selectedHobbies.id != null &&
+          _controller.selectedDivision.id != null) {
         final body = {
           "Id": "$userId",
           "Religion": "$selectedRelegion",
           "Language": "$selectedMotherTongue",
-          "DivisionName": "selectedDivision; ",
+          "DivisionName": "${_controller.selectedDivision.id}",
           "OtherCommu": "$willingToMarryFromOtherCommunities",
           "CasteName": "${_controller.selectedCast.casteId}",
           "SubCaste": "${_controller.selectedSubcast.subCasteId}",
@@ -421,20 +420,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
               // borderSide:  ,
             ),
           ),
-          value: selectedDivision,
+          value: _controller.selectedDivision,
           isExpanded: true,
           onChanged: (value) {
-            setState(() {
-              selectedDivision = value as String;
-            });
+            _controller.changeSelectedDivision(value as DivisionData);
+            setState(() {});
           },
-          items: divisionList.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
+          items: _controller.divisionList
+              .map<DropdownMenuItem<DivisionData>>((DivisionData value) {
+            return DropdownMenuItem(
               value: value,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: customText(
-                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+                    value.division!, Color(0xFF707070), 14.sp, FontWeight.w400),
               ),
             );
           }).toList(),

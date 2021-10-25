@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
+import 'package:matrimonial/model/divisionModel.dart';
 import 'package:matrimonial/model/hobbies.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
@@ -18,6 +19,9 @@ class PersonalDetailsRegisterController extends GetxController {
   var hobbiesList = <HobbieData>[].obs;
   var selectedHobbies;
 
+  var divisionModel = DivisionModel().obs;
+  var divisionList = <DivisionData>[].obs;
+  var selectedDivision;
   @override
   void onInit() {
     super.onInit();
@@ -49,7 +53,7 @@ class PersonalDetailsRegisterController extends GetxController {
   //fetchHobbie -------------------------------------------
   Future fetchHobbie() async {
     try {
-    hobbiesList.clear();
+      hobbiesList.clear();
       var apiData = await networkcallService.fetchhobbies();
       if (apiData != null) {
         hobbiesModel.value = apiData;
@@ -59,6 +63,24 @@ class PersonalDetailsRegisterController extends GetxController {
       if (e is CustomError) {
         print(e);
         isLoading.value = false;
+        showToast(e.customMessage, red);
+      }
+    }
+  }
+
+  //fetchDivision -------------------------------------------
+  Future fetchDivision() async {
+    try {
+      divisionList.clear();
+      var apiData = await networkcallService.fetchdivision();
+      if (apiData != null) {
+        divisionModel.value = apiData;
+        divisionList.assignAll(divisionModel.value.data!);
+      }
+    } catch (e) {
+      if (e is CustomError) {
+        print(e);
+        // isLoading.value = false;
         showToast(e.customMessage, red);
       }
     }
@@ -89,6 +111,11 @@ class PersonalDetailsRegisterController extends GetxController {
     var cast = value;
     selectedCast = value;
     fetchSubcastList(cast.casteId!);
+  }
+
+  //fetchCountryList-------------------------------------------
+  changeSelectedDivision(value) async {
+    selectedDivision = value;
   }
 
 // /////fetchStateList------------------------------------------------------------

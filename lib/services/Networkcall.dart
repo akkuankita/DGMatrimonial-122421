@@ -105,14 +105,15 @@ class Networkcall extends GetConnect {
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>> register <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<bool> register2(body) async {
-    try { showProgress();
-    var response = await post(registerApi1, body);
-    hideProgress();
-    print('res- ${response.body}');
-    final myJson = response.body;
+    try {
+      showProgress();
+      var response = await post(registerApi1, body);
+      hideProgress();
+      print('res- ${response.body}');
+      final myJson = response.body;
       if (response.statusCode == 200) {
         if (myJson['status'] == API_SUCCESS) {
-        return myJson;
+          return myJson;
         } else {
           throw CustomError(myJson['msg']);
         }

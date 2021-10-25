@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 

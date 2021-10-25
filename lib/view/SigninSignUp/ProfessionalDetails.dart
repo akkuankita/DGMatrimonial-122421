@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -412,7 +411,7 @@ class _ProDetailState extends State<ProDetail> {
                       DropdownMenuItem(
                           child: Text('Permanent Status'), value: 'A'),
                       DropdownMenuItem(
-                          child: Text('  Permanent Status'), value: 'B'),
+                          child: Text('Permanent Status'), value: 'B'),
                       DropdownMenuItem(
                           child: Text('Permanent Status'), value: 'C')
                     ]),
@@ -463,7 +462,7 @@ class _ProDetailState extends State<ProDetail> {
       var result = await networkcallService.register(body: body, registerNo: 4);
       if (result) {
         Get.to(
-          () =>  AboutyourSelf(),
+          () => AboutyourSelf(),
         );
       }
     } catch (e) {
@@ -476,5 +475,4 @@ class _ProDetailState extends State<ProDetail> {
       }
     }
   }
-
 }

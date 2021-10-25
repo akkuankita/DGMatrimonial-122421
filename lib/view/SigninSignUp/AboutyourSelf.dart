@@ -20,37 +20,42 @@ class AboutyourSelf extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
           title: customText("Register", white, 16.sp, FontWeight.w700),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  height: 1.sh,
-                  width: 1.sw,
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 1.sw,
-                        height: 120.h,
-                        alignment: Alignment.topCenter,
-                        padding: EdgeInsets.symmetric(vertical: 22.h),
-                        decoration: BoxDecoration(
-                          color: kThirdColor,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SingleChildScrollView(
+                  child: Container(
+                    height: 1.sh,
+                    width: 1.sw,
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 1.sw,
+                          height: 120.h,
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.symmetric(vertical: 22.h),
+                          decoration: BoxDecoration(
+                            color: kThirdColor,
+                          ),
+                          child: Column(
+                            children: [
+                              customText("Get started with your profile", white,
+                                  20.sp, FontWeight.w700),
+                            ],
+                          ),
                         ),
-                        child: Column(
-                          children: [
-                            customText("Get started with your profile", white,
-                                20.sp, FontWeight.w700),
-                          ],
-                        ),
-                      ),
-                      PartOne(),
-                    ],
+                        PartOne(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -126,6 +131,7 @@ class AboutSelf extends StatefulWidget {
 }
 
 class _AboutSelfState extends State<AboutSelf> {
+  final _AboutyourselfController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -145,7 +151,7 @@ class _AboutSelfState extends State<AboutSelf> {
             SizedBox(height: 5.h),
             TextFormField(
                 maxLines: 5,
-                decoration: myInputDecoration(hintText: 'E-mail Address')),
+                decoration: myInputDecoration(hintText: 'About yourself')),
             SizedBox(height: 35.h),
             SizedBox(
                 width: 1.sw,
@@ -153,10 +159,9 @@ class _AboutSelfState extends State<AboutSelf> {
                 child: DefaultButton(
                     text: "Finish",
                     press: () {
-                      Get.to(() => 
-                      // sendDataToApi()
-                      MyTabBar()
-                      );
+                      Get.to(() =>
+                          // sendDataToApi()
+                          MyTabBar());
                     })),
             SizedBox(height: 25.h),
           ],
@@ -164,22 +169,23 @@ class _AboutSelfState extends State<AboutSelf> {
       ),
     );
   }
-   void MyTabBar() async {
+
+  void MyTabBar() async {
     try {
       var userId = sharePrefereceInstance.getuserId();
       // if (userId != null) {
-        final body = {
+      final body = {
         "Id": "1",
-        "AboutYourself": " ",
+        "AboutYourself": "${_AboutyourselfController.text}",
         "OnTable": "REG5",
-        };
-        // print(body);
-        var result = await networkcallService.register(body: body, registerNo: 5);
-        if (result) {
-          Get.to(
-            () => MoreperDetail(),
-          );
-        }
+      };
+      // print(body);
+      var result = await networkcallService.register(body: body, registerNo: 5);
+      if (result) {
+        Get.to(
+          () => MyTabBar(),
+        );
+      }
     } catch (e) {
       if (e is CustomError) {
         if (e.isNetworkError != null && (e.isNetworkError)!) {
@@ -189,5 +195,5 @@ class _AboutSelfState extends State<AboutSelf> {
         }
       }
     }
-}
+  }
 }

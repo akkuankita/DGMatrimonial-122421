@@ -315,7 +315,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           "OnTable": "REG2",
         };
         // print(body);
-        var result = await networkcallService.register(body);
+        var result = await networkcallService.register(body: body, registerNo: 2);
         if (result) {
           Get.to(
             () => MoreperDetail(),

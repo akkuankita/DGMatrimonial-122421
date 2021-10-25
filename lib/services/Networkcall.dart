@@ -70,11 +70,7 @@ class Networkcall extends GetConnect {
   }
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>> register <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  Future<bool> register(body) async {
-    // var headers = {
-    //   'Accept': "application/json",
-    // };
-    // print(body);
+  Future<bool> register({required body,required int registerNo}) async {
     showProgress();
     try {
       var response = await post(registerApi1, body);
@@ -85,7 +81,10 @@ class Networkcall extends GetConnect {
       if (response.statusCode == 200) {
         if (myJson['status'] == API_SUCCESS) {
           showSnack(myJson['msg']);
+          if(registerNo == 1){
           sharePrefereceInstance.setuserId(myJson['data'][0]['Id']);
+
+          }
           return true;
         } else {
           throw CustomError(myJson['msg']);
@@ -102,34 +101,7 @@ class Networkcall extends GetConnect {
           : throw CustomError(INTERNET_ERROR);
     }
   }
-
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>> register <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  Future<bool> register2(body) async {
-    try { showProgress();
-    var response = await post(registerApi1, body);
-    hideProgress();
-    print('res- ${response.body}');
-    final myJson = response.body;
-      if (response.statusCode == 200) {
-        if (myJson['status'] == API_SUCCESS) {
-        return myJson;
-        } else {
-          throw CustomError(myJson['msg']);
-        }
-      } else {
-        throw CustomError(myJson['msg']);
-      }
-    } on SocketException {
-      throw CustomError('No Internet connection 😑');
-    } catch (e) {
-      print(e);
-      e is CustomError
-          ? throw CustomError(e.errorMessage())
-          : throw CustomError(INTERNET_ERROR);
-    }
-  }
-
-// --------------------------------register2--------------------------
+// --------------------------------fetchcastSubcast--------------------------
   Future<CastSubcastModel> fetchcastSubcast() async {
     try {
       var response = await get(casteSubCasteApi);
@@ -151,7 +123,7 @@ class Networkcall extends GetConnect {
     }
   }
 
-  // ----------------------------register2--------------------------------
+  // ----------------------------fetchdivision--------------------------------
   Future<DivisionModel> fetchdivision() async {
     try {
       var response = await get(divisionApi);

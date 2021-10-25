@@ -445,7 +445,7 @@ class _SignupState extends State<Signup> {
         "Age": "${selectedAge}",
         "OnTable": "REG1"
       };
-      var result = await networkcallService.register(body);
+      var result = await networkcallService.register(body: body, registerNo: 1);
 
       if (result) {
         Get.to(

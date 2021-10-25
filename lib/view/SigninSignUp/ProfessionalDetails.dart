@@ -460,13 +460,7 @@ class _ProDetailState extends State<ProDetail> {
         "PreferableLoc": " ",
         "OnTable": "REG4",
       };
-      final Registration5 = {
-        "Id": "1",
-        "AboutYourself": " ",
-        "OnTable": "REG5",
-      };
-      // print(body);
-      var result = await networkcallService.register(body);
+      var result = await networkcallService.register(body: body, registerNo: 4);
       if (result) {
         Get.to(
           () =>  AboutyourSelf(),

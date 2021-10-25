@@ -169,23 +169,12 @@ class _AboutSelfState extends State<AboutSelf> {
       var userId = sharePrefereceInstance.getuserId();
       // if (userId != null) {
         final body = {
-          // "Id": "$userId",
-          // "Religion": "$selectedRelegion",
-          // "Language": "$selectedMotherTongue",
-          // "DivisionName": "selectedDivision; ",
-          // "OtherCommu": "$willingToMarryFromOtherCommunities",
-          // "CasteName": "${_controller.selectedCast.casteId}",
-          // "SubCaste": "${_controller.selectedSubcast.subCasteId}",
-          // "Dosh": "$selectedDosh",
-          // "Personality": "$selectedPersonality",
-          // "EatingHabits": "$selectedEatingHabit",
-          // "Smoking": "$selectedSmokingHabit",
-          // "Drinking": "$selectedDrinkingHabit",
-          // "Hobbies": "${_controller.selectedHobbies.id}",
-          // "OnTable": "REG2",
+        "Id": "1",
+        "AboutYourself": " ",
+        "OnTable": "REG5",
         };
         // print(body);
-        var result = await networkcallService.register(body);
+        var result = await networkcallService.register(body: body, registerNo: 5);
         if (result) {
           Get.to(
             () => MoreperDetail(),

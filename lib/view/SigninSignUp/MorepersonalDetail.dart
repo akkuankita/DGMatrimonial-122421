@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
+import 'package:matrimonial/utils/sharePreference_instance.dart';
 import 'package:matrimonial/view/SigninSignUp/ProfessionalDetails.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
@@ -204,13 +205,14 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
 
   @override
   void initState() {
-  selectedMaritalStatus = maritalStatusList[0];
-  selectedNoOfChildren = noOfChildrenList[0];
-  selectedHeightInFit =heightInFitList[0];
-  selectedHeightInInch =heightInInchList[0];
-  selectedFamilyStatus = familyTypeList[0];
-  selectedFamilyValues=familyValuesList[0];
-  selectedDisability= disabilityList[0];
+    selectedMaritalStatus = maritalStatusList[0];
+    selectedNoOfChildren = noOfChildrenList[0];
+    selectedHeightInFit = heightInFitList[0];
+    selectedHeightInInch = heightInInchList[0];
+    selectedFamilyStatus = familyStatusList[0];
+    selectedFamilyType = familyTypeList[0];
+    selectedFamilyValues = familyValuesList[0];
+    selectedDisability = disabilityList[0];
     super.initState();
   }
 
@@ -278,17 +280,18 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
 
   void sendDataToApi() async {
     try {
+      var userId = sharePrefereceInstance.getuserId();
       final body = {
-        "Id": " ",
-        "MaritalStatus": " ",
-        "Children": " ",
-        "HeightFt": " ",
-        "HeightInch": " ",
-        "FamilyStatus": " ",
-        "FamilyType": " ",
-        "FamilyValues": " ",
-        "Disability": " ",
-        "FamilyBackground": " ",
+        "Id": "$userId",
+        "MaritalStatus": "$userId",
+        "Children": "$userId",
+        "HeightFt": "$userId",
+        "HeightInch": "$userId",
+        "FamilyStatus": "$userId",
+        "FamilyType": "$userId",
+        "FamilyValues": "$userId",
+        "Disability": "$userId",
+        "FamilyBackground": "$userId",
         "OnTable": "REG3",
       };
       final Registration4 = {
@@ -312,7 +315,7 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
         "OnTable": "REG5",
       };
       // print(body);
-      var result = await networkcallService.register(body);
+      var result = await networkcallService.register(body: body, registerNo: 3);
       if (result) {
         Get.to(
           () => ProfessionalDetails(),

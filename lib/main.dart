@@ -9,6 +9,7 @@ import 'package:matrimonial/utils/sharePreference_instance.dart';
 import 'package:matrimonial/view/SigninSignUp/LoginScreen.dart';
 import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
 import 'package:matrimonial/view/SigninSignUp/PersonalDetails.dart';
+import 'package:matrimonial/view/SigninSignUp/ProfessionalDetails.dart';
 import 'package:matrimonial/view/SigninSignUp/RegisterScreen.dart';
 import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
 
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
         if (applicationState == ApplicationState.LoggedIn) {
           return RegisterScreen();
         } else if (applicationState == ApplicationState.LoggedOut) {
-          return RegisterScreen();
+          return ProfessionalDetails();
         } else {
           return returnWidget1;
         }

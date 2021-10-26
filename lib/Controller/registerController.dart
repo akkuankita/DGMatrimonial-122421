@@ -134,13 +134,13 @@ class RegisterController extends GetxController {
   fetchCountryList() async {
     try {
       listOfCountry.clear();
-      selectedSubcast = null;
+      listOfState.clear();
+      listOfCity.clear();
       countryModel.value = await networkcallService.fetchCountry();
       stateModel.value = await networkcallService.fetchState();
       cityModel.value = await networkcallService.fetchCity();
 
       listOfCountry.assignAll(countryModel.value.data!);
-      listOfCity.assignAll(cityModel.value.data!);
     } catch (e) {
       if (e is CustomError) {
         print(e);
@@ -149,19 +149,32 @@ class RegisterController extends GetxController {
     }
   }
 
-  fetchStateList() async {
-    listOfState.assignAll(stateModel.value.data!);
+  fetchStateList(countryId) async {
+    listOfState.clear();
+    listOfCity.clear();
+    var tempCountryList = <StateData>[];
+    var sc = stateModel.value.data!.map((e) {
+      if (e.cID == countryId) {
+        tempCountryList.add(e);
+      }
+    }).toList();
+    if (tempCountryList.isNotEmpty) {
+      listOfState.assignAll(tempCountryList);
+      selectedState = listOfState[0];
+    }
   }
 
-//   setDefaultCountry(newValue) {
-//     selectedCountry = newValue;
-//   }
-
-//   setDefaultState(newValue) {
-//     selectedState = newValue;
-//   }
-
-//   setDefaultCity(newValue) {
-//     selectedCity = newValue;
-//   }
+  fetchCityList(stateId) async {
+    listOfCity.clear();
+    var tempCityList = <CityData>[];
+    var sc = cityModel.value.data!.map((e) {
+      if (e.sID == stateId) {
+        tempCityList.add(e);
+      }
+    }).toList();
+    if (tempCityList.isNotEmpty) {
+      listOfCity.assignAll(tempCityList);
+      selectedCity = listOfCity[0];
+    } 
+  }
 }

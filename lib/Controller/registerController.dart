@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
+import 'package:matrimonial/model/Country.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
+import 'package:matrimonial/model/city.dart';
 import 'package:matrimonial/model/divisionModel.dart';
 import 'package:matrimonial/model/hobbies.dart';
+import 'package:matrimonial/model/state.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
 
-class PersonalDetailsRegisterController extends GetxController {
-  var isLoading = true.obs;
+class RegisterController extends GetxController {
+  var isLoading = false.obs;
 
   var castSubcastModel = CastSubcastModel().obs;
   var listOfCastSubcast = <CasteList>[].obs;
@@ -22,6 +25,23 @@ class PersonalDetailsRegisterController extends GetxController {
   var divisionModel = DivisionModel().obs;
   var divisionList = <DivisionData>[].obs;
   var selectedDivision;
+
+  //country
+  var countryModel = CountryModel().obs;
+  var listOfCountry = <CountryData>[].obs;
+  var selectedCountry;
+  var initialCountry = 'select your country *'.obs;
+  //state
+  var stateModel = StateModel().obs;
+  var listOfState = <StateData>[].obs;
+  var selectedState;
+  var initialState = 'select your state *'.obs;
+  //city
+  var cityModel = CityModel().obs;
+  var listOfCity = <CityData>[].obs;
+  var selectedCity;
+  var initialcity = 'select your city *'.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -37,14 +57,11 @@ class PersonalDetailsRegisterController extends GetxController {
       listOfCastSubcast.clear();
       selectedSubcast = null;
       var apiData = await networkcallService.fetchcastSubcast();
-      if (apiData != null) {
-        castSubcastModel.value = apiData;
-        listOfCastSubcast.assignAll(castSubcastModel.value.casteList!);
-      }
+      castSubcastModel.value = apiData;
+      listOfCastSubcast.assignAll(castSubcastModel.value.casteList!);
     } catch (e) {
       if (e is CustomError) {
         print(e);
-        isLoading.value = false;
         showToast(e.customMessage, red);
       }
     }
@@ -55,14 +72,12 @@ class PersonalDetailsRegisterController extends GetxController {
     try {
       hobbiesList.clear();
       var apiData = await networkcallService.fetchhobbies();
-      if (apiData != null) {
-        hobbiesModel.value = apiData;
-        hobbiesList.assignAll(hobbiesModel.value.data!);
-      }
+
+      hobbiesModel.value = apiData;
+      hobbiesList.assignAll(hobbiesModel.value.data!);
     } catch (e) {
       if (e is CustomError) {
         print(e);
-        isLoading.value = false;
         showToast(e.customMessage, red);
       }
     }
@@ -73,20 +88,17 @@ class PersonalDetailsRegisterController extends GetxController {
     try {
       divisionList.clear();
       var apiData = await networkcallService.fetchdivision();
-      if (apiData != null) {
-        divisionModel.value = apiData;
-        divisionList.assignAll(divisionModel.value.data!);
-      }
+      divisionModel.value = apiData;
+      divisionList.assignAll(divisionModel.value.data!);
     } catch (e) {
       if (e is CustomError) {
         print(e);
-        // isLoading.value = false;
         showToast(e.customMessage, red);
       }
     }
   }
 
-  //fetchCountryList-------------------------------------------
+  //fetchSubcastList-------------------------------------------
   fetchSubcastList(String castId) async {
     List<Subcastelist> subCust = [];
     var sc = castSubcastModel.value.casteList!.map((e) {
@@ -106,54 +118,40 @@ class PersonalDetailsRegisterController extends GetxController {
     }
   }
 
-  //fetchCountryList-------------------------------------------
+  //changeSelectedCast-------------------------------------------
   changeSelectedCast(value) async {
     var cast = value;
     selectedCast = value;
     fetchSubcastList(cast.casteId!);
   }
 
-  //fetchCountryList-------------------------------------------
+  //changeSelectedDivision-------------------------------------------
   changeSelectedDivision(value) async {
     selectedDivision = value;
   }
 
-// /////fetchStateList------------------------------------------------------------
-//   fetchStateList(countryId) async {
-//     try {
-//       selectedState = null;
-//       selectedCity = null;
-//       var listOfStatefromApi = await Networkcall().fetchStateList(countryId);
-//       listOfState.assignAll(listOfStatefromApi.data);
-//     } catch (e) {
-//       print(e);
-//       isLoading.value = false;
-//       if (e.isNetworkError != null && e.isNetworkError) {
-//         showToast(e.customMessage, red);
-//       } else {
-//         showToast(e.customMessage, red);
-//       }
-//     }
-//   }
+// fetchCountryList------------------------------------------------------------
+  fetchCountryList() async {
+    try {
+      listOfCountry.clear();
+      selectedSubcast = null;
+      countryModel.value = await networkcallService.fetchCountry();
+      stateModel.value = await networkcallService.fetchState();
+      cityModel.value = await networkcallService.fetchCity();
 
-// ////fetchCityList-------------------------------------------------------------
-//   fetchCityList(cityId) async {
-//     selectedCity = null;
-//     try {
-//       isLoading.value = true;
-//       var listOfCityfromApi = await Networkcall().fetchCityList(cityId);
-//       listOfCity.assignAll(listOfCityfromApi.data);
-//       listOfCity.refresh();
-//     } catch (e) {
-//       print(e);
-//       isLoading.value = false;
-//       if (e.isNetworkError != null && e.isNetworkError) {
-//         showToast(e.customMessage, red);
-//       } else {
-//         showToast(e.customMessage, red);
-//       }
-//     }
-//   }
+      listOfCountry.assignAll(countryModel.value.data!);
+      listOfCity.assignAll(cityModel.value.data!);
+    } catch (e) {
+      if (e is CustomError) {
+        print(e);
+        showToast(e.customMessage, red);
+      }
+    }
+  }
+
+  fetchStateList() async {
+    listOfState.assignAll(stateModel.value.data!);
+  }
 
 //   setDefaultCountry(newValue) {
 //     selectedCountry = newValue;

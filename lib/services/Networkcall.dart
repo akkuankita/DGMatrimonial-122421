@@ -83,7 +83,6 @@ class Networkcall extends GetConnect {
           showSnack(myJson['msg']);
           if(registerNo == 1){
           sharePrefereceInstance.setuserId(myJson['data'][0]['Id']);
-
           }
           return true;
         } else {

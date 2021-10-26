@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/Controller/registerController.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
@@ -162,6 +163,7 @@ class _ProDetailState extends State<ProDetail> {
     'Work Permit',
   ];
   var selectedemployedIn;
+  RegisterController _controller = Get.put(RegisterController());
 
   @override
   void initState() {
@@ -171,6 +173,13 @@ class _ProDetailState extends State<ProDetail> {
     selectedOccupationCategory = occupationCategoryList[0];
     selectedAnnualIncomeCurrency = annualIncomeCurrencyList[0];
     selectedemployedIn = employedInList[0];
+    initialDataFetching();
+  }
+
+  initialDataFetching() async {
+    await _controller.fetchCountryList();
+    _controller.selectedCountry = _controller.selectedCountry[0];
+    setState(() {});
   }
 
   @override

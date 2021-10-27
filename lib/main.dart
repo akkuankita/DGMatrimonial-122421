@@ -15,7 +15,6 @@ import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: lightBlackBoldColor));
   SystemChrome.setPreferredOrientations(
@@ -68,6 +67,7 @@ class MyApp extends StatelessWidget {
           return RegisterScreen();
         } else if (applicationState == ApplicationState.LoggedOut) {
           return ProfessionalDetails();
+          // return LoginScreen();
         } else {
           return returnWidget1;
         }

@@ -64,7 +64,6 @@ class PartOne extends StatelessWidget {
   const PartOne({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -131,9 +130,13 @@ String _selectedValue = 'A';
 
 class _ProDetailState extends State<ProDetail> {
   var highestEducationCategoryList = [
-    'Aviation Degree',
-    'software Engeneer',
-    'BCA',
+    "No Answer",
+    "High school",
+    "College",
+    "University",
+    "Bachelors degree",
+    "Master degree",
+    "PhD/Post Doctoral",
   ];
   var selectedHighestEducationCategory;
 
@@ -147,24 +150,22 @@ class _ProDetailState extends State<ProDetail> {
   ];
   var selectedMaritalStatusRadiogroupVal;
 
-  var occupationCategoryList = [
-    'Airline',
-    'bsf',
-    'ca',
-  ];
+  var occupationCategoryList = ["Yes", "No"];
   var selectedOccupationCategory;
-  var annualIncomeCurrencyList = [
-    'Airline',
-    'bsf',
-    'ca',
-  ];
+  var annualIncomeCurrencyList = ["INR", "USD"];
   var selectedAnnualIncomeCurrency;
 
   var employedInList = [
-    'Permanent Resident',
-    'Work Permit',
+    "Government/PSU",
+    "Private",
+    " Business",
+    "Defence",
+    "Self Employed",
+    "Not Working"
   ];
   var selectedemployedIn;
+  var residentialList = ["Permanent", "Work Permit", "Citizen", "Student visa"];
+  var selectedresidential;
   RegisterController _controller = Get.put(RegisterController());
 
   @override
@@ -187,220 +188,57 @@ class _ProDetailState extends State<ProDetail> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Form(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 40.h),
-            customText(
-                "Professional Details", kThirdColor, 16.sp, FontWeight.w700),
-            SizedBox(height: 25.h),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customText("Highest Education", Color(0xFF707070), 14.sp,
-                    FontWeight.w400),
-                SizedBox(height: 8.h),
-                DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        // borderSide:  ,
-                      ),
-                    ),
-                    value: _selectedValue,
-                    isExpanded: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as String;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                          child: Text('  Highest Education'), value: 'A'),
-                      DropdownMenuItem(
-                          child: Text('Highest Education'), value: 'B'),
-                      DropdownMenuItem(
-                          child: Text('  Highest Education'), value: 'C')
-                    ]),
-                SizedBox(height: 25.h),
-              ],
+        child: Form(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SizedBox(height: 40.h),
+      customText("Professional Details", kThirdColor, 16.sp, FontWeight.w700),
+      SizedBox(height: 25.h),
+      highestEducationDropDown(),
+      SizedBox(height: 8.h),
+      occupationDropDown(),
+      annualIncomeDropDown(),
+      employedInDropDown(),
+      countryDropDown(),
+      stateDropDown(),
+      cityDropDown(),
+      residentialStatus(),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 8.h),
+          customText("Citizenship", Colors.black, 15, FontWeight.w300),
+          SizedBox(height: 5),
+          TextFormField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.r),
+                // borderSide:  ,
+              ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customText(
-                    "Employed In", Color(0xFF707070), 14.sp, FontWeight.w400),
-                SizedBox(height: 8.h),
-                DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        // borderSide:  ,
-                      ),
-                    ),
-                    value: _selectedValue,
-                    isExpanded: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as String;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                          child: Text('Government/PSU'), value: 'A'),
-                      DropdownMenuItem(
-                          child: Text('Government/PSU'), value: 'B'),
-                      DropdownMenuItem(
-                          child: Text('Government/PSU'), value: 'C')
-                    ]),
-                SizedBox(height: 25.h),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customText(
-                    "Annual Income", Color(0xFF707070), 14.sp, FontWeight.w400),
-                SizedBox(height: 8.h),
-                DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        // borderSide:  ,
-                      ),
-                    ),
-                    value: _selectedValue,
-                    isExpanded: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as String;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(child: Text('INR'), value: 'A'),
-                      DropdownMenuItem(child: Text('INR'), value: 'B'),
-                      DropdownMenuItem(child: Text('INR'), value: 'C')
-                    ]),
-                SizedBox(height: 25.h),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customText("  Work Location", Color(0xFF707070), 14.sp,
-                    FontWeight.w400),
-                SizedBox(height: 8.h),
-                DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        // borderSide:  ,
-                      ),
-                    ),
-                    value: _selectedValue,
-                    isExpanded: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as String;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                          child: Text('United States'), value: 'A'),
-                      DropdownMenuItem(
-                          child: Text('United States'), value: 'B'),
-                      DropdownMenuItem(child: Text('United States'), value: 'C')
-                    ]),
-                SizedBox(height: 25.h),
-              ],
-            ),
-            countryDropDown(),
-            stateDropDown(),
-            cityDropDown(),
-           
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customText(
-                    "  Citizenship", Color(0xFF707070), 14.sp, FontWeight.w400),
-                SizedBox(height: 8.h),
-                DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        // borderSide:  ,
-                      ),
-                    ),
-                    value: _selectedValue,
-                    isExpanded: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as String;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(child: Text('Citizenship'), value: 'A'),
-                      DropdownMenuItem(
-                          child: Text('  Citizenship'), value: 'B'),
-                      DropdownMenuItem(child: Text('Citizenship'), value: 'C')
-                    ]),
-                SizedBox(height: 25.h),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customText("  Resident Status", Color(0xFF707070), 14.sp,
-                    FontWeight.w400),
-                SizedBox(height: 8.h),
-                DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        // borderSide:  ,
-                      ),
-                    ),
-                    value: _selectedValue,
-                    isExpanded: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as String;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                          child: Text('Permanent Status'), value: 'A'),
-                      DropdownMenuItem(
-                          child: Text('Permanent Status'), value: 'B'),
-                      DropdownMenuItem(
-                          child: Text('Permanent Status'), value: 'C')
-                    ]),
-                SizedBox(height: 25.h),
-              ],
-            ),
-            SizedBox(
-                width: 1.sw,
-                height: 50.h,
-                child: GreyButton(
-                    text: "Back",
-                    press: () {
-                      Get.back();
-                    })),
-            SizedBox(height: 25.h),
-            SizedBox(
-                width: 1.sw,
-                height: 50.h,
-                child: DefaultButton(
-                    text: "Next",
-                    press: () {
-                      Get.to(() => AboutyourSelf());
-                    })),
-            SizedBox(height: 25.h),
-          ],
-        ),
-      ),
-    );
+          ),
+          SizedBox(height: 25.h),
+          SizedBox(
+              width: 1.sw,
+              height: 50.h,
+              child: GreyButton(
+                  text: "Back",
+                  press: () {
+                    Get.back();
+                  })),
+          SizedBox(height: 25.h),
+          SizedBox(
+              width: 1.sw,
+              height: 50.h,
+              child: DefaultButton(
+                  text: "Next",
+                  press: () {
+                    Get.to(() => AboutyourSelf());
+                  })),
+          SizedBox(height: 25.h),
+        ],
+      )
+    ])));
   }
 
   void sendDataToApi() async {
@@ -437,7 +275,6 @@ class _ProDetailState extends State<ProDetail> {
     }
   }
 
-  
   countryDropDown() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -448,7 +285,7 @@ class _ProDetailState extends State<ProDetail> {
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
-              // borderSide:  ,
+              // borderSide: ,
             ),
           ),
           value: _controller.selectedCountry,
@@ -465,8 +302,8 @@ class _ProDetailState extends State<ProDetail> {
               value: value,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: customText(value.country!, Color(0xFF707070), 14.sp,
-                    FontWeight.w400),
+                child: customText(
+                    value.country!, Color(0xFF707070), 14.sp, FontWeight.w400),
               ),
             );
           }).toList(),
@@ -475,7 +312,7 @@ class _ProDetailState extends State<ProDetail> {
       ],
     );
   }
-  
+
   stateDropDown() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -503,8 +340,8 @@ class _ProDetailState extends State<ProDetail> {
               value: value,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: customText(value.state!, Color(0xFF707070), 14.sp,
-                    FontWeight.w400),
+                child: customText(
+                    value.state!, Color(0xFF707070), 14.sp, FontWeight.w400),
               ),
             );
           }).toList(),
@@ -513,7 +350,7 @@ class _ProDetailState extends State<ProDetail> {
       ],
     );
   }
-  
+
   cityDropDown() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -540,8 +377,8 @@ class _ProDetailState extends State<ProDetail> {
               value: value,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: customText(value.city!, Color(0xFF707070), 14.sp,
-                    FontWeight.w400),
+                child: customText(
+                    value.city!, Color(0xFF707070), 14.sp, FontWeight.w400),
               ),
             );
           }).toList(),
@@ -551,5 +388,188 @@ class _ProDetailState extends State<ProDetail> {
     );
   }
 
+  highestEducationDropDown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customText(
+            "HighestEducation", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: selectedHighestEducationCategory,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              selectedHighestEducationCategory = value as String;
+            });
+          },
+          items: highestEducationCategoryList
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(
+                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+              ),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 25.h),
+      ],
+    );
+  }
 
+  occupationDropDown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customText(" Occupation", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: selectedOccupationCategory,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              selectedOccupationCategory = value as String;
+            });
+          },
+          items: occupationCategoryList
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(
+                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+              ),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 25.h),
+      ],
+    );
+  }
+
+  annualIncomeDropDown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customText("Annual Income", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: selectedAnnualIncomeCurrency,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              selectedAnnualIncomeCurrency = value as String;
+            });
+          },
+          items: annualIncomeCurrencyList
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(
+                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+              ),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 25.h),
+      ],
+    );
+  }
+
+  employedInDropDown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customText("Employed In", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: selectedemployedIn,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              selectedemployedIn = value as String;
+            });
+          },
+          items: employedInList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(
+                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+              ),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 25.h),
+      ],
+    );
+  }
+
+  residentialStatus() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customText(
+            "Residential Status", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: selectedresidential,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              selectedresidential = value as String;
+            });
+          },
+          items: residentialList.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(
+                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+              ),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 25.h),
+      ],
+    );
+  }
 }

@@ -1,7 +1,7 @@
 class CountryModel {
   String? status;
   String? msg;
-  List<Data>? data;
+  List<CountryData>? data;
 
   CountryModel({this.status, this.msg, this.data});
 
@@ -9,9 +9,9 @@ class CountryModel {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <CountryData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new CountryData.fromJson(v));
       });
     }
   }
@@ -27,14 +27,14 @@ class CountryModel {
   }
 }
 
-class Data {
+class CountryData {
   int? id;
   String? code;
   String? country;
 
-  Data({this.id, this.code, this.country});
+  CountryData({this.id, this.code, this.country});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  CountryData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     code = json['Code'];
     country = json['Country'];

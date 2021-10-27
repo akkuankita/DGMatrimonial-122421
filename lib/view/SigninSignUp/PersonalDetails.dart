@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:matrimonial/Controller/personalDetailsRegisterController.dart';
+import 'package:matrimonial/Controller/registerController.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
 import 'package:matrimonial/model/divisionModel.dart';
 import 'package:matrimonial/model/hobbies.dart';
@@ -197,8 +197,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   var selectedDrinkingHabit;
 
   bool willingToMarryFromOtherCommunities = false;
-  PersonalDetailsRegisterController _controller =
-      Get.put(PersonalDetailsRegisterController());
+  RegisterController _controller = Get.put(RegisterController());
 
   @override
   void initState() {
@@ -224,6 +223,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
     await _controller.fetchDivision();
     _controller.selectedDivision = _controller.divisionList[0];
+
+    await _controller.fetchCountryList();
     setState(() {});
   }
 
@@ -314,7 +315,8 @@ class _PersonalInfoState extends State<PersonalInfo> {
           "OnTable": "REG2",
         };
         // print(body);
-        var result = await networkcallService.register(body: body, registerNo: 2);
+        var result =
+            await networkcallService.register(body: body, registerNo: 2);
         if (result) {
           Get.to(
             () => MoreperDetail(),

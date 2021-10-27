@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:matrimonial/recyclebin/pricing.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/dashboard/details/details.dart';
 import 'package:matrimonial/view/dashboard/save_page.dart';
@@ -95,7 +94,7 @@ class Profile extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Get.to(() => Pricing());
+                  // Get.to(() => Pricing());
                 },
                 child: Card(
                   elevation: 4,

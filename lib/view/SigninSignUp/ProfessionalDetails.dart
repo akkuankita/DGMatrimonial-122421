@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/Controller/registerController.dart';
+import 'package:matrimonial/model/Country.dart';
+import 'package:matrimonial/model/city.dart';
+import 'package:matrimonial/model/state.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
@@ -161,6 +165,7 @@ class _ProDetailState extends State<ProDetail> {
     'Work Permit',
   ];
   var selectedemployedIn;
+  RegisterController _controller = Get.put(RegisterController());
 
   @override
   void initState() {
@@ -170,6 +175,13 @@ class _ProDetailState extends State<ProDetail> {
     selectedOccupationCategory = occupationCategoryList[0];
     selectedAnnualIncomeCurrency = annualIncomeCurrencyList[0];
     selectedemployedIn = employedInList[0];
+    initialDataFetching();
+  }
+
+  initialDataFetching() async {
+    await _controller.fetchCountryList();
+    _controller.selectedCountry = _controller.listOfCountry[0];
+    setState(() {});
   }
 
   @override
@@ -303,61 +315,10 @@ class _ProDetailState extends State<ProDetail> {
                 SizedBox(height: 25.h),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customText(
-                    "  State", Color(0xFF707070), 14.sp, FontWeight.w400),
-                SizedBox(height: 8.h),
-                DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        // borderSide:  ,
-                      ),
-                    ),
-                    value: _selectedValue,
-                    isExpanded: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as String;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(child: Text('State'), value: 'A'),
-                      DropdownMenuItem(child: Text('  State'), value: 'B'),
-                      DropdownMenuItem(child: Text('  State'), value: 'C')
-                    ]),
-                SizedBox(height: 25.h),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                customText("  City", Color(0xFF707070), 14.sp, FontWeight.w400),
-                SizedBox(height: 8.h),
-                DropdownButtonFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                        // borderSide:  ,
-                      ),
-                    ),
-                    value: _selectedValue,
-                    isExpanded: true,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value as String;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(child: Text('City'), value: 'A'),
-                      DropdownMenuItem(child: Text('  City'), value: 'B'),
-                      DropdownMenuItem(child: Text('City'), value: 'C')
-                    ]),
-                SizedBox(height: 25.h),
-              ],
-            ),
+            countryDropDown(),
+            stateDropDown(),
+            cityDropDown(),
+           
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -475,4 +436,120 @@ class _ProDetailState extends State<ProDetail> {
       }
     }
   }
+
+  
+  countryDropDown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customText("Country", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: _controller.selectedCountry,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              _controller.selectedCountry = value as CountryData;
+              _controller.fetchStateList(_controller.selectedCountry.id);
+            });
+          },
+          items: _controller.listOfCountry
+              .map<DropdownMenuItem<CountryData>>((CountryData value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(value.country!, Color(0xFF707070), 14.sp,
+                    FontWeight.w400),
+              ),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 25.h),
+      ],
+    );
+  }
+  
+  stateDropDown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customText("State", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: _controller.selectedState,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              _controller.selectedState = value as StateData;
+              _controller.fetchCityList(_controller.selectedState.id);
+            });
+          },
+          items: _controller.listOfState
+              .map<DropdownMenuItem<StateData>>((StateData value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(value.state!, Color(0xFF707070), 14.sp,
+                    FontWeight.w400),
+              ),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 25.h),
+      ],
+    );
+  }
+  
+  cityDropDown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customText("City", Color(0xFF707070), 14.sp, FontWeight.w400),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField(
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.r),
+              // borderSide:  ,
+            ),
+          ),
+          value: _controller.selectedCity,
+          isExpanded: true,
+          onChanged: (value) {
+            setState(() {
+              _controller.selectedCity = value as CityData;
+            });
+          },
+          items: _controller.listOfCity
+              .map<DropdownMenuItem<CityData>>((CityData value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                child: customText(value.city!, Color(0xFF707070), 14.sp,
+                    FontWeight.w400),
+              ),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 25.h),
+      ],
+    );
+  }
+
+
 }

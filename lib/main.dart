@@ -1,20 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/Controller/application_starter_controller.dart';
 import 'package:matrimonial/utils/const.dart';
-import 'package:matrimonial/view/SigninSignUp/AboutyourSelf.dart';
+import 'package:matrimonial/utils/sharePreference_instance.dart';
 import 'package:matrimonial/view/SigninSignUp/LoginScreen.dart';
 import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
 import 'package:matrimonial/view/SigninSignUp/PersonalDetails.dart';
+import 'package:matrimonial/view/SigninSignUp/ProfessionalDetails.dart';
 import 'package:matrimonial/view/SigninSignUp/RegisterScreen.dart';
 import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
 
-void main() {
-  runApp(GetMaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: lightBlackBoldColor));
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // print('main check');
+  await sharePrefereceInstance.init();
+  runApp(
+    StartApp(),
+  );
+}
+
+class StartApp extends StatefulWidget {
+  @override
+  _StartAppState createState() => _StartAppState();
+}
+
+class _StartAppState extends State<StartApp> {
+  @override
+  Widget build(BuildContext context) {
+    // String token = 'Bearer ${sharePrefereceInstance.getToken()}';
+    // print(token);
+    return GetMaterialApp(
+      theme: ThemeData(
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.black)),
+      themeMode: ThemeMode.light,
+      debugShowCheckedModeBanner: false,
+      home: MyApp(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
+  var returnWidget1 = SplashScreen();
+  final applicationStarterController = Get.put(ApplicationStarterController());
   @override
   Widget build(BuildContext context) {
     var w = MediaQuery.of(context).size.width;
@@ -22,7 +58,20 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       allowFontScaling: false,
       designSize: Size(w, h),
-      builder: () => SplashScreen(),
+      builder: () => Obx(() {
+        // print('obx');
+        var applicationState = applicationStarterController.state.value;
+        // return returnWidget1;
+        // return DashBoard();
+        // print('applicationState ${applicationState}');
+        if (applicationState == ApplicationState.LoggedIn) {
+          return RegisterScreen();
+        } else if (applicationState == ApplicationState.LoggedOut) {
+          return ProfessionalDetails();
+        } else {
+          return returnWidget1;
+        }
+      }),
     );
   }
 }
@@ -39,21 +88,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 0), () {
-      // Get.to(() => AdvSearch());
-      // Get.to(() => MainChatPage());
-      // Get.to(() => MessageScreen());
-      // Get.to(() => DetailsPage());
-      // Get.to(() => SavePage());
-      // Get.to(() => MorePersonalDetailsRegister());
-      // Get.to(() => PersonalDetailsRegister());
-      // Get.to(() => Pricing());
-      Get.to(() => RegisterScreen());
-      // Get.to(() => MoreperDetail());
-      // Get.to(() => iPhone12ProMax1());
-      // Get.to(() => SignInSignUp());
-      // Get.to(() => AboutyourSelf());
-    });
   }
 
   @override

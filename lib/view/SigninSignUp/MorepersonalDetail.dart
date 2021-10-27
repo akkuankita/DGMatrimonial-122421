@@ -132,6 +132,7 @@ class MorePersonalInfo extends StatefulWidget {
 }
 
 class _MorePersonalInfoState extends State<MorePersonalInfo> {
+  final _familyBackgroundController = TextEditingController();
   var maritalStatusList = [
     'Never Married',
     'Widowed',
@@ -217,6 +218,12 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
   }
 
   @override
+  void dispose() {
+    _familyBackgroundController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
@@ -257,19 +264,20 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
             SizedBox(
                 width: 1.sw,
                 height: 50.h,
-                child: GreyButton(
-                    text: "Back",
+                child: DefaultButton(
+                    text: "Next",
                     press: () {
-                      Get.back();
+                      sendDataToApi();
+                      // Get.to(() => ProfessionalDetails());
                     })),
             SizedBox(height: 25.h),
             SizedBox(
                 width: 1.sw,
                 height: 50.h,
-                child: DefaultButton(
-                    text: "Next",
+                child: GreyButton(
+                    text: "Back",
                     press: () {
-                      Get.to(() => ProfessionalDetails());
+                      Get.back();
                     })),
             SizedBox(height: 25.h),
           ],
@@ -283,36 +291,16 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
       var userId = sharePrefereceInstance.getuserId();
       final body = {
         "Id": "$userId",
-        "MaritalStatus": "$userId",
-        "Children": "$userId",
-        "HeightFt": "$userId",
-        "HeightInch": "$userId",
-        "FamilyStatus": "$userId",
-        "FamilyType": "$userId",
-        "FamilyValues": "$userId",
-        "Disability": "$userId",
-        "FamilyBackground": "$userId",
+        "MaritalStatus": "$selectedMaritalStatus",
+        "Children": "$selectedNoOfChildren",
+        "HeightFt": "$selectedHeightInFit",
+        "HeightInch": "$selectedHeightInInch",
+        "FamilyStatus": "$selectedFamilyStatus",
+        "FamilyType": "$selectedFamilyType",
+        "FamilyValues": "$selectedFamilyValues",
+        "Disability": "$selectedDisability",
+        "FamilyBackground": "${_familyBackgroundController.text}",
         "OnTable": "REG3",
-      };
-      final Registration4 = {
-        "Id": "1",
-        "Education": " ",
-        "Occupation": " ",
-        "Currency": " ",
-        "AnnualIncome": " ",
-        "EmployedIn": " ",
-        "CountryName": " ",
-        "State": " ",
-        "City": " ",
-        "Citizenship": " ",
-        "ResidentialSts": " ",
-        "PreferableLoc": " ",
-        "OnTable": "REG4",
-      };
-      final Registration5 = {
-        "Id": "1",
-        "AboutYourself": " ",
-        "OnTable": "REG5",
       };
       // print(body);
       var result = await networkcallService.register(body: body, registerNo: 3);
@@ -686,6 +674,7 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
             // color: backGroundColor,
           ),
           child: TextField(
+            controller: _familyBackgroundController,
             maxLines: 10,
             decoration: InputDecoration(border: InputBorder.none),
           ),

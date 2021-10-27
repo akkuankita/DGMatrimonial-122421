@@ -469,31 +469,59 @@ class _ProDetailState extends State<ProDetail> {
       children: [
         customText("Annual Income", Color(0xFF707070), 14.sp, FontWeight.w400),
         SizedBox(height: 8.h),
-        DropdownButtonFormField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              // borderSide:  ,
-            ),
-          ),
-          value: selectedAnnualIncomeCurrency,
-          isExpanded: true,
-          onChanged: (value) {
-            setState(() {
-              selectedAnnualIncomeCurrency = value as String;
-            });
-          },
-          items: annualIncomeCurrencyList
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: customText(
-                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+        Container(
+                  // width: 0.6.sw,
+                  height: 0.07.sh,
+          child: Row(
+            children: [
+              Flexible(
+                child: Container(
+                  // width: 0.6.sw,
+                  height: 0.08.sh,
+                  child: DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.r),
+                        // borderSide:  ,
+                      ),
+                    ),
+                    value: selectedAnnualIncomeCurrency,
+                    isExpanded: true,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedAnnualIncomeCurrency = value as String;
+                      });
+                    },
+                    items: annualIncomeCurrencyList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 3, 0, 0),
+                          child: customText(
+                              value, Color(0xFF707070), 14.sp, FontWeight.w400),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ),
-            );
-          }).toList(),
+              Container(
+                width: 0.6.sw,
+                height: 0.09.sh,
+                padding: EdgeInsets.only(left: 5),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Enter Amount',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      // borderSide:  ,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         SizedBox(height: 25.h),
       ],

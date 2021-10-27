@@ -276,6 +276,7 @@ String countryApi = baseUrl + 'RegistrationApi/FetchCountry';
 String stateApi = baseUrl + 'RegistrationApi/FetchState';
 String cityApi = baseUrl + 'RegistrationApi/FetchCity';
 String prefLocApi = baseUrl + 'RegistrationApi/FetchPrefLoc';
+String fetchProfile = baseUrl + 'ProfileApi/FetchProfile';
 // String otpVerifyApi = baseUrl + 'otp-verify-register';
 
 //----------------------------keys--------------------------

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/dashboard/chat/MainChatPage.dart';
-import 'package:matrimonial/view/dashboard/profile.dart';
+import 'package:matrimonial/view/Profile/profile.dart';
 import 'package:matrimonial/view/dashboard/save_page.dart';
 
 import 'home.dart';

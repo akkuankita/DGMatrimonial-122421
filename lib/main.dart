@@ -12,6 +12,8 @@ import 'package:matrimonial/view/SigninSignUp/PersonalDetails.dart';
 import 'package:matrimonial/view/SigninSignUp/ProfessionalDetails.dart';
 import 'package:matrimonial/view/SigninSignUp/RegisterScreen.dart';
 import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
+import 'package:matrimonial/view/Profile/profile.dart';
+import 'package:matrimonial/view/dashboard/details/details.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,7 +69,7 @@ class MyApp extends StatelessWidget {
         if (applicationState == ApplicationState.LoggedIn) {
           return RegisterScreen();
         } else if (applicationState == ApplicationState.LoggedOut) {
-          return ProfessionalDetails();
+          return profileDetailsPage();
         } else {
           return returnWidget1;
         }

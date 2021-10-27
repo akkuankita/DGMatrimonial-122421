@@ -30,26 +30,19 @@ class RegisterController extends GetxController {
   var countryModel = CountryModel().obs;
   var listOfCountry = <CountryData>[].obs;
   var selectedCountry;
-  var initialCountry = 'select your country *'.obs;
   //state
   var stateModel = StateModel().obs;
   var listOfState = <StateData>[].obs;
   var selectedState;
-  var initialState = 'select your state *'.obs;
   //city
   var cityModel = CityModel().obs;
   var listOfCity = <CityData>[].obs;
   var selectedCity;
-  var initialcity = 'select your city *'.obs;
 
   @override
   void onInit() {
     super.onInit();
   }
-
-  // clearData() {
-  //   listOfCastSubcast = null;
-  // }
 
   //fetchCastList -------------------------------------------
   Future fetchCastList() async {

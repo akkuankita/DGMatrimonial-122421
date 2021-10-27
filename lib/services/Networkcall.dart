@@ -12,6 +12,7 @@ import 'package:matrimonial/model/state.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/utils/sharePreference_instance.dart';
+import 'package:matrimonial/view/Profile/profileModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Networkcall extends GetConnect {
@@ -31,17 +32,13 @@ class Networkcall extends GetConnect {
   // >>>>>>>>>>>>>>>>>>>>>>>>>>> login <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<bool> login({required String email, required String password}) async {
     String url = '$BASE_URL$login_google';
-    // var headers = {
-    //   'Accept': "application/json",
-    // };
-    // print(body);
-    showProgress();
     final param = {
       'email': email,
       'password': password,
     };
     print(url);
     try {
+    showProgress();
       final response = await post(loginApi, param);
       hideProgress();
       print(response.body);
@@ -70,19 +67,19 @@ class Networkcall extends GetConnect {
   }
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>> register <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  Future<bool> register({required body,required int registerNo}) async {
+  Future<bool> register({required body, required int registerNo}) async {
     showProgress();
     try {
       var response = await post(registerApi1, body);
       hideProgress();
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
         if (myJson['status'] == API_SUCCESS) {
           showSnack(myJson['msg']);
-          if(registerNo == 1){
-          sharePrefereceInstance.setuserId(myJson['data'][0]['Id']);
+          if (registerNo == 1) {
+            sharePrefereceInstance.setuserId(myJson['data'][0]['Id']);
+            sharePrefereceInstance.setToken(myJson['data'][0]['access_token']);
           }
           return true;
         } else {
@@ -100,11 +97,11 @@ class Networkcall extends GetConnect {
           : throw CustomError(INTERNET_ERROR);
     }
   }
+
 // --------------------------------fetchcastSubcast--------------------------
   Future<CastSubcastModel> fetchcastSubcast() async {
     try {
       var response = await get(casteSubCasteApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -126,7 +123,6 @@ class Networkcall extends GetConnect {
   Future<DivisionModel> fetchdivision() async {
     try {
       var response = await get(divisionApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -169,7 +165,6 @@ class Networkcall extends GetConnect {
   Future<CountryModel> fetchCountry() async {
     try {
       var response = await get(countryApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -191,7 +186,6 @@ class Networkcall extends GetConnect {
   Future<StateModel> fetchState() async {
     try {
       var response = await get(stateApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -213,7 +207,6 @@ class Networkcall extends GetConnect {
   Future<CityModel> fetchCity() async {
     try {
       var response = await get(cityApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -235,7 +228,6 @@ class Networkcall extends GetConnect {
   Future<PreflocModel> fetchPrefloc() async {
     try {
       var response = await get(cityApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -253,28 +245,30 @@ class Networkcall extends GetConnect {
     }
   }
 
-//---------------------------------otp verify---------------------------
-  // Future<bool> otpVerification(
-  //     {required String email,
-  //     required String otp,
-  //     required String usertype}) async {
-  //   showProgress();
-  //   var param = {'email': email, 'otp': otp};
-  //   var response = await post(otpVerifyApi, param);
-  //   hideProgress();
-  //   print('otp res- ${response.body}');
-  //   final myJson = response.body;
-  //   if (response.statusCode == 200) {
-  //     if (myJson['success']) {
-  //       sharePref.setIsLogin(true);
-  //       sharePref.setUsertype(usertype);
-  //       sharePref.setToken(myJson['data']['original']['access_token']);
-  //       return true;
-  //     }
-  //     return false;
-  //   }
-  //   return false;
-  // }
+// --------------------------------fetchcastSubcast--------------------------
+  Future<ProfileModel> fetchProfileData({required int profileId}) async {
+    try {
+      var url = '${fetchProfile}?Id=${profileId}';
+      var accesToken = sharePrefereceInstance.getToken();
+      showProgress();
+      var response = await get(url,headers: {'Authorization': '$accesToken'});
+      hideProgress();
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return ProfileModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
 }
 
 Networkcall networkcallService = Networkcall();

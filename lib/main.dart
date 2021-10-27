@@ -17,7 +17,6 @@ import 'package:matrimonial/view/dashboard/details/details.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: lightBlackBoldColor));
   SystemChrome.setPreferredOrientations(
@@ -69,7 +68,8 @@ class MyApp extends StatelessWidget {
         if (applicationState == ApplicationState.LoggedIn) {
           return RegisterScreen();
         } else if (applicationState == ApplicationState.LoggedOut) {
-          return profileDetailsPage();
+          return ProfessionalDetails();
+          // return LoginScreen();
         } else {
           return returnWidget1;
         }

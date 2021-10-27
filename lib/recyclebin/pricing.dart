@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:matrimonial/view/dashboard/details/details.dart';
+import 'package:matrimonial/view/Profile/profiledetails.dart';
 import 'package:matrimonial/view/dashboard/widget/cashed_network_image.dart';
 
 class Pricing extends StatelessWidget {
@@ -56,8 +56,8 @@ class Pricing extends StatelessWidget {
                                           child: Image.asset(PricingVector)),
                                     ),
                                   ),
-                                  customText('Free', black, 18,
-                                        FontWeight.w600),
+                                  customText(
+                                      'Free', black, 18, FontWeight.w600),
                                 ],
                               ),
                               SizedBox(
@@ -95,8 +95,8 @@ class Pricing extends StatelessWidget {
                                         color: mainColor,
                                       ),
                                       child: Center(
-                                          child: customText(
-                                              'View Plan', white, 18,FontWeight.w400)),
+                                          child: customText('View Plan', white,
+                                              18, FontWeight.w400)),
                                     ),
                                   ),
                                 ],
@@ -122,8 +122,7 @@ class Pricing extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Flexible(
-              child: customText(text1, black, 16,   FontWeight.w400)),
+          Flexible(child: customText(text1, black, 16, FontWeight.w400)),
         ],
       ),
     );
@@ -141,9 +140,7 @@ class Pricing extends StatelessWidget {
           SizedBox(
             width: 10,
           ),
-          Flexible(
-              child: customText(text1, lightBlack, 16,
-                    FontWeight.w300)),
+          Flexible(child: customText(text1, lightBlack, 16, FontWeight.w300)),
         ],
       ),
     );

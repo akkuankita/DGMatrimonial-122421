@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/Profile/profileController.dart';
-import 'package:matrimonial/view/dashboard/details/details.dart';
+import 'package:matrimonial/view/Profile/profiledetails.dart';
 import 'package:matrimonial/view/dashboard/save_page.dart';
 
 class Profile extends StatefulWidget {
-  Profile({Key? key,}) : super(key: key);
+  Profile({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

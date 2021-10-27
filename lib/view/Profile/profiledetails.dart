@@ -26,10 +26,10 @@ class _profileDetailsPageState extends State<profileDetailsPage>
   @override
   void initState() {
     super.initState();
-    
+
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-    _profileController.fetchProfileDetails(profileId: 154);
-    // _profileController.fetchProfileDetails(profileId: widget.profileId);
+      _profileController.fetchProfileDetails(profileId: 154);
+      // _profileController.fetchProfileDetails(profileId: widget.profileId);
     });
 
     _tabController = TabController(length: 2, vsync: this);
@@ -72,86 +72,89 @@ class _profileDetailsPageState extends State<profileDetailsPage>
   }
 
   getFirstPart() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              width: 0.4.sw,
-              height: 0.4.sw,
-              decoration: BoxDecoration(
+    return Obx(() {
+      var data = _profileController.profileModel.value.data![0];
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 0.4.sw,
+                height: 0.4.sw,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 0,
+                          offset: Offset(10, 10),
+                          color: backGroundColor)
+                    ]),
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 0,
-                        offset: Offset(10, 10),
-                        color: backGroundColor)
-                  ]),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: CustomCashedNetworImage(
-                  imageUrl: img,
-                ),
-              ),
-            ),
-            Column(
-              children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundColor: mainColor,
-                  child: Icon(
-                    Icons.call,
-                    color: white,
+                  child: CustomCashedNetworImage(
+                    imageUrl: img,
                   ),
                 ),
-                SizedBox(
-                  height: 0.02.sh,
-                ),
-                CircleAvatar(
-                  radius: 25,
-                  backgroundColor: mainColor,
-                  child: Icon(Icons.chat, color: white),
-                ),
-              ],
-            )
-          ],
-        ),
-        SizedBox(
-          height: 0.03.sh,
-        ),
-        customText('Random Name', commonColor, 0.06.sw, FontWeight.w700),
-        customText(
-            'Profile Created By Myself', commonColor, 16, FontWeight.w300),
-        SizedBox(
-          height: 0.02.sh,
-        ),
-        getRichText('Age : ', '26'),
-        getRichText('Height : ', '4 Ft 6 In'),
-        getRichText('Religion : ', 'Hindu'),
-        getRichText('Caste : ', '24 Manai Telugu Chettiar'),
-        getRichText('Sub Caste : ', 'none'),
-        getRichText('Location : ', ' India,Andhra Pradesh,Hyderabad'),
-        getRichText('Education  : ', ' Diploma'),
-        getRichText('Profession : ', 'Others'),
-        getRichText('Annual Income : ', 'Not Specified'),
-        // getRichText('Location : ', 'Location'),
+              ),
+              Column(
+                children: [
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: mainColor,
+                    child: Icon(
+                      Icons.call,
+                      color: white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 0.02.sh,
+                  ),
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: mainColor,
+                    child: Icon(Icons.chat, color: white),
+                  ),
+                ],
+              )
+            ],
+          ),
+          SizedBox(
+            height: 0.03.sh,
+          ),
+          customText(data.fullName!, commonColor, 0.06.sw, FontWeight.w700),
+          customText(
+              'Profile Created By Myself', commonColor, 16, FontWeight.w300),
+          SizedBox(
+            height: 0.02.sh,
+          ),
+          getRichText('Age: ', data.age.toString()),
+          getRichText('Height : ', data.heightFt),
+          getRichText('Religion : ', data.religion),
+          getRichText('Caste : ', data.caste),
+          getRichText('Sub Caste : ', data.subCaste),
+          getRichText('Location : ', data.preferableLoc),
+          getRichText('Education  : ', data.education),
+          getRichText('Profession : ', data.education),
+          getRichText('Annual Income : ', data.annualIncome),
+          // getRichText('Location : ', 'Location'),
 
-        button(() {
-          Get.to(() => SearchResult());
-        }, 'Send Interest', mainColor, white),
-        SizedBox(
-          height: 0.02.sh,
-        ),
-        button(() {
-          Get.to(() => SearchResult());
-        }, 'Like ', grayColor, white),
+          button(() {
+            Get.to(() => SearchResult());
+          }, 'Send Interest', mainColor, white),
+          SizedBox(
+            height: 0.02.sh,
+          ),
+          button(() {
+            Get.to(() => SearchResult());
+          }, 'Like ', grayColor, white),
 
-        getTabSection(),
-      ],
-    );
+          getTabSection(),
+        ],
+      );
+    });
   }
 
   getTabSection() {

@@ -137,7 +137,7 @@ class _profileDetailsPageState extends State<profileDetailsPage>
           getRichText('Sub Caste : ', data.subCaste),
           getRichText('Location : ', data.preferableLoc),
           getRichText('Education  : ', data.education),
-          getRichText('Profession : ', data.education),
+          getRichText('Occupation : ', data.occupation),
           getRichText('Annual Income : ', data.annualIncome),
           // getRichText('Location : ', 'Location'),
 

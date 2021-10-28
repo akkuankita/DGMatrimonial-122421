@@ -38,7 +38,7 @@ class Networkcall extends GetConnect {
     };
     print(url);
     try {
-    showProgress();
+      showProgress();
       final response = await post(loginApi, param);
       hideProgress();
       print(response.body);
@@ -248,10 +248,15 @@ class Networkcall extends GetConnect {
 // --------------------------------fetchcastSubcast--------------------------
   Future<ProfileModel> fetchProfileData({required int profileId}) async {
     try {
-      var url = '${fetchProfile}?Id=${profileId}';
-      var accesToken = sharePrefereceInstance.getToken();
+      var url = 'https://demo39.gowebbi.us/api/ProfileApi/FetchProfile?Id=154';
+      var accesToken = 'Bearer ' +
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImRnMjNAZ21haWwuY29tIiwibmJmIjoxNjM1MjMxODczLCJleHAiOjE3Mjk5MjYyNzMsImlhdCI6MTYzNTIzMTg3M30.M-3RsAjv5TlUnF4Su5fOYZmrWvq_K1Lpf28i4Wr4IZQ';
+      //  var accesToken = 'Bearer' + ${sharePrefereceInstance.getToken()};
       showProgress();
-      var response = await get(url,headers: {'Authorization': '$accesToken'});
+      var response = await get(url, headers: {
+        'Authorization': '$accesToken',
+        'accept': 'application/json'
+      });
       hideProgress();
       print('res- ${response.body}-- ');
       final myJson = response.body;

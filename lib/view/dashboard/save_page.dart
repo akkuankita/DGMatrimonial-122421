@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:matrimonial/view/dashboard/details/details.dart';
+import 'package:matrimonial/view/Profile/profiledetails.dart';
 import 'package:matrimonial/view/dashboard/widget/cashed_network_image.dart';
 
 class SavePage extends StatefulWidget {
@@ -36,8 +36,7 @@ class _SavePageState extends State<SavePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    customText('Filter', commonColor, 0.06.sw,
-                          FontWeight.w500),
+                    customText('Filter', commonColor, 0.06.sw, FontWeight.w500),
                     SizedBox(
                       width: 0.3.sw,
                       child: Row(
@@ -52,8 +51,8 @@ class _SavePageState extends State<SavePage> {
                                 child: Padding(
                                   padding:
                                       EdgeInsets.fromLTRB(0.02.sw, 0, 0, 0),
-                                  child: customText(
-                                      selectedGender, commonColor, 18,FontWeight.w400),
+                                  child: customText(selectedGender, commonColor,
+                                      18, FontWeight.w400),
                                 ),
                               ),
                               style: TextStyle(color: primaryColor),
@@ -71,7 +70,8 @@ class _SavePageState extends State<SavePage> {
                                   child: Padding(
                                     padding:
                                         const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                    child: customText(value, commonColor, 18,FontWeight.w400),
+                                    child: customText(value, commonColor, 18,
+                                        FontWeight.w400),
                                   ),
                                 );
                               }).toList(),
@@ -130,10 +130,9 @@ class _SavePageState extends State<SavePage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           customText('Name', black, 18,
-                                                FontWeight.bold),
-                                          customText(
-                                              'user@gmail.com', black, 14,
-                                                FontWeight.w400),
+                                              FontWeight.bold),
+                                          customText('user@gmail.com', black,
+                                              14, FontWeight.w400),
                                         ],
                                       ),
                                     ),

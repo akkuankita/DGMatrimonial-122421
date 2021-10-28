@@ -9,7 +9,7 @@ class ProfileModel {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data =<ProfileData>[];
+      data = <ProfileData>[];
       json['data'].forEach((v) {
         data!.add(new ProfileData.fromJson(v));
       });
@@ -134,7 +134,6 @@ class ProfileData {
       this.hobbies,
       this.preferableLoc,
       this.starSign});
-
   ProfileData.fromJson(Map<String, dynamic> json) {
     id = json['Id'];
     fullName = json['FullName'];
@@ -189,7 +188,6 @@ class ProfileData {
     preferableLoc = json['PreferableLoc'];
     starSign = json['StarSign'];
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Id'] = this.id;

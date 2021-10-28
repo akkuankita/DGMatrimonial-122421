@@ -31,12 +31,10 @@ class Networkcall extends GetConnect {
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>> login <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<bool> login({required String email, required String password}) async {
-    String url = '$BASE_URL$login_google';
     final param = {
       'email': email,
       'password': password,
     };
-    print(url);
     try {
       showProgress();
       final response = await post(loginApi, param);

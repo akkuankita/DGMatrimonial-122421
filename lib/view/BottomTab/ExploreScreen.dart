@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:matrimonial/view/dashboard/search/searchDashboard.dart';
 
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class ExploreScreen extends StatelessWidget {
             width: 44.w,
             height: 44.h,
             decoration: BoxDecoration(
-               // border: Border.all(color: Color(0xFF0C4880)),
+                // border: Border.all(color: Color(0xFF0C4880)),
                 borderRadius: BorderRadius.circular(50.r)),
             child: Icon(Icons.notifications_active, color: white, size: 22.sp),
           ),
@@ -44,7 +46,7 @@ class ExploreScreen extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      // Get.to(() => SearchDashboard());
+                      Get.to(() => SearchDashboard());
                     },
                     child: Container(
                       decoration: BoxDecoration(

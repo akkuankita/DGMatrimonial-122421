@@ -9,6 +9,7 @@ import 'package:matrimonial/view/BottomTab/MyTabBar.dart';
 import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
+import 'package:matrimonial/view/dashboard/dashboard.dart';
 
 class AboutyourSelf extends StatelessWidget {
   @override
@@ -161,7 +162,7 @@ class _AboutSelfState extends State<AboutSelf> {
                     press: () {
                       Get.to(() =>
                           // sendDataToApi()
-                          MyTabBar());
+                          DashboardPage());
                     })),
             SizedBox(height: 25.h),
           ],

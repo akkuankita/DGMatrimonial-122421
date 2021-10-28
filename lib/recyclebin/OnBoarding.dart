@@ -5,7 +5,7 @@ import 'package:matrimonial/recyclebin/signInSignUp.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:matrimonial/utils/customs/button.dart';
-import 'package:matrimonial/view/dashboard/dashboard.dart';
+//import 'package:matrimonial/view/dashboard/dashboard.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);

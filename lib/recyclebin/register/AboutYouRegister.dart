@@ -4,10 +4,10 @@ import 'package:matrimonial/recyclebin/register/ProfessionalDetailsRegister.dart
 import 'package:matrimonial/utils/const.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:matrimonial/utils/customs/button.dart';
+// import 'package:matrimonial/utils/customs/button.dart';
 import 'package:matrimonial/view/dashboard/dashboard.dart';
-import 'package:matrimonial/view/dashboard/search/search_result.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
+// import 'package:matrimonial/view/dashboard/search/search_result.dart';
+// import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class AboutYouRegister extends StatefulWidget {
   const AboutYouRegister({Key? key}) : super(key: key);

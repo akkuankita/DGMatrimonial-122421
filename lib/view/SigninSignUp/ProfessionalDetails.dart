@@ -129,6 +129,7 @@ class ProDetail extends StatefulWidget {
 String _selectedValue = 'A';
 
 class _ProDetailState extends State<ProDetail> {
+ final _citizenshipController = TextEditingController();
   var highestEducationCategoryList = [
     "No Answer",
     "High school",
@@ -210,6 +211,7 @@ class _ProDetailState extends State<ProDetail> {
           customText("Citizenship", Colors.black, 15, FontWeight.w300),
           SizedBox(height: 5),
           TextFormField(
+          controller:_citizenshipController, 
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.r),
@@ -245,15 +247,15 @@ class _ProDetailState extends State<ProDetail> {
     try {
       final body = {
         "Id": "1",
-        "Education": " ",
-        "Occupation": " ",
-        "Currency": " ",
-        "AnnualIncome": " ",
-        "EmployedIn": " ",
-        "CountryName": " ",
-        "State": " ",
-        "City": " ",
-        "Citizenship": " ",
+        "Education": "$selectedHighestEducationCategory",
+        "Occupation": "$selectedOccupationCategory",
+        "Currency": "$selectedAnnualIncomeCurrency",
+        "AnnualIncome": "",
+        "EmployedIn": "$selectedemployedIn",
+        "CountryName": "${_controller.selectedCountry}",
+        "State": "${_controller.selectedState}",
+        "City":"${_controller.selectedCity}",
+        "Citizenship": "${_citizenshipController.text}",
         "ResidentialSts": " ",
         "PreferableLoc": " ",
         "OnTable": "REG4",

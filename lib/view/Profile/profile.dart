@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/recyclebin/pricing.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/Profile/profileController.dart';
 import 'package:matrimonial/view/Profile/profiledetails.dart';
@@ -101,7 +102,7 @@ class _ProfileState extends State<Profile> {
               ),
               InkWell(
                 onTap: () {
-                  // Get.to(() => Pricing());
+                  Get.to(() => Pricing());
                 },
                 child: Card(
                   elevation: 4,

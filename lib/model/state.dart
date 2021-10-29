@@ -1,7 +1,7 @@
 class StateModel {
   String? status;
   String? msg;
-  List<Data>? data;
+  List<StateData>? data;
 
   StateModel({this.status, this.msg, this.data});
 
@@ -9,9 +9,9 @@ class StateModel {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <StateData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new StateData.fromJson(v));
       });
     }
   }
@@ -27,14 +27,14 @@ class StateModel {
   }
 }
 
-class Data {
+class StateData {
   int? id;
   int? cID;
   String? state;
 
-  Data({this.id, this.cID, this.state});
+  StateData({this.id, this.cID, this.state});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  StateData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     cID = json['CID'];
     state = json['State'];

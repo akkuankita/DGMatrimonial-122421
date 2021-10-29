@@ -16,7 +16,6 @@ class ApplicationStarterController extends GetxController {
   void onInit() async {
     // await
     initializeApplicationState();
-
     super.onInit();
   }
 

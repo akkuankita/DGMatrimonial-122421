@@ -12,6 +12,7 @@ import 'package:matrimonial/model/state.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/utils/sharePreference_instance.dart';
+import 'package:matrimonial/view/Profile/profileModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Networkcall extends GetConnect {
@@ -30,18 +31,12 @@ class Networkcall extends GetConnect {
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>> login <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   Future<bool> login({required String email, required String password}) async {
-    String url = '$BASE_URL$login_google';
-    // var headers = {
-    //   'Accept': "application/json",
-    // };
-    // print(body);
-    showProgress();
     final param = {
       'email': email,
       'password': password,
     };
-    print(url);
     try {
+      showProgress();
       final response = await post(loginApi, param);
       hideProgress();
       print(response.body);
@@ -69,23 +64,21 @@ class Networkcall extends GetConnect {
     }
   }
 
-  // >>>>>>>>>>>>>>>>>>>>>>>>>>> login <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  Future<bool> register(body) async {
-    // var headers = {
-    //   'Accept': "application/json",
-    // };
-    // print(body);
+  // >>>>>>>>>>>>>>>>>>>>>>>>>>> register <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+  Future<bool> register({required body, required int registerNo}) async {
     showProgress();
     try {
       var response = await post(registerApi1, body);
       hideProgress();
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
         if (myJson['status'] == API_SUCCESS) {
           showSnack(myJson['msg']);
-          sharePrefereceInstance.setuserId(myJson['data'][0]['Id']);
+          if (registerNo == 1) {
+            sharePrefereceInstance.setuserId(myJson['data'][0]['Id']);
+            sharePrefereceInstance.setToken(myJson['data'][0]['access_token']);
+          }
           return true;
         } else {
           throw CustomError(myJson['msg']);
@@ -103,31 +96,10 @@ class Networkcall extends GetConnect {
     }
   }
 
-// --------------------------------register2--------------------------
-  Future register2(body) async {
-    showProgress();
-    var response = await post(registerApi1, body);
-    hideProgress();
-    print('res- ${response.body}');
-    final myJson = response.body;
-    if (response.statusCode == 200) {
-      if (myJson['status'] == API_SUCCESS) {
-        return myJson;
-      } else {
-        showSnack(myJson['msg']);
-        return null;
-      }
-    } else {
-      showSnack(myJson['msg']);
-      return null;
-    }
-  }
-
-// --------------------------------register2--------------------------
+// --------------------------------fetchcastSubcast--------------------------
   Future<CastSubcastModel> fetchcastSubcast() async {
     try {
       var response = await get(casteSubCasteApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -145,11 +117,10 @@ class Networkcall extends GetConnect {
     }
   }
 
-  // ----------------------------register2--------------------------------
+  // ----------------------------fetchdivision--------------------------------
   Future<DivisionModel> fetchdivision() async {
     try {
       var response = await get(divisionApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -167,11 +138,10 @@ class Networkcall extends GetConnect {
     }
   }
 
-  // ----------------------------register2--------------------------------
+  // ----------------------------fetchhobbies--------------------------------
   Future<HobbiesModel> fetchhobbies() async {
     try {
       var response = await get(hobbiesApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -193,7 +163,6 @@ class Networkcall extends GetConnect {
   Future<CountryModel> fetchCountry() async {
     try {
       var response = await get(countryApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -215,7 +184,6 @@ class Networkcall extends GetConnect {
   Future<StateModel> fetchState() async {
     try {
       var response = await get(stateApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -237,7 +205,6 @@ class Networkcall extends GetConnect {
   Future<CityModel> fetchCity() async {
     try {
       var response = await get(cityApi);
-      print(response.body);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {
@@ -254,49 +221,57 @@ class Networkcall extends GetConnect {
           : throw CustomError(INTERNET_ERROR);
     }
   }
-  // ----------------------------register4--------------------------------
-  // Future<PreflocModel> fetchPrefloc() async {
-  //   try {
-  //     var response = await get(preflocApi);
-  //     print(response.body);
-  //     print('res- ${response.body}-- ');
-  //     final myJson = response.body;/
-  //       return PreflocModel.fromJson(myJson);
-  //     } else {
-  //       throw CustomError(myJson['msg']);
-  //     }
-  //   } on SocketException {
-  //     throw CustomError('No Internet connection 😑');
-  //   } catch (e) {
-  //     print(e);
-  //     e is CustomError
-  //         ? throw CustomError(e.errorMessage())
-  //         : throw CustomError(INTERNET_ERROR);
-  //   }
-  // }
 
-//---------------------------------otp verify---------------------------
-  // Future<bool> otpVerification(
-  //     {required String email,
-  //     required String otp,
-  //     required String usertype}) async {
-  //   showProgress();
-  //   var param = {'email': email, 'otp': otp};
-  //   var response = await post(otpVerifyApi, param);
-  //   hideProgress();
-  //   print('otp res- ${response.body}');
-  //   final myJson = response.body;
-  //   if (response.statusCode == 200) {
-  //     if (myJson['success']) {
-  //       sharePref.setIsLogin(true);
-  //       sharePref.setUsertype(usertype);
-  //       sharePref.setToken(myJson['data']['original']['access_token']);
-  //       return true;
-  //     }
-  //     return false;
-  //   }
-  //   return false;
-  // }
+  // ----------------------------register4--------------------------------
+  Future<PreflocModel> fetchPrefloc() async {
+    try {
+      var response = await get(prefLocApi);
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return PreflocModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
+
+// --------------------------------fetchcastSubcast--------------------------
+  Future<ProfileModel> fetchProfileData({required int profileId}) async {
+    try {
+      var url = 'https://demo39.gowebbi.us/api/ProfileApi/FetchProfile?Id=154';
+      var accesToken = 'Bearer ' +
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImRnMjNAZ21haWwuY29tIiwibmJmIjoxNjM1MjMxODczLCJleHAiOjE3Mjk5MjYyNzMsImlhdCI6MTYzNTIzMTg3M30.M-3RsAjv5TlUnF4Su5fOYZmrWvq_K1Lpf28i4Wr4IZQ';
+      //  var accesToken = 'Bearer' + ${sharePrefereceInstance.getToken()};
+      showProgress();
+      var response = await get(url, headers: {
+        'Authorization': '$accesToken',
+        'accept': 'application/json'
+      });
+      hideProgress();
+      print('res- ${response.body}-- ');
+      final myJson = response.body;
+      if (response.statusCode == 200) {
+        return ProfileModel.fromJson(myJson);
+      } else {
+        throw CustomError(myJson['msg']);
+      }
+    } on SocketException {
+      throw CustomError('No Internet connection 😑');
+    } catch (e) {
+      print(e);
+      e is CustomError
+          ? throw CustomError(e.errorMessage())
+          : throw CustomError(INTERNET_ERROR);
+    }
+  }
 }
 
 Networkcall networkcallService = Networkcall();

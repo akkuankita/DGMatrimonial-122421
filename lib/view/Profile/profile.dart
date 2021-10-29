@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/recyclebin/pricing.dart';
 import 'package:matrimonial/utils/const.dart';
-import 'package:matrimonial/view/dashboard/details/details.dart';
+import 'package:matrimonial/view/Profile/profileController.dart';
+import 'package:matrimonial/view/Profile/profiledetails.dart';
 import 'package:matrimonial/view/dashboard/save_page.dart';
 
-class Profile extends StatelessWidget {
-  const Profile({Key? key}) : super(key: key);
+class Profile extends StatefulWidget {
+  Profile({
+    Key? key,
+  }) : super(key: key);
 
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,17 +39,17 @@ class Profile extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              customText('Customer Name', mainColor, 20,FontWeight.w400),
+              customText('Customer Name', mainColor, 20, FontWeight.w400),
               SizedBox(
                 height: 5,
               ),
-              customText('xyz@gmail.com', commonColor, 16,FontWeight.w400),
+              customText('xyz@gmail.com', commonColor, 16, FontWeight.w400),
               SizedBox(
                 height: 15,
               ),
               InkWell(
                 onTap: () {
-                  Get.to(() => DetailsPage());
+                  Get.to(() => profileDetailsPage());
                 },
                 child: Card(
                   elevation: 4,
@@ -50,8 +58,7 @@ class Profile extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        customText('Profile', commonColor, 18,
-                              FontWeight.w400),
+                        customText('Profile', commonColor, 18, FontWeight.w400),
                         CircleAvatar(
                           radius: 15,
                           backgroundColor: Colors.grey[200],
@@ -77,8 +84,8 @@ class Profile extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        customText('My members', commonColor, 18,
-                              FontWeight.w400),
+                        customText(
+                            'My members', commonColor, 18, FontWeight.w400),
                         CircleAvatar(
                           radius: 15,
                           backgroundColor: Colors.grey[200],
@@ -105,7 +112,7 @@ class Profile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         customText('Membership plan', commonColor, 18,
-                              FontWeight.w400),
+                            FontWeight.w400),
                         CircleAvatar(
                           radius: 15,
                           backgroundColor: Colors.grey[200],
@@ -128,7 +135,7 @@ class Profile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       customText('Partner Preference', commonColor, 18,
-                            FontWeight.w400),
+                          FontWeight.w400),
                       CircleAvatar(
                         radius: 15,
                         backgroundColor: Colors.grey[200],

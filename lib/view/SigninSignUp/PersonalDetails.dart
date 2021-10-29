@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:matrimonial/Controller/personalDetailsRegisterController.dart';
+import 'package:matrimonial/Controller/registerController.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
+import 'package:matrimonial/model/divisionModel.dart';
 import 'package:matrimonial/model/hobbies.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/utils/error_handler.dart';
+import 'package:matrimonial/utils/sharePreference_instance.dart';
 import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
 import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
@@ -155,13 +158,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
     'Daughter',
   ];
   var selectedMotherTongue;
-
-  var divisionList = [
-    'Myself',
-    'Son',
-    'Daughter',
-  ];
-  var selectedDivision;
   var personalityList = [
     'Myself',
     'Son',
@@ -201,16 +197,18 @@ class _PersonalInfoState extends State<PersonalInfo> {
   var selectedDrinkingHabit;
 
   bool willingToMarryFromOtherCommunities = false;
-  PersonalDetailsRegisterController _controller =
-      Get.put(PersonalDetailsRegisterController());
+  RegisterController _controller = Get.put(RegisterController());
 
   @override
   void initState() {
     selectedRelegion = relegionList[0];
     selectedMotherTongue = motherTongueList[0];
-    selectedDivision = divisionList[0];
+
     selectedPersonality = personalityList[0];
     selectedDosh = doshList[0];
+    selectedEatingHabit = EatingHabitList[0];
+    selectedSmokingHabit = SmokingHabitList[0];
+    selectedDrinkingHabit = DrinkingHabitList[0];
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       initialDataFetching();
     });
@@ -221,7 +219,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
     await _controller.fetchCastList();
     await _controller.fetchHobbie();
     _controller.selectedCast = _controller.listOfCastSubcast[0];
-    
+    _controller.selectedHobbies = _controller.hobbiesList[0];
+
+    await _controller.fetchDivision();
+    _controller.selectedDivision = _controller.divisionList[0];
+
+    await _controller.fetchCountryList();
     setState(() {});
   }
 
@@ -264,20 +267,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
               SizedBox(
                   width: 1.sw,
                   height: 50.h,
-                  child: GreyButton(
-                      text: "Back",
+                  child: DefaultButton(
+                      text: "Next",
                       press: () {
-                        Get.back();
+                        sendDataToApi();
+                        // Get.to(() => MoreperDetail());
                       })),
               SizedBox(height: 25.h),
               SizedBox(
                   width: 1.sw,
                   height: 50.h,
-                  child: DefaultButton(
-                      text: "Next",
+                  child: GreyButton(
+                      text: "Back",
                       press: () {
-                        // sendDataToApi();
-                        Get.to(() => MoreperDetail());
+                        Get.back();
                       })),
               SizedBox(height: 25.h),
             ],
@@ -288,24 +291,50 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   void sendDataToApi() async {
-    final param = {
-      // "FirstName": "${_Firstname.text.trim()}",
-      // "LastName": "${_Lastname.text.trim()}",
-      // "Email": "${_email.text.trim()}",
-      // "ContactNo": "${_phone.text.trim()}",
-      // "Password": "${_password.text.trim()}",
-      // "Example": "${selectedExample}",
-      // "Gender": "${selectedGender}",
-      // "Age": "${selectedAge}",
-      // "OnTable": "REG1"
-    };
-    var result = await networkcallService.register(param);
-
-    if (result != null) {
-      Get.to(
-        () => PersonalDetails(),
-      );
+    try {
+      var userId = sharePrefereceInstance.getuserId();
+      // if (userId != null) {
+      if (_controller.selectedCast.casteId != null &&
+          _controller.selectedSubcast.subCasteId != null &&
+          _controller.selectedHobbies.id != null &&
+          _controller.selectedDivision.id != null) {
+        final body = {
+          "Id": "$userId",
+          "Religion": "$selectedRelegion",
+          "Language": "$selectedMotherTongue",
+          "DivisionName": "${_controller.selectedDivision.id}",
+          "OtherCommu": "$willingToMarryFromOtherCommunities",
+          "CasteName": "${_controller.selectedCast.casteId}",
+          "SubCaste": "${_controller.selectedSubcast.subCasteId}",
+          "Dosh": "$selectedDosh",
+          "Personality": "$selectedPersonality",
+          "EatingHabits": "$selectedEatingHabit",
+          "Smoking": "$selectedSmokingHabit",
+          "Drinking": "$selectedDrinkingHabit",
+          "Hobbies": "${_controller.selectedHobbies.id}",
+          "OnTable": "REG2",
+        };
+        // print(body);
+        var result =
+            await networkcallService.register(body: body, registerNo: 2);
+        if (result) {
+          Get.to(
+            () => MoreperDetail(),
+          );
+        }
+      } else {
+        showSnack('please fill up all information');
+      }
+    } catch (e) {
+      if (e is CustomError) {
+        if (e.isNetworkError != null && (e.isNetworkError)!) {
+          showSnack(e.customMessage);
+        } else {
+          showSnack(e.customMessage);
+        }
+      }
     }
+    // }
   }
 
   relegionDropDown() {
@@ -393,20 +422,20 @@ class _PersonalInfoState extends State<PersonalInfo> {
               // borderSide:  ,
             ),
           ),
-          value: selectedDivision,
+          value: _controller.selectedDivision,
           isExpanded: true,
           onChanged: (value) {
-            setState(() {
-              selectedDivision = value as String;
-            });
+            _controller.changeSelectedDivision(value as DivisionData);
+            setState(() {});
           },
-          items: divisionList.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
+          items: _controller.divisionList
+              .map<DropdownMenuItem<DivisionData>>((DivisionData value) {
+            return DropdownMenuItem(
               value: value,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: customText(
-                    value, Color(0xFF707070), 14.sp, FontWeight.w400),
+                    value.division!, Color(0xFF707070), 14.sp, FontWeight.w400),
               ),
             );
           }).toList(),

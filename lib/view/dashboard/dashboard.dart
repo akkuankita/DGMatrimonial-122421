@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/view/BottomTab/ExploreScreen.dart';
 import 'package:matrimonial/view/dashboard/chat/MainChatPage.dart';
-import 'package:matrimonial/view/dashboard/profile.dart';
+import 'package:matrimonial/view/Profile/profile.dart';
 import 'package:matrimonial/view/dashboard/save_page.dart';
 
 import 'home.dart';
@@ -13,7 +14,7 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   int _currentIndex = 0;
-  List _screens = [Home(), SavePage(), MainChatPage(), Profile()];
+  List _screens = [ExploreScreen(), SavePage(), MainChatPage(), Profile()];
 
   void _updateIndex(int value) {
     setState(() {

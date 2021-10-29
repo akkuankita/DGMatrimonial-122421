@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:matrimonial/view/dashboard/details/details.dart';
+import 'package:matrimonial/view/Profile/profiledetails.dart';
 import 'package:matrimonial/view/dashboard/widget/cashed_network_image.dart';
 
 class Pricing extends StatelessWidget {

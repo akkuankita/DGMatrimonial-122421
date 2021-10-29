@@ -51,7 +51,7 @@ class Blackbox extends StatelessWidget {
           color: Color(0xFF090927),
           borderRadius: BorderRadius.circular(25.r),
           border: Border.all(color: white)),
-      child: customText("1", white, 16.sp, FontWeight.w700),
+      child: customText(text, white, 16.sp, FontWeight.w700),
     );
   }
 }

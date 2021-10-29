@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:matrimonial/utils/const.dart';
-import 'package:matrimonial/view/ProfileDetail/ProfileDetail.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
@@ -70,11 +69,7 @@ class ProfileScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 22.h),
               child: Column(
                 children: [
-                  ProfileList(
-                      text: "Profile",
-                      press: () {
-                        Get.to(() => ProfileDetail());
-                      }),
+                  ProfileList(text: "Profile", press: () {}),
                   ProfileList(text: "Partner Preference", press: () {}),
                   ProfileList(text: "Membership plan", press: () {}),
                   ProfileList(text: "Log Out", press: () {}),

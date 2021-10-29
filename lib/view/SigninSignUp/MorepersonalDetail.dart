@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/utils/error_handler.dart';
+import 'package:matrimonial/utils/sharePreference_instance.dart';
 import 'package:matrimonial/view/SigninSignUp/ProfessionalDetails.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
@@ -129,6 +132,7 @@ class MorePersonalInfo extends StatefulWidget {
 }
 
 class _MorePersonalInfoState extends State<MorePersonalInfo> {
+  final _familyBackgroundController = TextEditingController();
   var maritalStatusList = [
     'Never Married',
     'Widowed',
@@ -201,6 +205,25 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
   var selectedDisability;
 
   @override
+  void initState() {
+    selectedMaritalStatus = maritalStatusList[0];
+    selectedNoOfChildren = noOfChildrenList[0];
+    selectedHeightInFit = heightInFitList[0];
+    selectedHeightInInch = heightInInchList[0];
+    selectedFamilyStatus = familyStatusList[0];
+    selectedFamilyType = familyTypeList[0];
+    selectedFamilyValues = familyValuesList[0];
+    selectedDisability = disabilityList[0];
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _familyBackgroundController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
@@ -241,25 +264,60 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
             SizedBox(
                 width: 1.sw,
                 height: 50.h,
+                child: DefaultButton(
+                    text: "Next",
+                    press: () {
+                      sendDataToApi();
+                      // Get.to(() => ProfessionalDetails());
+                    })),
+            SizedBox(height: 25.h),
+            SizedBox(
+                width: 1.sw,
+                height: 50.h,
                 child: GreyButton(
                     text: "Back",
                     press: () {
                       Get.back();
                     })),
             SizedBox(height: 25.h),
-            SizedBox(
-                width: 1.sw,
-                height: 50.h,
-                child: DefaultButton(
-                    text: "Next",
-                    press: () {
-                      Get.to(() => ProfessionalDetails());
-                    })),
-            SizedBox(height: 25.h),
           ],
         ),
       ),
     );
+  }
+
+  void sendDataToApi() async {
+    try {
+      var userId = sharePrefereceInstance.getuserId();
+      final body = {
+        "Id": "$userId",
+        "MaritalStatus": "$selectedMaritalStatus",
+        "Children": "$selectedNoOfChildren",
+        "HeightFt": "$selectedHeightInFit",
+        "HeightInch": "$selectedHeightInInch",
+        "FamilyStatus": "$selectedFamilyStatus",
+        "FamilyType": "$selectedFamilyType",
+        "FamilyValues": "$selectedFamilyValues",
+        "Disability": "$selectedDisability",
+        "FamilyBackground": "${_familyBackgroundController.text}",
+        "OnTable": "REG3",
+      };
+      // print(body);
+      var result = await networkcallService.register(body: body, registerNo: 3);
+      if (result) {
+        Get.to(
+          () => ProfessionalDetails(),
+        );
+      }
+    } catch (e) {
+      if (e is CustomError) {
+        if (e.isNetworkError != null && (e.isNetworkError)!) {
+          showSnack(e.customMessage);
+        } else {
+          showSnack(e.customMessage);
+        }
+      }
+    }
   }
 
   maritalStatusWidget() {
@@ -616,6 +674,7 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
             // color: backGroundColor,
           ),
           child: TextField(
+            controller: _familyBackgroundController,
             maxLines: 10,
             decoration: InputDecoration(border: InputBorder.none),
           ),

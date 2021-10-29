@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/utils/error_handler.dart';
+import 'package:matrimonial/utils/sharePreference_instance.dart';
 import 'package:matrimonial/view/BottomTab/MyTabBar.dart';
+import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
+import 'package:matrimonial/view/dashboard/dashboard.dart';
 
 class AboutyourSelf extends StatelessWidget {
   @override
@@ -16,37 +21,42 @@ class AboutyourSelf extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
           title: customText("Register", white, 16.sp, FontWeight.w700),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  height: 1.sh,
-                  width: 1.sw,
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 1.sw,
-                        height: 120.h,
-                        alignment: Alignment.topCenter,
-                        padding: EdgeInsets.symmetric(vertical: 22.h),
-                        decoration: BoxDecoration(
-                          color: kThirdColor,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SingleChildScrollView(
+                  child: Container(
+                    height: 1.sh,
+                    width: 1.sw,
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 1.sw,
+                          height: 120.h,
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.symmetric(vertical: 22.h),
+                          decoration: BoxDecoration(
+                            color: kThirdColor,
+                          ),
+                          child: Column(
+                            children: [
+                              customText("Get started with your profile", white,
+                                  20.sp, FontWeight.w700),
+                            ],
+                          ),
                         ),
-                        child: Column(
-                          children: [
-                            customText("Get started with your profile", white,
-                                20.sp, FontWeight.w700),
-                          ],
-                        ),
-                      ),
-                      PartOne(),
-                    ],
+                        PartOne(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -122,6 +132,7 @@ class AboutSelf extends StatefulWidget {
 }
 
 class _AboutSelfState extends State<AboutSelf> {
+  final _AboutyourselfController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -141,7 +152,7 @@ class _AboutSelfState extends State<AboutSelf> {
             SizedBox(height: 5.h),
             TextFormField(
                 maxLines: 5,
-                decoration: myInputDecoration(hintText: 'E-mail Address')),
+                decoration: myInputDecoration(hintText: 'About yourself')),
             SizedBox(height: 35.h),
             SizedBox(
                 width: 1.sw,
@@ -149,12 +160,41 @@ class _AboutSelfState extends State<AboutSelf> {
                 child: DefaultButton(
                     text: "Finish",
                     press: () {
-                      Get.to(() => MyTabBar());
+                      Get.to(() =>
+                          // sendDataToApi()
+                          DashboardPage());
                     })),
             SizedBox(height: 25.h),
           ],
         ),
       ),
     );
+  }
+
+  void MyTabBar() async {
+    try {
+      var userId = sharePrefereceInstance.getuserId();
+      // if (userId != null) {
+      final body = {
+        "Id": "1",
+        "AboutYourself": "${_AboutyourselfController.text}",
+        "OnTable": "REG5",
+      };
+      // print(body);
+      var result = await networkcallService.register(body: body, registerNo: 5);
+      if (result) {
+        Get.to(
+          () => MyTabBar(),
+        );
+      }
+    } catch (e) {
+      if (e is CustomError) {
+        if (e.isNetworkError != null && (e.isNetworkError)!) {
+          showSnack(e.customMessage);
+        } else {
+          showSnack(e.customMessage);
+        }
+      }
+    }
   }
 }

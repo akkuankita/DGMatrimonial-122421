@@ -5,42 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-//=================================BASE URL====================================
-final String BASE_URL = "https://laravel.gowebbidemo.com/122303/public/api/v1/";
-// final String BASE_URL = "https://bhojpurisangam.in/api/";
-//========================================sharedpreference======================
-
-//---------------Parent Apis-----------------//
-final String login_google = 'login-google'; //get
-final String whats_new = 'whats-new'; //get
-final String aboutus = 'aboutus'; //get
-final String categories = 'categories'; //get
-final String albums = 'albums'; //get
-final String mostLoveOneImage = 'bestoff-image'; //get
-final String audioStoriesImage = 'audio-stories-image'; //get
-final String latestAudioStoriesHome = 'latest-audio-stories-home'; //get
-final String myplaylist = 'my-playlist'; //get
-final String remove_playlist = 'remove-playlist'; //get
-final String like_dislike = 'songs-like-dislike'; //get
-final String allaudios = 'all-audios'; //get
-final String bestofSongsichendana = 'bestof-songsichendana'; //get
-final String categoryWiseAudio = 'category-wise-audio'; //get
-final String albumsWiseAudio = 'albums-wise-audio'; //get
-final String artistWiseAudio = 'artist-wise-audio'; //get
-final String writerWiseAudio = 'writer-wise-audio'; //get
-final String musicIdWiseAudio = 'audio-id-wise-music'; //get
-final String searchSongs = 'search-songs-album-artist'; //get
-final String poems = 'poems'; //get
-final String artistAndWriter = 'artist-writer'; //get
-final String savePlayCountApi = 'songs-play-count';
-
-//========================================sharedpreference======================
 //==========================Text============================================
-
-final String INTERNET_ERROR = "We are faceing an error";
-
-final String SUCCESS = "success";
-final String FAILED = "failed";
 
 /* ---------------------- image -------------*/
 String logo = 'assets/logo.png';
@@ -114,14 +79,13 @@ Widget customUnderlineText(String text, Color color, double size,
 const kPrimaryColor = Color(0xffFF7D13);
 const kSecColor = Color(0xff090927);
 const kThirdColor = Color(0xff003B71);
-
 const kPrimaryGradientColor = LinearGradient(
   begin: FractionalOffset.centerLeft,
   end: FractionalOffset.centerRight,
-
   //stops: [0.1, 2.0],
   colors: [Color(0xFFFFD7B7), Color(0xFFFFFFFF)],
 );
+
 final Color backGroundColor = Color(0xff090927);
 final Color primaryColor = Color(0xff3A3A3A);
 final Color commonColor = Color(0xff090927);
@@ -131,11 +95,8 @@ const white = Color(0xFFFFFFFF);
 const border = Color(0xFFDBDBDB);
 const unselect = Color(0xFFB1B1B1);
 final Color lightBlack = Colors.black54;
-
 const kAnimationDurkThirdColoration = Duration(milliseconds: 200);
-
 const defaultDuration = Duration(milliseconds: 250);
-
 final Color mainColor = Color(0xffFF7D13);
 // final Color primaryColor = Color(0xff3A3A3A);
 final Color secondryColor = Color(0xff003B71);
@@ -152,9 +113,7 @@ final Color grey = Colors.grey;
 final Color yellow = Colors.yellow;
 final Color orange = Colors.orange;
 final Color red = Colors.red;
-
 // final Color white = Colors.white;
-
 final FontWeight extraBoldTextWeight = FontWeight.w700;
 final FontWeight boldTextWeight = FontWeight.w600;
 final FontWeight mediumTextWeight = FontWeight.w500;
@@ -265,9 +224,6 @@ void showSnack(String msg,
 String internetError = 'No Internet Connection';
 String baseUrl = 'https://demo39.gowebbi.us/api/';
 String registerApi1 = baseUrl + 'RegistrationApi/Registration';
-String registerApi2 = baseUrl + 'RegistrationApi/Registration';
-String registerApi3 = baseUrl + 'RegistrationApi/Registration';
-String registerApi4 = baseUrl + 'RegistrationApi/Registration';
 String loginApi = baseUrl + 'LoginApi/Login';
 String divisionApi = baseUrl + 'RegistrationApi/FetchDivision';
 String casteSubCasteApi = baseUrl + 'RegistrationApi/FetchCasteSubCaste';
@@ -276,8 +232,10 @@ String countryApi = baseUrl + 'RegistrationApi/FetchCountry';
 String stateApi = baseUrl + 'RegistrationApi/FetchState';
 String cityApi = baseUrl + 'RegistrationApi/FetchCity';
 String prefLocApi = baseUrl + 'RegistrationApi/FetchPrefLoc';
+String fetchProfile = baseUrl + 'ProfileApi/FetchProfile';
 // String otpVerifyApi = baseUrl + 'otp-verify-register';
 
 //----------------------------keys--------------------------
 String API_SUCCESS = 'success';
 String API_FAILED = 'failed';
+final String INTERNET_ERROR = "We are faceing an error";

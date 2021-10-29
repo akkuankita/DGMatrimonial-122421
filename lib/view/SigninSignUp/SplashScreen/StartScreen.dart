@@ -10,6 +10,7 @@ import 'package:matrimonial/view/SigninSignUp/LoginScreen.dart';
 import 'package:matrimonial/view/SigninSignUp/RegisterScreen.dart';
 import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
+import 'package:matrimonial/view/dashboard/dashboard.dart';
 
 class StartScreen extends StatelessWidget {
   @override
@@ -47,7 +48,7 @@ class StartScreen extends StatelessWidget {
                 SizedBox(height: 35.h),
                 InkWell(
                     onTap: () {
-                      Get.to(() => MyTabBar());
+                      Get.to(() => DashboardPage());
                     },
                     child:
                         customText(" Skip", kSecColor, 16.sp, FontWeight.w700)),

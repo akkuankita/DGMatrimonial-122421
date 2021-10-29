@@ -5,7 +5,7 @@ import 'package:matrimonial/recyclebin/signInSignUp.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:matrimonial/utils/customs/button.dart';
-//import 'package:matrimonial/view/dashboard/dashboard.dart';
+import 'package:matrimonial/view/dashboard/dashboard.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
@@ -53,11 +53,12 @@ class _OnBoardingState extends State<OnBoarding> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          customText(title[i], mainColor, 18,FontWeight.w400),
+                          customText(title[i], mainColor, 18, FontWeight.w400),
                           SizedBox(
                             height: 10,
                           ),
-                          customText(subTitle[i], primaryColor, 17,FontWeight.w400),
+                          customText(
+                              subTitle[i], primaryColor, 17, FontWeight.w400),
                           SizedBox(
                             height: 10,
                           ),

@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/view/SigninSignUp/LoginScreen.dart';
-//import 'package:matrimonial/view/SigninSignUp/PersonalDetails.dart';
-//import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
+import 'package:matrimonial/view/SigninSignUp/PersonalDetails.dart';
+import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
 
 void main() {
   runApp(GetMaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));

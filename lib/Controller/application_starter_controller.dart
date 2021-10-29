@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
-//import 'package:matrimonial/utils/const.dart';
+import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/sharePreference_instance.dart';
 
 enum ApplicationState { applicationRunning, LoggedIn, LoggedOut }

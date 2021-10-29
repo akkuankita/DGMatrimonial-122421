@@ -121,12 +121,11 @@ class _MorePersonalDetailsRegisterState
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               customText('More Personal Details', commonColor, 0.06.sw,
-                    FontWeight.w500),
+                  FontWeight.w500),
               SizedBox(
                 height: 20,
               ),
-              customText('Marital Status', commonColor, 18,
-                    FontWeight.w400),
+              customText('Marital Status', commonColor, 18, FontWeight.w400),
               ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
@@ -149,7 +148,7 @@ class _MorePersonalDetailsRegisterState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           customText(maritalStatusList[i], lightBlack, 17,
-                                FontWeight.w400),
+                              FontWeight.w400),
                           selectedMaritalStatusRadiogroupVal ==
                                   maritalStatusList[i]
                               ? Container(
@@ -180,8 +179,7 @@ class _MorePersonalDetailsRegisterState
               SizedBox(
                 height: 30,
               ),
-              customText('No. of children', commonColor, 18,
-                    FontWeight.w400),
+              customText('No. of children', commonColor, 18, FontWeight.w400),
               ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
@@ -204,7 +202,7 @@ class _MorePersonalDetailsRegisterState
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           customText(maritalStatusList[i], lightBlack, 17,
-                                FontWeight.w400),
+                              FontWeight.w400),
                           selectedMaritalStatusRadiogroupVal ==
                                   maritalStatusList[i]
                               ? Container(
@@ -238,34 +236,31 @@ class _MorePersonalDetailsRegisterState
               SizedBox(
                 height: 15,
               ),
-              customText('Height', commonColor, 18,
-                    FontWeight.w400),
+              customText('Height', commonColor, 18, FontWeight.w400),
               /* ---------------looking for---------- */
               customDropDown(genderList, selectedGender),
               SizedBox(
                 height: 15,
               ),
-              customText('Family Status', commonColor, 18,
-                    FontWeight.w400),
+              customText('Family Status', commonColor, 18, FontWeight.w400),
               /* ---------------looking for---------- */
               customDropDown(genderList, selectedGender),
               SizedBox(
                 height: 15,
               ),
-              customText('Family type', commonColor, 18,   FontWeight.w400),
+              customText('Family type', commonColor, 18, FontWeight.w400),
               /* ---------------looking for---------- */
               customDropDown(genderList, selectedGender),
               SizedBox(
                 height: 15,
               ),
-              customText('Family Values', commonColor, 18,
-                    FontWeight.w400),
+              customText('Family Values', commonColor, 18, FontWeight.w400),
               /* ---------------looking for---------- */
               customDropDown(genderList, selectedGender),
               SizedBox(
                 height: 15,
               ),
-              customText('Any Disability', commonColor, 18,   FontWeight.w400),
+              customText('Any Disability', commonColor, 18, FontWeight.w400),
               /* ---------------looking for---------- */
               customDropDown(genderList, selectedGender),
               SizedBox(
@@ -285,7 +280,9 @@ class _MorePersonalDetailsRegisterState
                         borderRadius: BorderRadius.circular(10),
                         color: backGroundColor,
                       ),
-                      child: Center(child: customText('Prev', black, 18,FontWeight.w400)),
+                      child: Center(
+                          child:
+                              customText('Prev', black, 18, FontWeight.w400)),
                     ),
                   ),
                   SizedBox(width: 0.02.sw),
@@ -300,7 +297,9 @@ class _MorePersonalDetailsRegisterState
                         borderRadius: BorderRadius.circular(10),
                         color: mainColor,
                       ),
-                      child: Center(child: customText('Next', white, 18,FontWeight.w400)),
+                      child: Center(
+                          child:
+                              customText('Next', white, 18, FontWeight.w400)),
                     ),
                   ),
                 ],
@@ -329,7 +328,8 @@ class _MorePersonalDetailsRegisterState
                   width: 0.8.sw,
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0.02.sw, 0, 0, 0),
-                    child: customText(selectedItem, commonColor, 18,FontWeight.w400),
+                    child: customText(
+                        selectedItem, commonColor, 18, FontWeight.w400),
                   ),
                 ),
                 // elevation: 16,
@@ -346,7 +346,8 @@ class _MorePersonalDetailsRegisterState
                     value: value,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                      child: customText(value, commonColor, 18,FontWeight.w400),
+                      child:
+                          customText(value, commonColor, 18, FontWeight.w400),
                     ),
                   );
                 }).toList(),

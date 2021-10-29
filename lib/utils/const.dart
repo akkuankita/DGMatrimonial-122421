@@ -86,9 +86,9 @@ const kPrimaryGradientColor = LinearGradient(
   colors: [Color(0xFFFFD7B7), Color(0xFFFFFFFF)],
 );
 
-final Color backGroundColor = Color(0xff090927);
+final Color backGroundColor = Color.fromRGBO(255, 245, 243, 1);
 final Color primaryColor = Color(0xff3A3A3A);
-final Color commonColor = Color(0xff090927);
+final Color commonColor = Color(0xffFF7D13);
 const kButtonColor = Color(0xFF3C2C2C);
 const kTextColor = Color(0xFF1A1A1A);
 const white = Color(0xFFFFFFFF);

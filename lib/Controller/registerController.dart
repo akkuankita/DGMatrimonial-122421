@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:matrimonial/model/Country.dart';
+import 'package:matrimonial/model/Prefloc.dart';
 import 'package:matrimonial/model/castSubcastModel.dart';
 import 'package:matrimonial/model/city.dart';
 import 'package:matrimonial/model/divisionModel.dart';
@@ -38,6 +39,11 @@ class RegisterController extends GetxController {
   var cityModel = CityModel().obs;
   var listOfCity = <CityData>[].obs;
   var selectedCity;
+
+  //preflocModel
+  var preflocModel = PreflocModel().obs;
+  var listOfPrefloc = <PreflocData?>[];
+  var selectedPreflocList = <PreflocData?>[];
 
   @override
   void onInit() {
@@ -168,6 +174,20 @@ class RegisterController extends GetxController {
     if (tempCityList.isNotEmpty) {
       listOfCity.assignAll(tempCityList);
       selectedCity = listOfCity[0];
-    } 
+    }
+  }
+
+  //fetchCastList -------------------------------------------
+  Future fetchPrefloc() async {
+    try {
+      var apiData = await networkcallService.fetchPrefloc();
+      preflocModel.value = apiData;
+      listOfPrefloc.assignAll(preflocModel.value.data!);
+    } catch (e) {
+      if (e is CustomError) {
+        print(e);
+        showToast(e.customMessage, red);
+      }
+    }
   }
 }

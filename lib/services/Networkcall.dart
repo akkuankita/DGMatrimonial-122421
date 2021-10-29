@@ -225,7 +225,7 @@ class Networkcall extends GetConnect {
   // ----------------------------register4--------------------------------
   Future<PreflocModel> fetchPrefloc() async {
     try {
-      var response = await get(cityApi);
+      var response = await get(prefLocApi);
       print('res- ${response.body}-- ');
       final myJson = response.body;
       if (response.statusCode == 200) {

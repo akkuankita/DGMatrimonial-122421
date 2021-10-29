@@ -1,17 +1,15 @@
 class PreflocModel {
   String? status;
   String? msg;
-  List<Data>? data;
-
+  List<PreflocData>? data;
   PreflocModel({this.status, this.msg, this.data});
-
   PreflocModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <PreflocData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new PreflocData.fromJson(v));
       });
     }
   }
@@ -26,17 +24,16 @@ class PreflocModel {
   }
 }
 
-class Data {
+class PreflocData {
   int? id;
   String? preferableLoc;
 
-  Data({this.id, this.preferableLoc});
+  PreflocData({this.id, this.preferableLoc});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  PreflocData.fromJson(Map<String, dynamic> json) {
     id = json['Id'];
     preferableLoc = json['PreferableLoc'];
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Id'] = this.id;

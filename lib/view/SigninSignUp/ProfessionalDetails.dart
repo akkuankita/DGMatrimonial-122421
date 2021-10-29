@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/Controller/registerController.dart';
 import 'package:matrimonial/model/Country.dart';
+import 'package:matrimonial/model/Prefloc.dart';
 import 'package:matrimonial/model/city.dart';
 import 'package:matrimonial/model/state.dart';
 import 'package:matrimonial/services/Networkcall.dart';
@@ -11,6 +12,10 @@ import 'package:matrimonial/utils/error_handler.dart';
 import 'package:matrimonial/view/SigninSignUp/AboutyourSelf.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
+import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 
 class ProfessionalDetails extends StatelessWidget {
   @override
@@ -129,7 +134,8 @@ class ProDetail extends StatefulWidget {
 String _selectedValue = 'A';
 
 class _ProDetailState extends State<ProDetail> {
- final _citizenshipController = TextEditingController();
+  final _citizenshipController = TextEditingController();
+  final _anualIncomeController = TextEditingController();
   var highestEducationCategoryList = [
     "No Answer",
     "High school",
@@ -172,17 +178,22 @@ class _ProDetailState extends State<ProDetail> {
   @override
   void initState() {
     super.initState();
-    selectedHighestEducationCategory = highestEducationCategoryList[0];
-    selectedMaritalStatusRadiogroupVal = maritalStatusList[0];
-    selectedOccupationCategory = occupationCategoryList[0];
-    selectedAnnualIncomeCurrency = annualIncomeCurrencyList[0];
-    selectedemployedIn = employedInList[0];
-    initialDataFetching();
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      selectedHighestEducationCategory = highestEducationCategoryList[0];
+      selectedMaritalStatusRadiogroupVal = maritalStatusList[0];
+      selectedOccupationCategory = occupationCategoryList[0];
+      selectedAnnualIncomeCurrency = annualIncomeCurrencyList[0];
+      selectedemployedIn = employedInList[0];
+      initialDataFetching();
+    });
   }
 
   initialDataFetching() async {
     await _controller.fetchCountryList();
     _controller.selectedCountry = _controller.listOfCountry[0];
+    await _controller.fetchPrefloc();
+    // _controller.selectedPreflocList = _controller.listOfPrefloc[0];
     setState(() {});
   }
 
@@ -211,7 +222,7 @@ class _ProDetailState extends State<ProDetail> {
           customText("Citizenship", Colors.black, 15, FontWeight.w300),
           SizedBox(height: 5),
           TextFormField(
-          controller:_citizenshipController, 
+            controller: _citizenshipController,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.r),
@@ -220,6 +231,34 @@ class _ProDetailState extends State<ProDetail> {
             ),
           ),
           SizedBox(height: 25.h),
+          SizedBox(
+              width: double.infinity,
+              child: Card(
+                color: Colors.grey[300],
+                elevation: 2,
+                child: MultiSelectDialogField(
+                  items: _controller.listOfPrefloc.map((e) {
+                    var preferableLocation = e?.preferableLoc;
+                    return MultiSelectItem(e, preferableLocation!);
+                  }).toList(),
+                  listType: MultiSelectListType.CHIP,
+                  onConfirm: (List<PreflocData?> values) {
+                    _controller.selectedPreflocList.assignAll(values);
+                  },
+                  searchable: true,
+                  chipDisplay: MultiSelectChipDisplay(
+                    items: _controller.selectedPreflocList.map((e) {
+                      var preferableLocation = e?.preferableLoc;
+                      return MultiSelectItem(e, preferableLocation!);
+                    }).toList(),
+                    onTap: (PreflocData? value) {
+                      setState(() {
+                        _controller.selectedPreflocList.remove(value);
+                      });
+                    },
+                  ),
+                ),
+              )),
           SizedBox(
               width: 1.sw,
               height: 50.h,
@@ -250,14 +289,14 @@ class _ProDetailState extends State<ProDetail> {
         "Education": "$selectedHighestEducationCategory",
         "Occupation": "$selectedOccupationCategory",
         "Currency": "$selectedAnnualIncomeCurrency",
-        "AnnualIncome": "",
+        // "AnnualIncome": "",
         "EmployedIn": "$selectedemployedIn",
         "CountryName": "${_controller.selectedCountry}",
         "State": "${_controller.selectedState}",
-        "City":"${_controller.selectedCity}",
+        "City": "${_controller.selectedCity}",
         "Citizenship": "${_citizenshipController.text}",
-        "ResidentialSts": " ",
-        "PreferableLoc": " ",
+        "ResidentialSts": "$selectedresidential",
+        "PreferableLoc": "${_controller.selectedPreflocList.toString()}",
         "OnTable": "REG4",
       };
       var result = await networkcallService.register(body: body, registerNo: 4);
@@ -472,8 +511,8 @@ class _ProDetailState extends State<ProDetail> {
         customText("Annual Income", Color(0xFF707070), 14.sp, FontWeight.w400),
         SizedBox(height: 8.h),
         Container(
-                  // width: 0.6.sw,
-                  height: 0.07.sh,
+          // width: 0.6.sw,
+          height: 0.07.sh,
           child: Row(
             children: [
               Flexible(
@@ -513,6 +552,7 @@ class _ProDetailState extends State<ProDetail> {
                 height: 0.09.sh,
                 padding: EdgeInsets.only(left: 5),
                 child: TextFormField(
+                  controller: _anualIncomeController,
                   decoration: InputDecoration(
                     hintText: 'Enter Amount',
                     border: OutlineInputBorder(

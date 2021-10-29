@@ -289,7 +289,7 @@ class _ProDetailState extends State<ProDetail> {
         "Education": "$selectedHighestEducationCategory",
         "Occupation": "$selectedOccupationCategory",
         "Currency": "$selectedAnnualIncomeCurrency",
-        // "AnnualIncome": "",
+        "AnnualIncome": _anualIncomeController.text,
         "EmployedIn": "$selectedemployedIn",
         "CountryName": "${_controller.selectedCountry}",
         "State": "${_controller.selectedState}",
@@ -552,6 +552,7 @@ class _ProDetailState extends State<ProDetail> {
                 height: 0.09.sh,
                 padding: EdgeInsets.only(left: 5),
                 child: TextFormField(
+                  keyboardType: TextInputType.number,
                   controller: _anualIncomeController,
                   decoration: InputDecoration(
                     hintText: 'Enter Amount',

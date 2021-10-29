@@ -21,7 +21,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late FocusNode _phoneFocusNode = FocusNode();
   late FocusNode _passwordFocusNode = FocusNode();
   late FocusNode _confirmPassFocusNode = FocusNode();
-
   @override
   void initState() {
     super.initState();

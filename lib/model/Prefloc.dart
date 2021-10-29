@@ -23,7 +23,6 @@ class PreflocModel {
     return data;
   }
 }
-
 class PreflocData {
   int? id;
   String? preferableLoc;

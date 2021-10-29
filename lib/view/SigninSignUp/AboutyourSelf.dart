@@ -141,17 +141,15 @@ class _AboutSelfState extends State<AboutSelf> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 40.h),
-            customText(
-                "Professional Details", kThirdColor, 16.sp, FontWeight.w700),
+            customText("About Yourself", kThirdColor, 16.sp, FontWeight.w700),
             SizedBox(height: 25.h),
-            customText("Write Something About You", Color(0xFF090927), 16.sp,
-                FontWeight.w400),
-            SizedBox(height: 5.h),
             customText("Write about yourself in minimum of 60 words",
                 Color(0xFF707070), 14.sp, FontWeight.w400),
-            SizedBox(height: 5.h),
+            SizedBox(height: 25.h),
             TextFormField(
+              controller: _AboutyourselfController,
                 maxLines: 5,
+                maxLength: 60,
                 decoration: myInputDecoration(hintText: 'About yourself')),
             SizedBox(height: 35.h),
             SizedBox(
@@ -160,9 +158,16 @@ class _AboutSelfState extends State<AboutSelf> {
                 child: DefaultButton(
                     text: "Finish",
                     press: () {
-                      Get.to(() =>
-                          // sendDataToApi()
-                          DashboardPage());
+                      sendDataToApi();
+                    })),
+            SizedBox(height: 25.h),
+            SizedBox(
+                width: 1.sw,
+                height: 50.h,
+                child: GreyButton(
+                    text: "Back",
+                    press: () {
+                      Get.back();
                     })),
             SizedBox(height: 25.h),
           ],
@@ -171,21 +176,19 @@ class _AboutSelfState extends State<AboutSelf> {
     );
   }
 
-  void MyTabBar() async {
+  void sendDataToApi() async {
     try {
       var userId = sharePrefereceInstance.getuserId();
       // if (userId != null) {
       final body = {
-        "Id": "1",
+        "Id": "$userId",
         "AboutYourself": "${_AboutyourselfController.text}",
         "OnTable": "REG5",
       };
       // print(body);
       var result = await networkcallService.register(body: body, registerNo: 5);
       if (result) {
-        Get.to(
-          () => MyTabBar(),
-        );
+        Get.to(() => DashboardPage());
       }
     } catch (e) {
       if (e is CustomError) {

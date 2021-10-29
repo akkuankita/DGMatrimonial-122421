@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
         } else if (applicationState == ApplicationState.LoggedOut) {
           // return OnBoarding();
           // return LoginScreen();
-          return ProfessionalDetails();
+          return OnBoarding();
         } else {
           return returnWidget1;
         }

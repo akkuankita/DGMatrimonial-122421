@@ -326,7 +326,7 @@ class _MorePersonalInfoState extends State<MorePersonalInfo> {
         SizedBox(
           height: 15,
         ),
-        customText('Drinking', commonColor, 18, FontWeight.w400),
+        customText('Marital Status', commonColor, 18, FontWeight.w400),
         ListView.builder(
           padding: EdgeInsets.zero,
           shrinkWrap: true,

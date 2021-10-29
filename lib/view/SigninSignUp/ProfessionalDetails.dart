@@ -254,6 +254,8 @@ class _ProDetailState extends State<ProDetail> {
                       color: Colors.grey[300],
                       elevation: 2,
                       child: MultiSelectDialogField(
+                        title: Text('Preferable Location'),
+                        buttonText: Text('Preferable Location'),
                         items: _controller.listOfPrefloc.map((e) {
                           var preferableLocation = e?.preferableLoc;
                           return MultiSelectItem(e, preferableLocation!);

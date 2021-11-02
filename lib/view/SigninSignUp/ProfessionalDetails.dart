@@ -588,8 +588,8 @@ class _ProDetailState extends State<ProDetail> {
                 height: 0.09.sh,
                 padding: EdgeInsets.only(left: 5),
                 child: TextFormField(
-                  controller: _anualIncomeController,
                   keyboardType: TextInputType.number,
+                  controller: _anualIncomeController,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Enter Enter Amount ";

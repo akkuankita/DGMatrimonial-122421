@@ -22,11 +22,14 @@ class _profileDetailsPageState extends State<profileDetailsPage>
   bool _isFirstSelected = true;
   bool _isSecondSelected = false;
   ProfileController _profileController = Get.put(ProfileController());
-
+  var data;
+  //Text editing Controller//////
+  // bool _isEditingText = false;
+  // TextEditingController _editingController;
+  // String initialText = "Initial Text";
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _profileController.fetchProfileDetails(profileId: 154);
       // _profileController.fetchProfileDetails(profileId: widget.profileId);
@@ -73,87 +76,90 @@ class _profileDetailsPageState extends State<profileDetailsPage>
 
   getFirstPart() {
     return Obx(() {
-      var data = _profileController.profileModel.value.data![0];
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 0.4.sw,
-                height: 0.4.sw,
-                decoration: BoxDecoration(
+      data = _profileController.profileModel.value.data![0];
+      if (data != null) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 0.4.sw,
+                  height: 0.4.sw,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 0,
+                            offset: Offset(10, 10),
+                            color: backGroundColor)
+                      ]),
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 0,
-                          offset: Offset(10, 10),
-                          color: backGroundColor)
-                    ]),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: CustomCashedNetworImage(
-                    imageUrl: img,
-                  ),
-                ),
-              ),
-              Column(
-                children: [
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: mainColor,
-                    child: Icon(
-                      Icons.call,
-                      color: white,
+                    child: CustomCashedNetworImage(
+                      imageUrl: img,
                     ),
                   ),
-                  SizedBox(
-                    height: 0.02.sh,
-                  ),
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: mainColor,
-                    child: Icon(Icons.chat, color: white),
-                  ),
-                ],
-              )
-            ],
-          ),
-          SizedBox(
-            height: 0.03.sh,
-          ),
-          customText(data.fullName!, commonColor, 0.06.sw, FontWeight.w700),
-          customText(
-              'Profile Created By Myself', commonColor, 16, FontWeight.w300),
-          SizedBox(
-            height: 0.02.sh,
-          ),
-          getRichText('Age: ', data.age.toString()),
-          getRichText('Height : ', data.heightFt),
-          getRichText('Religion : ', data.religion),
-          getRichText('Caste : ', data.caste),
-          getRichText('Sub Caste : ', data.subCaste),
-          getRichText('Location : ', data.preferableLoc),
-          getRichText('Education  : ', data.education),
-          getRichText('Occupation : ', data.occupation),
-          getRichText('Annual Income : ', data.annualIncome),
-          // getRichText('Location : ', 'Location'),
+                ),
+                Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: mainColor,
+                      child: Icon(
+                        Icons.call,
+                        color: white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 0.02.sh,
+                    ),
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: mainColor,
+                      child: Icon(Icons.chat, color: white),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            SizedBox(
+              height: 0.03.sh,
+            ),
+            customText(data.fullName!, commonColor, 0.06.sw, FontWeight.w700),
+            customText(
+                'Profile Created By Myself', commonColor, 16, FontWeight.w300),
+            SizedBox(
+              height: 0.02.sh,
+            ),
+            getRichText('Age: ', data.age.toString()),
+            getRichText('Height : ', data.heightFt),
+            getRichText('Religion : ', data.religion),
+            getRichText('Caste : ', data.caste),
+            getRichText('Sub Caste : ', data.subCaste),
+            getRichText('Location : ', data.preferableLoc),
+            getRichText('Education  : ', data.education),
+            getRichText('Occupation : ', data.occupation),
+            getRichText('Annual Income : ', data.annualIncome),
+            // getRichText('Location : ', 'Location'),
+            button(() {
+              Get.to(() => SearchResult());
+            }, 'Send Interest', mainColor, white),
+            SizedBox(
+              height: 0.02.sh,
+            ),
+            button(() {
+              Get.to(() => SearchResult());
+            }, 'Like ', grayColor, white),
 
-          button(() {
-            Get.to(() => SearchResult());
-          }, 'Send Interest', mainColor, white),
-          SizedBox(
-            height: 0.02.sh,
-          ),
-          button(() {
-            Get.to(() => SearchResult());
-          }, 'Like ', grayColor, white),
-
-          getTabSection(),
-        ],
-      );
+            getTabSection(),
+          ],
+        );
+      } else {
+        return Container();
+      }
     });
   }
 

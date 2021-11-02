@@ -20,8 +20,8 @@ class RegisterController extends GetxController {
   var selectedSubcast;
 
   var hobbiesModel = HobbiesModel().obs;
-  var hobbiesList = <HobbieData>[].obs;
-  var selectedHobbies;
+  var hobbiesList = <HobbieData?>[];
+  var selectedHobbiesList = <HobbieData?>[];
 
   var divisionModel = DivisionModel().obs;
   var divisionList = <DivisionData>[].obs;

@@ -17,6 +17,10 @@ import 'package:matrimonial/view/SigninSignUp/MorepersonalDetail.dart';
 import 'package:matrimonial/view/SigninSignUp/SplashScreen/OnBoarding.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
+import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 
 class PersonalDetails extends StatefulWidget {
   @override
@@ -219,7 +223,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
     await _controller.fetchCastList();
     await _controller.fetchHobbie();
     _controller.selectedCast = _controller.listOfCastSubcast[0];
-    _controller.selectedHobbies = _controller.hobbiesList[0];
 
     await _controller.fetchDivision();
     _controller.selectedDivision = _controller.divisionList[0];
@@ -246,6 +249,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
               castDropDown(),
               subCastDropDown(),
               hobbiesWidget(),
+              SizedBox(height: 25.h),
               doshDropDown(),
               CheckboxListTile(
                   contentPadding: EdgeInsets.all(0),
@@ -293,11 +297,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
   void sendDataToApi() async {
     try {
       var userId = sharePrefereceInstance.getuserId();
+      var hobbiesList = _controller.selectedHobbiesList.map((e) => e?.id);
+      var hobbiesListStringFormate =
+          hobbiesList.toString().replaceAll('(', '').replaceAll(')', '');
+      // print(hobbiesList.toString().replaceAll('(', '').replaceAll(')', ''));
       // if (userId != null) {
-      if (_controller.selectedCast.casteId != null &&
-          _controller.selectedSubcast.subCasteId != null &&
-          _controller.selectedHobbies.id != null &&
-          _controller.selectedDivision.id != null) {
+      // if (_controller.selectedCast.casteId != null &&
+      //     _controller.selectedSubcast.subCasteId != null &&
+      //     _controller.selectedDivision.id != null) {
         final body = {
           "Id": "$userId",
           "Religion": "$selectedRelegion",
@@ -311,7 +318,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
           "EatingHabits": "$selectedEatingHabit",
           "Smoking": "$selectedSmokingHabit",
           "Drinking": "$selectedDrinkingHabit",
-          "Hobbies": "${_controller.selectedHobbies.id}",
+          "Hobbies": "${hobbiesListStringFormate}",
           "OnTable": "REG2",
         };
         // print(body);
@@ -322,9 +329,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
             () => MoreperDetail(),
           );
         }
-      } else {
-        showSnack('please fill up all information');
-      }
+      // } else {
+      //   showSnack('please fill up all information');
+      // }
     } catch (e) {
       if (e is CustomError) {
         if (e.isNetworkError != null && (e.isNetworkError)!) {
@@ -809,39 +816,70 @@ class _PersonalInfoState extends State<PersonalInfo> {
   }
 
   hobbiesWidget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        customText("Hobbies", Color(0xFF707070), 14.sp, FontWeight.w400),
-        SizedBox(height: 8.h),
-        DropdownButtonFormField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              // borderSide:  ,
+    // return Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     customText("Hobbies", Color(0xFF707070), 14.sp, FontWeight.w400),
+    //     SizedBox(height: 8.h),
+    //     DropdownButtonFormField(
+    //       decoration: InputDecoration(
+    //         border: OutlineInputBorder(
+    //           borderRadius: BorderRadius.circular(8.r),
+    //           // borderSide:  ,
+    //         ),
+    //       ),
+    //       value: _controller.selectedHobbies,
+    //       isExpanded: true,
+    //       onChanged: (value) {
+    //         setState(() {
+    //           _controller.selectedHobbies = value as HobbieData;
+    //         });
+    //       },
+    //       items: _controller.hobbiesList
+    //           .map<DropdownMenuItem<HobbieData>>((HobbieData value) {
+    //         return DropdownMenuItem(
+    //           value: value,
+    //           child: Padding(
+    //             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+    //             child: customText(
+    //                 value.hobbies!, Color(0xFF707070), 14.sp, FontWeight.w400),
+    //           ),
+    //         );
+    //       }).toList(),
+    //     ),
+    //     SizedBox(height: 25.h),
+    //   ],
+    // );
+
+    return SizedBox(
+        width: double.infinity,
+        child: Card(
+          color: Colors.grey[300],
+          elevation: 2,
+          child: MultiSelectDialogField(
+            title: Text('Hobbies'),
+            buttonText: Text('Hobbies'),
+            items: _controller.hobbiesList.map((e) {
+              var hobbies = e?.hobbies;
+              return MultiSelectItem(e, hobbies!);
+            }).toList(),
+            listType: MultiSelectListType.CHIP,
+            onConfirm: (List<HobbieData?> values) {
+              _controller.selectedHobbiesList.assignAll(values);
+            },
+            searchable: true,
+            chipDisplay: MultiSelectChipDisplay(
+              items: _controller.selectedHobbiesList.map((e) {
+                var hobbies = e?.hobbies;
+                return MultiSelectItem(e, hobbies!);
+              }).toList(),
+              onTap: (HobbieData? value) {
+                setState(() {
+                  _controller.selectedHobbiesList.remove(value);
+                });
+              },
             ),
           ),
-          value: _controller.selectedHobbies,
-          isExpanded: true,
-          onChanged: (value) {
-            setState(() {
-              _controller.selectedHobbies = value as HobbieData;
-            });
-          },
-          items: _controller.hobbiesList
-              .map<DropdownMenuItem<HobbieData>>((HobbieData value) {
-            return DropdownMenuItem(
-              value: value,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: customText(
-                    value.hobbies!, Color(0xFF707070), 14.sp, FontWeight.w400),
-              ),
-            );
-          }).toList(),
-        ),
-        SizedBox(height: 25.h),
-      ],
-    );
+        ));
   }
 }

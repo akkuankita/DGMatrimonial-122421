@@ -9,6 +9,7 @@ import 'package:matrimonial/model/state.dart';
 import 'package:matrimonial/services/Networkcall.dart';
 import 'package:matrimonial/utils/const.dart';
 import 'package:matrimonial/utils/error_handler.dart';
+import 'package:matrimonial/utils/sharePreference_instance.dart';
 import 'package:matrimonial/view/SigninSignUp/AboutyourSelf.dart';
 import 'package:matrimonial/view/SigninSignUp/comonWidget.dart';
 import 'package:matrimonial/view/components/DefaultButton.dart';
@@ -134,6 +135,7 @@ class ProDetail extends StatefulWidget {
 String _selectedValue = 'A';
 
 class _ProDetailState extends State<ProDetail> {
+  final _formKey = GlobalKey<FormState>();
   final _citizenshipController = TextEditingController();
   final _anualIncomeController = TextEditingController();
   var highestEducationCategoryList = [
@@ -184,6 +186,7 @@ class _ProDetailState extends State<ProDetail> {
       selectedMaritalStatusRadiogroupVal = maritalStatusList[0];
       selectedOccupationCategory = occupationCategoryList[0];
       selectedAnnualIncomeCurrency = annualIncomeCurrencyList[0];
+      selectedresidential = residentialList[0];
       selectedemployedIn = employedInList[0];
       initialDataFetching();
     });
@@ -199,111 +202,144 @@ class _ProDetailState extends State<ProDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Form(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(height: 40.h),
-      customText("Professional Details", kThirdColor, 16.sp, FontWeight.w700),
-      SizedBox(height: 25.h),
-      highestEducationDropDown(),
-      SizedBox(height: 8.h),
-      occupationDropDown(),
-      annualIncomeDropDown(),
-      employedInDropDown(),
-      countryDropDown(),
-      stateDropDown(),
-      cityDropDown(),
-      residentialStatus(),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 8.h),
-          customText("Citizenship", Colors.black, 15, FontWeight.w300),
-          SizedBox(height: 5),
-          TextFormField(
-            controller: _citizenshipController,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.r),
-                // borderSide:  ,
-              ),
-            ),
-          ),
-          SizedBox(height: 25.h),
-          SizedBox(
-              width: double.infinity,
-              child: Card(
-                color: Colors.grey[300],
-                elevation: 2,
-                child: MultiSelectDialogField(
-                  items: _controller.listOfPrefloc.map((e) {
-                    var preferableLocation = e?.preferableLoc;
-                    return MultiSelectItem(e, preferableLocation!);
-                  }).toList(),
-                  listType: MultiSelectListType.CHIP,
-                  onConfirm: (List<PreflocData?> values) {
-                    _controller.selectedPreflocList.assignAll(values);
+    return Form(
+      key: _formKey,
+      child: SingleChildScrollView(
+          child: Form(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+            SizedBox(height: 40.h),
+            customText(
+                "Professional Details", kThirdColor, 16.sp, FontWeight.w700),
+            SizedBox(height: 25.h),
+            highestEducationDropDown(),
+            SizedBox(height: 8.h),
+            occupationDropDown(),
+            annualIncomeDropDown(),
+            employedInDropDown(),
+            countryDropDown(),
+            stateDropDown(),
+            cityDropDown(),
+            residentialStatus(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 8.h),
+                customText("Citizenship", Colors.black, 15, FontWeight.w300),
+                SizedBox(height: 5),
+                TextFormField(
+                  controller: _citizenshipController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter Citizenship ";
+                    } else if (value.trim().isEmpty) {
+                      return "Enter Citizenship ";
+                    }
                   },
-                  searchable: true,
-                  chipDisplay: MultiSelectChipDisplay(
-                    items: _controller.selectedPreflocList.map((e) {
-                      var preferableLocation = e?.preferableLoc;
-                      return MultiSelectItem(e, preferableLocation!);
-                    }).toList(),
-                    onTap: (PreflocData? value) {
-                      setState(() {
-                        _controller.selectedPreflocList.remove(value);
-                      });
-                    },
+                  decoration: InputDecoration(
+                    hintText: 'Enter Citizenship',
+                    hintStyle:
+                        TextStyle(color: Colors.black54, fontSize: 0.03.sw),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                      // borderSide:  ,
+                    ),
                   ),
                 ),
-              )),
-          SizedBox(
-              width: 1.sw,
-              height: 50.h,
-              child: GreyButton(
-                  text: "Back",
-                  press: () {
-                    Get.back();
-                  })),
-          SizedBox(height: 25.h),
-          SizedBox(
-              width: 1.sw,
-              height: 50.h,
-              child: DefaultButton(
-                  text: "Next",
-                  press: () {
-                    Get.to(() => AboutyourSelf());
-                  })),
-          SizedBox(height: 25.h),
-        ],
-      )
-    ])));
+                SizedBox(height: 25.h),
+                SizedBox(
+                    width: double.infinity,
+                    child: Card(
+                      color: Colors.grey[300],
+                      elevation: 2,
+                      child: MultiSelectDialogField(
+                        title: Text('Preferable Location'),
+                        buttonText: Text('Preferable Location'),
+                        items: _controller.listOfPrefloc.map((e) {
+                          var preferableLocation = e?.preferableLoc;
+                          return MultiSelectItem(e, preferableLocation!);
+                        }).toList(),
+                        listType: MultiSelectListType.CHIP,
+                        onConfirm: (List<PreflocData?> values) {
+                          _controller.selectedPreflocList.assignAll(values);
+                        },
+                        searchable: true,
+                        chipDisplay: MultiSelectChipDisplay(
+                          items: _controller.selectedPreflocList.map((e) {
+                            var preferableLocation = e?.preferableLoc;
+                            return MultiSelectItem(e, preferableLocation!);
+                          }).toList(),
+                          onTap: (PreflocData? value) {
+                            setState(() {
+                              _controller.selectedPreflocList.remove(value);
+                            });
+                          },
+                        ),
+                      ),
+                    )),
+                SizedBox(height: 25.h),
+                SizedBox(
+                    width: 1.sw,
+                    height: 50.h,
+                    child: DefaultButton(
+                        text: "Next",
+                        press: () {
+                          sendDataToApi();
+                          // Get.to(() => AboutyourSelf());
+                        })),
+                SizedBox(height: 25.h),
+                SizedBox(
+                    width: 1.sw,
+                    height: 50.h,
+                    child: GreyButton(
+                        text: "Back",
+                        press: () {
+                          Get.back();
+                        })),
+                SizedBox(height: 25.h),
+              ],
+            )
+          ]))),
+    );
   }
 
   void sendDataToApi() async {
     try {
-      final body = {
-        "Id": "1",
-        "Education": "$selectedHighestEducationCategory",
-        "Occupation": "$selectedOccupationCategory",
-        "Currency": "$selectedAnnualIncomeCurrency",
-        "AnnualIncome": _anualIncomeController.text,
-        "EmployedIn": "$selectedemployedIn",
-        "CountryName": "${_controller.selectedCountry}",
-        "State": "${_controller.selectedState}",
-        "City": "${_controller.selectedCity}",
-        "Citizenship": "${_citizenshipController.text}",
-        "ResidentialSts": "$selectedresidential",
-        "PreferableLoc": "${_controller.selectedPreflocList.toString()}",
-        "OnTable": "REG4",
-      };
-      var result = await networkcallService.register(body: body, registerNo: 4);
-      if (result) {
-        Get.to(
-          () => AboutyourSelf(),
-        );
+      var userId = sharePrefereceInstance.getuserId();
+      var preflocation = _controller.selectedPreflocList.map((e) => e?.id);
+      var preflocationStringFormate =
+          preflocation.toString().replaceAll('(', '').replaceAll(')', '');
+      print(preflocation.toString().replaceAll('(', '').replaceAll(')', ''));
+      // if (userId != null) {
+      // if (_controller.selectedCountry?.country != null &&
+      //     _controller.selectedState.state != null &&
+      //     _controller.selectedCity.city != null) {
+      if (_formKey.currentState!.validate()) {
+        final body = {
+          "Id": "$userId",
+          "Education": "$selectedHighestEducationCategory",
+          "Occupation": "$selectedOccupationCategory",
+          "Currency": "$selectedAnnualIncomeCurrency",
+          "AnnualIncome": "${_anualIncomeController.text}",
+          "EmployedIn": "$selectedemployedIn",
+          "CountryName": "${_controller.selectedCountry?.id ?? ''}",
+          "State": "${_controller.selectedState?.id ?? ''}",
+          "City": "${_controller.selectedCity?.id ?? ''}",
+          "Citizenship": "${_citizenshipController.text}",
+          "ResidentialSts": "$selectedresidential",
+          "PreferableLoc": "${preflocationStringFormate}",
+          "OnTable": "REG4",
+        };
+        var result =
+            await networkcallService.register(body: body, registerNo: 4);
+        if (result) {
+          Get.to(
+            () => AboutyourSelf(),
+          );
+        }
+      } else {
+        showSnack('please enter the required field');
       }
     } catch (e) {
       if (e is CustomError) {
@@ -554,6 +590,13 @@ class _ProDetailState extends State<ProDetail> {
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _anualIncomeController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter Enter Amount ";
+                    } else if (value.trim().isEmpty) {
+                      return "Enter Enter Amount ";
+                    }
+                  },
                   decoration: InputDecoration(
                     hintText: 'Enter Amount',
                     border: OutlineInputBorder(

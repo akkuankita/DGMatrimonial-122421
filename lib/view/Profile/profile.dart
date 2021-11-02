@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/size_extension.dart';
 import 'package:get/get.dart';
 import 'package:matrimonial/recyclebin/pricing.dart';
 import 'package:matrimonial/utils/const.dart';
@@ -18,12 +19,12 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 45, 10, 10),
+      backgroundColor: Color(0xFFF8F8F8),
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(height: 20.h),
               Center(
                 child: CircleAvatar(
                   radius: 60,
@@ -35,17 +36,12 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              customText('Customer Name', mainColor, 20, FontWeight.w400),
-              SizedBox(
-                height: 5,
-              ),
-              customText('xyz@gmail.com', commonColor, 16, FontWeight.w400),
-              SizedBox(
-                height: 15,
-              ),
+              SizedBox(height: 10.h),
+              customText('Customer Name', mainColor, 20.sp, FontWeight.w700),
+              SizedBox(height: 10.h),
+              customText(
+                  'xyz@gmail.com', Color(0xFF090927), 12.sp, FontWeight.w400),
+              SizedBox(height: 38.h),
               InkWell(
                 onTap: () {
                   Get.to(() => profileDetailsPage());

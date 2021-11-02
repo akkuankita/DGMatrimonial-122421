@@ -17,79 +17,70 @@ class MyChat extends StatefulWidget {
 class _MyChatState extends State<MyChat> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: backGroundColor,
-          body: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, i) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(MessageScreen());
-                    },
-                    child: Container(
-                        // width: 20,
-                        height: 0.12.sh,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                        ),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, i) {
+          return InkWell(
+            onTap: () {
+              Get.to(MessageScreen());
+            },
+            child: Container(
+                margin: EdgeInsets.only(bottom: 16.h),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      customText(
-                                          'Name of Customer  ', black, 18,
-                                            FontWeight.bold),
-                                      Container(
-                                        width: 25,
-                                        height: 25,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          color: mainColor,
-                                        ),
-                                        child: Center(
-                                          child: customText('2', white, 16,
-                                                FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
+                            Row(
+                              children: [
+                                customText('Name of Customer  ', black, 14.sp,
+                                    FontWeight.w700),
+                                SizedBox(height: 4.h),
+                                Container(
+                                  width: 26.w,
+                                  height: 21.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: mainColor,
                                   ),
-                                  customText(
-                                      'It is a long established fact a... ',
-                                      mainColor,
-                                      14,
-                                        FontWeight.w400),
-                                  customText('\nOnline', colorGreenAccent, 14,
-                                        FontWeight.w400),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: 0.06.sh,
-                              height: 0.06.sh,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CustomCashedNetworImage(
-                                  imageUrl: img,
+                                  child: Center(
+                                    child: customText(
+                                        '2', white, 13.sp, FontWeight.w700),
+                                  ),
                                 ),
-                              ),
-                            )
+                              ],
+                            ),
+                            SizedBox(height: 6.h),
+                            customText('It is a long established fact a... ',
+                                mainColor, 12.sp, FontWeight.w400),
                           ],
-                        )),
-                  ),
-                );
-              })),
-    );
+                        ),
+                        Container(
+                          width: 0.06.sh,
+                          height: 0.06.sh,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: CustomCashedNetworImage(
+                              imageUrl: img,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
+                    customText('Online', colorGreenAccent, 14, FontWeight.w400),
+                  ],
+                )),
+          );
+        });
   }
 }

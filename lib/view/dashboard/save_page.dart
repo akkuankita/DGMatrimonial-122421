@@ -29,121 +29,148 @@ class _SavePageState extends State<SavePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: backGroundColor,
-          body: Column(
-            children: [
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    customText('Filter', commonColor, 0.06.sw, FontWeight.w500),
-                    SizedBox(
-                      width: 0.3.sw,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: DropdownButton<String>(
-                              // dropdownColor: commonColor,
-                              value: selectedGender,
-                              iconSize: 1,
-                              hint: Container(
-                                // width: 0.8.sw,
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(0.02.sw, 0, 0, 0),
-                                  child: customText(selectedGender, commonColor,
-                                      18, FontWeight.w400),
-                                ),
+          backgroundColor: Color(0xFFF8F8F8),
+          body: Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+            child: Column(
+              children: [
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      customText(
+                          'Filter', Colors.black, 19.sp, FontWeight.w700),
+                      Container(
+                        width: 112.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.r),
+                          color: white,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: DropdownButton<String>(
+                                // dropdownColor: commonColor,
+                                value: selectedGender,
+                                iconSize: 1,
+                                hint: customText(selectedGender,
+                                    Color(0xFF090927), 18, FontWeight.w400),
+                                style: TextStyle(color: primaryColor),
+                                underline: SizedBox(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedGender = newValue!;
+                                    print(selectedGender);
+                                  });
+                                },
+                                items: genderList.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: customText(value, Colors.black87,
+                                        14.sp, FontWeight.w500),
+                                  );
+                                }).toList(),
                               ),
-                              style: TextStyle(color: primaryColor),
-                              underline: SizedBox(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedGender = newValue!;
-                                  print(selectedGender);
-                                });
-                              },
-                              items: genderList.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                    child: customText(value, commonColor, 18,
-                                        FontWeight.w400),
-                                  ),
-                                );
-                              }).toList(),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0.0, 0, 0, 0),
-                            child: Icon(
-                              Icons.arrow_drop_down_outlined,
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                            Icon(Icons.expand_more_rounded,
+                                color: kPrimaryColor),
+                            SizedBox(width: 12.w),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (context, i) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            // Get.to(MessageScreen());
-                            // Get.to(() => DetailsPage());
-                          },
+                SizedBox(height: 12.h),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context, i) {
+                        return InkWell(
+                          onTap: () {},
                           child: Container(
-                              height: 0.12.sh,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(8.r),
                                 color: Colors.white,
                               ),
+                              margin: EdgeInsets.only(bottom: 12.h),
                               padding: EdgeInsets.all(10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                              child: Column(
                                 children: [
-                                  Container(
-                                    width: 0.07.sh,
-                                    height: 0.07.sh,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: CustomCashedNetworImage(
-                                        imageUrl: img,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 10),
+                                        child: SizedBox(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              customText(
+                                                  'Person Name',
+                                                  kPrimaryColor,
+                                                  16.sp,
+                                                  FontWeight.w600),
+                                              SizedBox(height: 8.h),
+                                              customText(
+                                                  'user@gmail.com',
+                                                  black,
+                                                  16.sp,
+                                                  FontWeight.w400),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      Container(
+                                        width: 60.h,
+                                        height: 60.h,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          border: Border.all(
+                                              width: 2,
+                                              color: Color(0xFFFFE8E1)),
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.r),
+                                          child: CustomCashedNetworImage(
+                                            imageUrl: img,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  SizedBox(height: 6.h),
+                                  Divider(color: Color(0xFFDBDBDB)),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: SizedBox(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          customText('Name', black, 18,
-                                              FontWeight.bold),
-                                          customText('user@gmail.com', black,
-                                              14, FontWeight.w400),
-                                        ],
-                                      ),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 8.h, horizontal: 8.w),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        customText('View', Color(0xFF818181),
+                                            16.sp, FontWeight.w400),
+                                        customText('Remove', Color(0xFF818181),
+                                            16.sp, FontWeight.w400),
+                                      ],
                                     ),
-                                  ),
+                                  )
                                 ],
                               )),
-                        ),
-                      );
-                    }),
-              ),
-            ],
+                        );
+                      }),
+                ),
+              ],
+            ),
           )),
     );
   }

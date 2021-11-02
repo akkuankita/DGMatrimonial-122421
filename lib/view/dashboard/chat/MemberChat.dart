@@ -24,13 +24,12 @@ class _MemberChatState extends State<MemberChat> {
               itemCount: 10,
               itemBuilder: (context, i) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () {
                       Get.to(MessageScreen());
                     },
                     child: Container(
-                        height: 0.12.sh,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.white,
@@ -40,8 +39,8 @@ class _MemberChatState extends State<MemberChat> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              width: 0.07.sh,
-                              height: 0.07.sh,
+                              width: 48.h,
+                              height: 48.h,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: CustomCashedNetworImage(
@@ -49,19 +48,18 @@ class _MemberChatState extends State<MemberChat> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: SizedBox(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    customText('Name of Customer  ', black, 18,
-                                          FontWeight.bold),
-                                    customText('Online', colorGreenAccent, 14,
-                                          FontWeight.w400),
-                                  ],
-                                ),
+                            SizedBox(width: 20.w),
+                            SizedBox(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  customText('Name of Customer  ', black, 14.sp,
+                                      FontWeight.bold),
+                                  SizedBox(height: 4.h),
+                                  customText('Online', colorGreenAccent, 14,
+                                      FontWeight.w400),
+                                ],
                               ),
                             ),
                           ],

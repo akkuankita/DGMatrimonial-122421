@@ -7,12 +7,13 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
           children: [
             ColoredBox(
-              color: Color(0xFFFAFAFA),
+              color: Color(0xFFF8F8F8),
               child: Center(
                 child: Column(
                   children: [
@@ -43,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
                     customText("Customer Name ", kPrimaryColor, 24.sp,
                         FontWeight.w700),
                     SizedBox(height: 8.h),
-                    customText("xyz@gmail.com", Color(0xFF8E8E8E), 14.sp,
+                    customText("xyz@gmail.com", Color(0xFF090927), 14.sp,
                         FontWeight.w400),
                     SizedBox(height: 16.h),
                     // InkWell(

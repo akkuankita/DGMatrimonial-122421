@@ -89,8 +89,11 @@ class ExploreScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset("assets/images/banner.png",
-                        fit: BoxFit.contain),
+                    SizedBox(
+                      width: 1.sw,
+                      child: Image.asset("assets/images/banner.png",
+                          fit: BoxFit.contain),
+                    ),
                     SizedBox(height: 30.h),
                     customText(
                         "Your Matches", kSecColor, 18.sp, FontWeight.w700),
@@ -293,8 +296,8 @@ class MiniProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 210.w,
-      margin: EdgeInsets.only(right: 10.w, left: 16.w),
+      width: 140.w,
+      margin: EdgeInsets.only(right: 4.w, left: 16.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: white,
@@ -305,8 +308,8 @@ class MiniProfile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 180.w,
-              height: 120.w,
+              width: 112.w,
+              height: 112.w,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
@@ -326,12 +329,12 @@ class MiniProfile extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-            customText("Full Name", kPrimaryColor, 18.sp, FontWeight.w700),
+            customText("Full Name", kPrimaryColor, 17.sp, FontWeight.w700),
             SizedBox(height: 8.h),
             customText(
                 "It is a long established fact that a reader will be distracted by the",
                 kSecColor,
-                15.sp,
+                14.sp,
                 FontWeight.w500),
 
             // Column(

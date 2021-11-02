@@ -37,47 +37,67 @@ class _MainChatPageState extends State<MainChatPage>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: Column(
-        children: [
-          Container(
-            color: bg,
-            margin: EdgeInsets.only(top: 20),
-            child: TabBar(
-              labelPadding: EdgeInsets.zero,
-              controller: _tabController,
-              indicatorColor: white,
-              labelColor: white,
-              unselectedLabelColor: black,
-              unselectedLabelStyle: TextStyle(color: white),
-              tabs: [
+    return Scaffold(
+        backgroundColor: Color(0xFFF8F8F8),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+            child: Column(
+              children: [
                 Container(
-                    width: 1.sw,
-                    color: _isFirstSelected ? mainColor : bg,
-                    alignment: Alignment.center,
-                    child: Text(
-                      '\nChat\n',
-                    )),
-                Container(
-                    width: 1.sw,
-                    alignment: Alignment.center,
-                    color: _isSecondSelected ? mainColor : bg,
-                    child: Text(
-                      '\nMember\n',
-                    )),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.r),
+                    color: bg,
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: TabBar(
+                    labelPadding: EdgeInsets.zero,
+                    controller: _tabController,
+                    indicatorColor: white,
+                    labelColor: white,
+                    unselectedLabelColor: black,
+                    unselectedLabelStyle: TextStyle(color: white),
+                    tabs: [
+                      Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.r),
+                            color: _isFirstSelected ? mainColor : bg,
+                          ),
+                          width: 1.sw,
+                          height: 33.h,
+                          child: Center(
+                            child: Text(
+                              'Chat',
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
+                          )),
+                      Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.r),
+                            color: _isSecondSelected ? mainColor : bg,
+                          ),
+                          width: 1.sw,
+                          height: 33.h,
+                          child: Center(
+                            child: Text(
+                              'Member',
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24.h),
+                Expanded(
+                  flex: 2,
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [MyChat(), MemberChat()],
+                  ),
+                ),
               ],
             ),
           ),
-          Expanded(
-            flex: 2,
-            child: TabBarView(
-              controller: _tabController,
-              children: [MyChat(), MemberChat()],
-            ),
-          ),
-        ],
-      )),
-    );
+        ));
   }
 }

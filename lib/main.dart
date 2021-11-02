@@ -66,11 +66,12 @@ class MyApp extends StatelessWidget {
         // return DashBoard();
         // print('applicationState ${applicationState}');
         if (applicationState == ApplicationState.LoggedIn) {
-          return RegisterScreen();
+          // return RegisterScreen();
+          return profileDetailsPage();
         } else if (applicationState == ApplicationState.LoggedOut) {
           // return OnBoarding();
           // return LoginScreen();
-          return OnBoarding();
+          return profileDetailsPage();
         } else {
           return returnWidget1;
         }
@@ -82,7 +83,6 @@ class MyApp extends StatelessWidget {
 //
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
-
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }

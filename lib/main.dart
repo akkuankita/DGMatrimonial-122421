@@ -21,7 +21,6 @@ Future<void> main() async {
       SystemUiOverlayStyle(statusBarColor: lightBlackBoldColor));
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  // print('main check');
   await sharePrefereceInstance.init();
   runApp(
     StartApp(),
